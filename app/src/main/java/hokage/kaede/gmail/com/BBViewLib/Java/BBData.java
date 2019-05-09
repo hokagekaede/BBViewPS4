@@ -341,27 +341,6 @@ public class BBData extends KVCStore {
 		
 		return ret;
 	}
-	
-	/**
-	 * セットボーナスの情報を取得する。
-	 * @return セットボーナスの文字列
-	 */
-	public String getSetBonus() {
-		String name = super.get("名称");
-		String brand = "";
-		
-		// 頭部のパーツのブランド名を取得する
-		int len = SpecValues.SETBONUS.size();
-		for(int i=0; i<len; i++) {
-			String brand_buf = SpecValues.SETBONUS.getKey(i);
-			if(name.indexOf(brand_buf) > -1) {
-				brand = brand_buf;
-				return SpecValues.SETBONUS.get(brand);
-			}
-		}
-		
-		return "なし";
-	}
 
 	//--------------------------------------------------
 	// 索敵装備関連

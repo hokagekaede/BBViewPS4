@@ -43,32 +43,20 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 	
 	private static int sLastPosition = -1;
 	private static int sLastListTop = -1;
-	
-	private boolean mShowChips = false;
 
-	private CustomData mCustomData;
-	
-	public CustomView(Context context, CustomData custom_data, boolean is_show_chips) {
+	public CustomView(Context context, CustomData custom_data) {
 		super(context);
 
 		this.setLayoutParams(new FrameLayout.LayoutParams(FP, FP));
-		
-		mShowChips = is_show_chips;
 
 		String file_dir = context.getFilesDir().toString();
 		CustomFileManager custom_mng = CustomFileManager.getInstance(file_dir);
-		mCustomData = custom_mng.getCacheData();
 
 		if(BBViewSetting.IS_SHOW_COLUMN2) {
 			createViewColTwo(context, custom_data);
 		}
 		else {
 			createViewColOne(context, custom_data);
-		}
-		
-		// チップ装着情報を表示するかどうか
-		if(mShowChips) {
-			createChipView(context, custom_data);
 		}
 	}
 
@@ -85,9 +73,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		list_view.setAdapter(adapter);
 		list_view.setOnItemClickListener(this);
 
-		String base_spec_str = String.format("機体 (装甲：%.1f / チップ容量：%.1f)", 
-				custom_data.getArmorAve(),
-				custom_data.getChipCapacity()); 
+		String base_spec_str = String.format("機体 (装甲：%.1f)", custom_data.getArmorAve());
 		
 		adapter.addItem(new CustomAdapterItemCategory(context, base_spec_str));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD));
@@ -166,9 +152,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		list_view.setAdapter(adapter);
 		list_view.setOnItemClickListener(this);
 
-		String base_spec_str = String.format("機体 (装甲：%.1f / チップ容量：%.1f)", 
-				custom_data.getArmorAve(),
-				custom_data.getChipCapacity()); 
+		String base_spec_str = String.format("機体 (装甲：%.1f)", custom_data.getArmorAve());
 		
 		adapter.addItem(new CustomAdapterItemCategory(context, base_spec_str));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD));
@@ -329,33 +313,5 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		Intent intent = new Intent(context, InfoActivity.class);
 		IntentManager.setSelectedData(intent, to_item);
 		context.startActivity(intent);
-	}
-	
-	/**
-	 * 装着中のチップ情報を表示するビューを設定する。
-	 * @param context 対象の画面
-	 * @param custom_data アセンデータ
-	 */
-	private void createChipView(Context context, CustomData custom_data) {
-		ArrayList<BBData> chiplist = custom_data.getChips();
-		String chip_cap_str = SpecValues.getSpecUnit(custom_data.getChipCapacity(), "チップ容量", BBViewSetting.IS_KM_PER_HOUR);
-		String chip_weight_str = String.valueOf(custom_data.getChipWeight());
-		String chip_text_str = "■チップ情報 [" + chip_weight_str + "/" + chip_cap_str + "]" + FileIO.NEWLINE;
-		int size = chiplist.size();
-		for(int i=0; i<size; i++) {
-			chip_text_str = chip_text_str + chiplist.get(i).get("名称") + FileIO.NEWLINE;
-		}
-		
-		TextView chip_text_view = ViewBuilder.createTextView(context, chip_text_str, BBViewSetting.FLAG_TEXTSIZE_SMALL);
-		chip_text_view.setLayoutParams(new LayoutParams(WC, WC));
-		chip_text_view.setTextColor(SettingManager.getColorWhite());
-		chip_text_view.setBackgroundColor(SettingManager.getColorGray());
-		
-		LinearLayout buf_layout = new LinearLayout(context);
-		buf_layout.setLayoutParams(new LayoutParams(FP, WC));
-		buf_layout.setGravity(Gravity.RIGHT);
-		buf_layout.addView(chip_text_view);
-		
-		this.addView(buf_layout);
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hokage.kaede.gmail.com.BBViewPS4"
-    android:versionCode="1005"
-    android:versionName="1.0.05">
+    android:versionCode="1006"
+    android:versionName="1.0.06">
     
     <uses-permission android:name="android.hardware.touchscreen" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -31,10 +31,12 @@
         <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Main.AboutActivity" />
         
         <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Main.SettingActivity" />
-        
+
         <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.CustomMainActivity" />
         
         <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.SelectActivity" />
+
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.SelectChipActivity" />
 
         <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.CompareActivity" />
         

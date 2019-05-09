@@ -9,7 +9,6 @@ import hokage.kaede.gmail.com.BBViewLib.Java.BBDataManager;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataReader;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBNetDatabase;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBViewSetting;
-import hokage.kaede.gmail.com.BBViewLib.Java.CustomData;
 import hokage.kaede.gmail.com.BBViewLib.Java.CustomFileManager;
 import hokage.kaede.gmail.com.BBViewLib.Java.FavoriteManager;
 import hokage.kaede.gmail.com.BBViewLib.Java.SpecValues;
@@ -67,9 +66,6 @@ public class TopActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// バージョンアップデータを使用するかどうかの設定値を初期化
-		//BBViewSetting.IS_NEXT_VERSION_ON = false;
-		
 		// 初期化する
 		SpecValues.init();
 		loadPartsData();
@@ -92,11 +88,6 @@ public class TopActivity extends BaseActivity {
 			BBViewSetting.setVersionCode(this);
 			showFirstDialog();
 		}
-
-		// 共有データを設定する
-		//CustomCodeReader reader = new CustomCodeReader(this, getIntent());
-		//reader.read();
-		setShareData(getIntent());
 
 		// メインのレイアウト
 		LinearLayout layout = new LinearLayout(this);
@@ -149,54 +140,7 @@ public class TopActivity extends BaseActivity {
 		blog_btn.setOnClickListener(new OnSelectBlogListener());
 		layout.addView(blog_btn);
 
-		/* 次回のバージョンアップ用(データ切り替え) */
-		/*
-		ToggleButton ver_btn = new ToggleButton(this);
-		ver_btn.setChecked(BBViewSetting.IS_NEXT_VERSION_ON);
-		ver_btn.setText(BBViewSetting.NEXT_VERSION_TITLE + "データ [OFF]");
-		ver_btn.setTextOn(BBViewSetting.NEXT_VERSION_TITLE + "データ [ON]");
-		ver_btn.setTextOff(BBViewSetting.NEXT_VERSION_TITLE + "データ [OFF]");
-		ver_btn.setOnCheckedChangeListener(new OnChangeVersionListener());
-		layout.addView(ver_btn);
-		*/
-
 		setContentView(layout);
-	}
-	
-	/* 次回のバージョンアップ用(データ切り替え) */
-	/*
-	private class OnChangeVersionListener implements OnCheckedChangeListener {
-
-		@Override
-		public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-			
-			if(arg1) {
-				BBViewSetting.IS_NEXT_VERSION_ON = true;
-				SpecValues.init();
-				loadPartsData(R.raw.bb_data_plus);
-				initCustomData();
-			}
-			else {
-				BBViewSetting.IS_NEXT_VERSION_ON = false;
-				SpecValues.init();
-				loadPartsData();
-				initCustomData();
-			}
-			
-			TopActivity.this.updateVer();
-		}
-	}
-	*/
-
-	/**
-	 * 既存のアクティビティを使用する場合の処理を行う。
-	 */
-	@Override
-	protected void onNewIntent(Intent intent) {
-		super.onNewIntent(intent);
-		//CustomCodeReader reader = new CustomCodeReader(this, getIntent());
-		//reader.read();
-		setShareData(getIntent());
 	}
 
 	/**
@@ -280,44 +224,6 @@ public class TopActivity extends BaseActivity {
 		return update_info_str;
 	}
 
-	/**
-	 * 共有アセンデータを設定する。
-	 * 共有データが渡されていない場合は何も処理しない。
-	 */
-	private void setShareData(Intent intent) {
-		if(intent == null) {
-			return;
-		}
-		else if(intent.getAction() == null) {
-			return;
-		}
-		
-		if(intent.getAction().equals(Intent.ACTION_SEND)) {
-			String code = intent.getExtras().getCharSequence(Intent.EXTRA_TEXT).toString();
-
-			String file_dir = getFilesDir().toString();
-			CustomFileManager custom_mng = CustomFileManager.getInstance(file_dir);
-			CustomData custom_data = custom_mng.getCacheData();
-
-			int ret = custom_data.setCustomDataID(BBViewSetting.getVersionCode(this), (String) code);
-			
-			if(ret == CustomData.RET_SUCCESS) {
-				Toast.makeText(this, "アセンデータを読み込みました", Toast.LENGTH_SHORT).show();
-				Intent next_intent = new Intent(this, CustomMainActivity.class);
-				startActivity(next_intent);
-			}
-			else if(ret == CustomData.ERROR_CODE_TARGET_NOTHING) {
-				Toast.makeText(this, "アセンデータが存在しません", Toast.LENGTH_SHORT).show();
-			}
-			else if(ret == CustomData.ERROR_CODE_VERSION_NOT_EQUAL) {
-				Toast.makeText(this, "バージョン情報が一致していません", Toast.LENGTH_SHORT).show();
-			}
-			else if(ret == CustomData.ERROR_CODE_ITEM_NOTHING) {
-				Toast.makeText(this, "アセン情報の読み込みに失敗しました", Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
-	
 	/**
 	 * オプションメニュー生成時の処理を行う。
 	 */

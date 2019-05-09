@@ -196,13 +196,7 @@ public class InfoActivity extends BaseActivity {
 				layout_table.addView(ViewBuilder.createTableRow(this, SettingManager.getColorCyan(), key, value_str));
 			}
 		}
-		
-		// セットボーナス情報を表示する
-		if(BBDataManager.isParts(data)) {
-			String bonus = data.getSetBonus();
-			layout_table.addView(ViewBuilder.createTableRow(this, SettingManager.getColorCyan(), "セットボーナス", bonus));
-		}
-		
+
 		return layout_table;
 	}
 

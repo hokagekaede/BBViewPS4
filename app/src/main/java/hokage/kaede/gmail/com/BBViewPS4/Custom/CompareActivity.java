@@ -448,9 +448,6 @@ public class CompareActivity extends BaseActivity {
 			
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), "", "比較元", "比較先"));
 
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "チップ容量")));
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpChipWeight(from_data, to_data)));
-			
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpWeightSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpSpaceWeightSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpArmorAveSpecArray(from_data, to_data, blust_type)));
@@ -472,7 +469,6 @@ public class CompareActivity extends BaseActivity {
 			
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpWalkSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpStartDushSpecArray(from_data, to_data, blust_type)));
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpNormalDushSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpSpeedDonRateSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "重量耐性")));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "加速")));

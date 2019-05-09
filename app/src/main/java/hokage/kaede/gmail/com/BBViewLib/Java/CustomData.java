@@ -12,7 +12,14 @@ public class CustomData {
 	private BBData[] mRecentSniper;
 	private BBData[] mRecentSupport;
 	private BBData mReqArm; // 要請兵器
-	private ArrayList<BBData> mRecentChips;
+
+	// チップデータ
+	private BBData[] mRecentHeadChips;
+	private BBData[] mRecentBodyChips;
+	private BBData[] mRecentArmsChips;
+	private BBData[] mRecentLegsChips;
+	private BBData[] mRecentSupportChips;
+	private static final int CHIP_MAX_COUNT = 2;
 	
 	// 各種状態のモード設定
 	private int mMode;
@@ -65,7 +72,13 @@ public class CustomData {
 		mRecentHeavy   = new BBData[BBDataManager.WEAPON_TYPE_LIST.length];
 		mRecentSniper  = new BBData[BBDataManager.WEAPON_TYPE_LIST.length];
 		mRecentSupport = new BBData[BBDataManager.WEAPON_TYPE_LIST.length];
-		mRecentChips = new ArrayList<BBData>(5);
+
+		mRecentHeadChips = new BBData[CHIP_MAX_COUNT];
+		mRecentBodyChips = new BBData[CHIP_MAX_COUNT];
+		mRecentArmsChips = new BBData[CHIP_MAX_COUNT];
+		mRecentLegsChips = new BBData[CHIP_MAX_COUNT];
+		mRecentSupportChips = new BBData[CHIP_MAX_COUNT];
+
 		mReqArm = new BBData();
 		
 		// 配列を初期化する。
@@ -147,55 +160,7 @@ public class CustomData {
 			return;
 		}
 	}
-	
-	/**
-	 * チップデータを追加する。
-	 * @param data 追加するチップデータ
-	 */
-	public void addChip(BBData data) {
-		mRecentChips.add(data);
-	}
-	
-	/**
-	 * チップデータを削除する。
-	 * @param data 削除するチップデータ
-	 */
-	public void removeChip(BBData data) {
-		int size = mRecentChips.size();
-		for(int i=0; i<size; i++) {
-			String tmp_name1 = mRecentChips.get(i).get("名称");
-			String tmp_name2 = data.get("名称");
-			
-			if(tmp_name1.equals(tmp_name2)) {
-				mRecentChips.remove(i);
-				break;
-			}
-		}
-	}
-	
-	/**
-	 * 指定のチップ系統を全て削除する。
-	 * @param name 削除するチップの系統名
-	 */
-	public void removeChipSeries(String name) {
-		int size = mRecentChips.size();
-		for(int i=0; i<size; i++) {
-			String tmp_name1 = mRecentChips.get(i).get("名称");
-			
-			if(tmp_name1.startsWith(name)) {
-				mRecentChips.remove(i);
-				break;
-			}
-		}
-	}
-	
-	/**
-	 * 選択中のチップデータを全消去する。
-	 */
-	public void clearChips() {
-		mRecentChips.clear();
-	}
-	
+
 	/**
 	 * アセンデータの算出モードを設定する。
 	 * @param mode モード
@@ -219,38 +184,82 @@ public class CustomData {
 	public BBData getReqArm() {
 		return this.mReqArm;
 	}
+
+	/**
+	 * チップをセットする。
+	 * @param chip 設定するチップ
+	 * @param type 設定先の種類。空文字を指定した場合はサポートチップとして扱う。
+	 * @param index 設定位置
+	 */
+	public void setChip(BBData chip, String type, int index) {
+
+		if(type.equals(BBDataManager.BLUST_PARTS_HEAD)) {
+			mRecentHeadChips[index] = chip;
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_BODY)) {
+			mRecentBodyChips[index] = chip;
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_ARMS)) {
+			mRecentArmsChips[index] = chip;
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_LEGS)) {
+			mRecentLegsChips[index] = chip;
+		}
+		else {
+			mRecentSupportChips[index] = chip;
+		}
+	}
+
+	/**
+	 * チップを取得する。
+	 * @param type 取得先の種類。
+	 * @param index 取得位置。
+	 * @return 所定のチップを取得する。空文字を指定した場合はサポートチップを返す。
+	 */
+	public BBData getChip(String type, int index) {
+
+		if(type.equals(BBDataManager.BLUST_PARTS_HEAD)) {
+			return mRecentHeadChips[index];
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_BODY)) {
+			return mRecentBodyChips[index];
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_ARMS)) {
+			return mRecentArmsChips[index];
+		}
+		else if(type.equals(BBDataManager.BLUST_PARTS_LEGS)) {
+			return mRecentLegsChips[index];
+		}
+		else {
+			return mRecentSupportChips[index];
+		}
+	}
+
+	/**
+	 * チップデータのリストを取得する。
+	 * @return チップデータのリスト
+	 */
+	public ArrayList<BBData> getChipList() {
+		ArrayList<BBData> list = new ArrayList<BBData>(10);
+
+		list.add(mRecentHeadChips[0]);
+		list.add(mRecentHeadChips[1]);
+		list.add(mRecentBodyChips[0]);
+		list.add(mRecentBodyChips[1]);
+		list.add(mRecentArmsChips[0]);
+		list.add(mRecentArmsChips[1]);
+		list.add(mRecentLegsChips[0]);
+		list.add(mRecentLegsChips[1]);
+		list.add(mRecentSupportChips[0]);
+		list.add(mRecentSupportChips[1]);
+
+		return list;
+	}
 	
 	//----------------------------------------------------------
 	// データ判定系の関数
 	//----------------------------------------------------------
-	
-	/**
-	 * 現在のアセンが指定のフルセット機体かどうかを判別する。
-	 * @param parts_set 判定するセット名
-	 * @return フルセット機体の場合はtrueを返し、フルセット機体でない場合はfalseを返す。
-	 */
-	private boolean isFullSet(String parts_set) {
-		boolean ret = false;
-		int count = 0;
 
-		// 無効化 (BBPS4にセトボは存在しない)
-		/*
-		int len = mRecentParts.length;
-		for(int i=0; i<len; i++) {
-			String parts_name = mRecentParts[i].get("名称");
-			if(parts_name.startsWith(parts_set)) {
-				count = count + 1;
-			}
-		}
-		
-		if(count == BBDataManager.BLUST_PARTS_LIST.length) {
-			ret = true;
-		}
-		*/
-		
-		return ret;
-	}
-	
 	/**
 	 * ホバー脚部かどうかを判別する。
 	 * @return ホバー脚部の場合はtrueを返し、ホバー脚部でない場合はfalseを返す。
@@ -278,106 +287,51 @@ public class CustomData {
 	}
 
 	/**
-	 * チップのセットの有無を判別する
+	 * チップがセットされているかどうかを判定する。
 	 * @param name チップの名前
-	 * @return 指定されたチップがセットされている場合はtrueを返し、セットされていない場合はfalseを返す。
+	 * @return セットされている場合はtrueを返し、セットされていない場合はfalseを返す。
 	 */
 	public boolean existChip(String name) {
-		boolean ret = false;
-		int size = mRecentChips.size();
-		
+
+		if(existChipArray(name, mRecentHeadChips)) {
+			return true;
+		}
+		else if(existChipArray(name, mRecentBodyChips)) {
+			return true;
+		}
+		else if(existChipArray(name, mRecentArmsChips)) {
+			return true;
+		}
+		else if(existChipArray(name, mRecentLegsChips)) {
+			return true;
+		}
+		else if(existChipArray(name, mRecentSupportChips)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * 所定の設定個所にチップがセットされているかどうかを判定する。
+	 * @param name チップの名前
+	 * @param chips 設定場所
+	 * @return セットされている場合はtrueを返し、セットされていない場合はfalseを返す。
+	 */
+	private boolean existChipArray(String name, BBData[] chips) {
+		int size = chips.length;
+
 		for(int i=0; i<size; i++) {
-			BBData item = mRecentChips.get(i);
+			BBData item = chips[i];
 			String item_name = item.get("名称");
 			if(item_name.equals(name)) {
-				ret = true;
-				break;
+				return true;
 			}
 		}
-		
-		return ret;
+
+		return false;
 	}
-	
-	/**
-	 * 特定のチップ系統がセットされているかどうかを判別する。
-	 * @param name  チップの名前
-	 * @return 指定されたチップの系統がセットされている場合はtrueを返し、セットされていない場合はfalseを返す。
-	 */
-	public boolean existChipGroup(String name) {
-		boolean ret = false;
-		int size = mRecentChips.size();
-		
-		for(int i=0; i<size; i++) {
-			BBData item = mRecentChips.get(i);
-			String item_name = item.get("名称");
-			if(item_name.startsWith(name)) {
-				ret = true;
-				break;
-			}
-		}
-		
-		return ret;
-	}
-	
-	/**
-	 * アクションチップの判定をする
-	 * @return アクションチップのボタンに重複があればfalseを返す。それ以外はtrueを返す。
-	 */
-	public boolean judgeActionChip() {
-		boolean ret = true;
-		int action_btn_count = 0;
-		int dash_btn_count = 0;
-		int jump_btn_count = 0;
-		int size = mRecentChips.size();
-		
-		for(int i=0; i<size; i++) {
-			BBData data = mRecentChips.get(i);
-			
-			if(data.existCategory(BBDataManager.ACTION_ACT_CHIP_STR)) {
-				action_btn_count++;
-			}
-			else if(data.existCategory(BBDataManager.ACTION_DASH_CHIP_STR)) {
-				dash_btn_count++;
-			}
-			else if(data.existCategory(BBDataManager.ACTION_JUMP_CHIP_STR)) {
-				jump_btn_count++;
-			}
-		}
-		
-		if(action_btn_count > 1 || dash_btn_count > 1 || jump_btn_count > 1) {
-			ret = false;
-		}
-		
-		return ret;
-	}
-	
-	/**
-	 * 機体強化チップの判定をする。
-	 * @return 機体強化チップで同種のチップがあればfalseを返す。それ以外はtrueを返す。
-	 */
-	public boolean judgePowerupChip() {
-		boolean ret = true;
-		int size = mRecentChips.size();
-		
-		for(int i=0; i<size; i++) {
-			String cmp1_name = mRecentChips.get(i).get("名称") + "II";
-			
-			for(int j=0; j<size; j++) {
-				if(i==j) {
-					continue;
-				}
-				
-				String cmp2_name = mRecentChips.get(j).get("名称");
-				if(cmp1_name.equals(cmp2_name)) {
-					ret = false;
-					break;
-				}
-			}
-		}
-		
-		return ret;
-	}
-	
+
 	//----------------------------------------------------------
 	// パーツ、武器、チップデータ取得系
 	//----------------------------------------------------------
@@ -470,63 +424,7 @@ public class CustomData {
 		
 		return null;
 	}
-	
-	/**
-	 * チップリストを取得する。
-	 * @return 現在選択中のチップリストのコピー。
-	 */
-	public ArrayList<BBData> getChips() {
-		ArrayList<BBData> tmp_list = new ArrayList<BBData>();
-		int size = mRecentChips.size();
-		
-		for(int i=0; i<size; i++) {
-			BBData tmp_item = mRecentChips.get(i);
-			tmp_list.add(tmp_item);
-		}
-		
-		return tmp_list;
-	}
-	
-	/**
-	 * 指定値からセットボーナス強化の値を計算する。
-	 * @param value フルセットボーナス値
-	 * @return セットボーナス強化チップを含めた強化値
-	 */
-	public int getFullSetBonus(int value) {
-		int ret = value;
-		
-		if(existChip("セットボーナス強化"))
-		{
-			ret = ret * 2;
-		}
-		else if(existChip("セットボーナス強化II"))
-		{
-			ret = ret * 3;
-		}
-		
-		return ret;
-	}
 
-	/**
-	 * 指定値からセットボーナス強化の値を計算する。
-	 * @param value フルセットボーナス値
-	 * @return セットボーナス強化チップを含めた強化値
-	 */
-	public double getFullSetBonus(double value) {
-		double ret = value;
-		
-		if(existChip("セットボーナス強化"))
-		{
-			ret = ret * 2;
-		}
-		else if(existChip("セットボーナス強化II"))
-		{
-			ret = ret * 3;
-		}
-		
-		return ret;
-	}
-	
 	//----------------------------------------------------------
 	// 性能値取得系(機体)
 	//----------------------------------------------------------
@@ -630,89 +528,7 @@ public class CustomData {
 		
 		return ret;
 	}
-	
-	/**
-	 * フルセットボーナスの説明文を取得する
-	 * @return フルセットボーナスの説明文
-	 */
-	public String getSetBonus() {
-		String ret = "なし";
-	
-		int len = SpecValues.SETBONUS.size();
-		String brand = "";
-		
-		// 頭部パーツの名前を取得する
-		BBData head_data = mRecentParts[HEAD_IDX];
-		String head_name = head_data.get("名称");
-		
-		// 頭部のパーツのブランド名を取得する
-		for(int i=0; i<len; i++) {
-			String brand_buf = SpecValues.SETBONUS.getKey(i);
-			if(head_name.indexOf(brand_buf) > -1) {
-				brand = brand_buf;
-				break;
-			}
-		}
-		
-		// 他パーツのブランドが同じかどうか確認する
-		len = mRecentParts.length;
-		boolean is_same_brand = true;
-		
-		for(int i=0; i<len; i++) {
-			BBData list_buf = mRecentParts[i];
-			String name = list_buf.get("名称");
-			
-			// 同じでなければfalseで抜ける
-			if(name.indexOf(brand) < 0) {
-				is_same_brand = false;
-				break;
-			}
-		}
-		
-		// すべて同じ場合、セットボーナスを戻り値に設定する
-		if(is_same_brand) {
-			ret = SpecValues.SETBONUS.get(brand);
-		}
 
-		return ret;
-	}
-
-	/**
-	 * チップデータの合計値を取得する。
-	 * @return チップデータの合計値
-	 */
-	public int getChipWeight() {
-		int ret = 0;
-
-		try {
-
-			int size = mRecentChips.size();
-			for(int i=0; i<size; i++) {
-				String str_value = mRecentChips.get(i).get("コスト");
-				ret = ret + Integer.valueOf(str_value);
-			}
-			
-		} catch(NumberFormatException e) {
-			ret = -1;
-		}
-		
-		return ret;
-	}
-	
-	/**
-	 * チップ容量の合計値を取得する
-	 * @return チップ容量の合計値
-	 */
-	public double getChipCapacity() {
-		double ret = 0;
-		int len = mRecentParts.length;
-		for(int i=0; i<len; i++) {
-			ret = ret + getChipValue(i);
-		}
-
-		return ret;
-	}
-	
 	//----------------------------------------------------------
 	// 性能取得系(パーツ)
 	//----------------------------------------------------------
@@ -750,35 +566,6 @@ public class CustomData {
     }
 
 	/**
-	 * 指定部位のチップ容量を取得する。
-	 * @param parts_type 指定のパーツ種類
-	 * @return チップ容量
-	 */
-	public double getChipValue(String parts_type) {
-		int idx = getPartsTypeIndex(parts_type);
-		return getChipValue(idx);
-	}
-	
-	/**
-	 * 指定部位のチップ容量を取得する。
-	 * @param idx 指定位置
-	 * @return チップ容量
-	 */
-	private double getChipValue(int idx) {
-		double ret;
-		
-		try {
-			String chip_value_str = mRecentParts[idx].get("チップ容量");
-			ret = Double.valueOf(chip_value_str);
-			
-		}  catch(NumberFormatException e) {
-			ret = 0;
-		}
-		
-		return ret;
-	}
-	
-	/**
 	 * 指定部位の装甲値を取得する。
 	 * @param parts_type 指定のパーツ種類
 	 * @return 装甲値
@@ -796,29 +583,26 @@ public class CustomData {
 	public double getArmor(int idx) {
 		double ret = mRecentParts[idx].getArmor();
 
-		// フルセットボーナス
-		if(isFullSet("ヘヴィガード")) {
-			ret = ret + getFullSetBonus(3);
-		}
-		else if(isFullSet("ロージー")) {
-			ret = ret + getFullSetBonus(4.5);
-		}
-		else if(isFullSet("PLUS：G")) {
-			ret = ret + getFullSetBonus(3);
-		}
-		
 		// チップ上乗せ分を反映する
-		if(existChip("装甲")) {
-			ret = ret + 1;
+		if(idx == HEAD_IDX) {
+			if(existChip("頭部装甲")) {
+				ret = ret + 2;
+			}
 		}
-		else if(existChip("装甲II")) {
-			ret = ret + 2;
+		else if(idx == BODY_IDX) {
+			if(existChip("胴部装甲")) {
+				ret = ret + 2;
+			}
 		}
-		else if(existChip("装甲III")) {
-			ret = ret + 3;
+		else if(idx == ARMS_IDX) {
+			if(existChip("腕部装甲")) {
+				ret = ret + 2;
+			}
 		}
-		else if(existChip("装甲IV")) {
-			ret = ret + 5;
+		else if(idx == LEGS_IDX) {
+			if(existChip("脚部装甲")) {
+				ret = ret + 2;
+			}
 		}
 
 		return ret;
@@ -837,47 +621,13 @@ public class CustomData {
 		
 		try {
 			ret = Double.valueOf(value);
-			
-			// フルセットボーナス
-			if(isFullSet("ネレイド")) {
-				ret = ret + getFullSetBonus(0.05);
-			}
-			else if(isFullSet("クーガー")) {
-				ret = ret + getFullSetBonus(0.05);
-			}
-			else if(isFullSet("アスラ")) {
-				ret = ret + getFullSetBonus(0.05);
-			}
-			
+
 			// チップセットボーナス
 			if(existChip("射撃補正")) {
-				ret = ret + 0.01;
+				ret = ret + 0.010;
 			}
 			else if(existChip("射撃補正II")) {
-				ret = ret + 0.03;
-			}
-			else if(existChip("射撃補正III")) {
-				ret = ret + 0.05;
-			}
-			
-			if(existChip("頭部パーツ強化")) {
-				ret = ret + 0.01;
-			}
-			else if(existChip("頭部パーツ強化II")) {
-				ret = ret + 0.02;
-			}
-			
-			// ロックオン時のみ
-			if(mMode == MODE_ROCKON) {
-				if(existChip("近距離ロック射撃")) {
-					ret = ret + 0.04;
-				}
-				else if(existChip("近距離ロック射撃II")) {
-					ret = ret + 0.08;
-				}
-				else if(existChip("近距離ロック射撃III")) {
-					ret = ret + 0.12;    // IとIIの効果からの暫定値
-				}
+				ret = ret + 0.015;
 			}
 
 		} catch(Exception e) {
@@ -900,30 +650,15 @@ public class CustomData {
 		
 		try {
 			ret = Integer.valueOf(value);
-			
-			// フルセットボーナス
-			if(isFullSet("ツェーブラ")) {
-				ret = ret + getFullSetBonus(15);
-			}
 
 			// チップセットボーナス
 			if(existChip("索敵")) {
 				ret = ret + 15;
 			}
 			else if(existChip("索敵II")) {
-				ret = ret + 45;
+				ret = ret + 24;
 			}
-			else if(existChip("索敵III")) {
-				ret = ret + 75;
-			}
-			
-			if(existChip("頭部パーツ強化")) {
-				ret = ret + 15;
-			}
-			else if(existChip("頭部パーツ強化II")) {
-				ret = ret + 30;
-			}
-			
+
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -945,33 +680,12 @@ public class CustomData {
 		try {
 			ret = Integer.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("迅牙")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			else if(isFullSet("ヤクシャ")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			else if(isFullSet("ヤーデ")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			
 			// チップセットボーナス
 			if(existChip("ロックオン")) {
-				ret = ret + 5;
-			}
-			else if(existChip("ロックオンII")) {
-				ret = ret + 10;
-			}
-			else if(existChip("ロックオンIII")) {
-				ret = ret + 15;
-			}
-			
-			if(existChip("頭部パーツ強化")) {
 				ret = ret + 3;
 			}
-			else if(existChip("頭部パーツ強化II")) {
-				ret = ret + 6;
+			else if(existChip("ロックオンII")) {
+				ret = ret + 5;
 			}
 			
 		} catch(Exception e) {
@@ -995,48 +709,11 @@ public class CustomData {
 		try {
 			ret = Double.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("グライフ")) {
-				ret = ret + getFullSetBonus(10);
-			}
-			else if(isFullSet("B.U.Z.")) {
-				ret = ret + getFullSetBonus(10);
-			}
-			else if(isFullSet("Z.t.")) {
-				ret = ret + getFullSetBonus(10);
-			}
-			
 			// チップボーナス
 			if(existChip("DEF回復")) {
-				ret = ret + 4.0;
-			}
-			else if(existChip("DEF回復II")) {
-				ret = ret + 7.0;
-			}
-			else if(existChip("DEF回復III")) {
-				ret = ret + 10.0;
+				ret = ret + 2.0;
 			}
 
-			if(existChip("頭部パーツ強化")) {
-				ret = ret + 4.0;
-			}
-			else if(existChip("頭部パーツ強化II")) {
-				ret = ret + 7.0;
-			}
-			
-			// 自軍プラント内の場合、リニアDEF回復チップの効果を反映する
-			if(mMode == MODE_PLANT) {
-				if(existChip("リニアDEF回復")) {
-					ret = ret + 5.0;
-				}
-				else if(existChip("リニアDEF回復II")) {
-					ret = ret + 10.0;
-				}
-				else if(existChip("リニアDEF回復III")) {
-					ret = ret + 15.0;
-				}
-			}
-			
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -1060,37 +737,13 @@ public class CustomData {
 		BBData body_parts = mRecentParts[BODY_IDX];
 		double ret = body_parts.getBoost();
 
-		// フルセットボーナス
-		if(isFullSet("エンフォーサー")) {
-			ret = ret + getFullSetBonus(7.5);
-		}
-		else if(isFullSet("雷花")) {
-			ret = ret + getFullSetBonus(5);
-		}
-		else if(isFullSet("スペクター")) {
-			ret = ret + getFullSetBonus(5);
-		}
-		else if(isFullSet("シュライク")) {
-			ret = ret + getFullSetBonus(5);
-		}
-
 		// チップセットボーナス
 		if(existChip("ブースター")) {
 			ret = ret + 2;
 		}
 		else if(existChip("ブースターII")) {
-			ret = ret + 6;
+			ret = ret + 3;
 		}
-		else if(existChip("ブースターIII")) {
-			ret = ret + 10;
-		}
-
-		if(existChip("胴部パーツ強化")) {
-			ret = ret + 2;
-		}
-		else if(existChip("胴部パーツ強化II")) {
-			ret = ret + 4;
-		}	
 			
 		return ret;
 	}
@@ -1110,13 +763,6 @@ public class CustomData {
 	public double getBoostChargeTime() {
 		double charge = 50;
 
-		if(existChip("ブースター回復")) {
-			charge = charge * 1.1;
-		}
-		else if(existChip("ブースター回復II")) {
-			charge = charge * 1.25;
-		}
-		
 		return getBoost() / charge;
 	}
 	
@@ -1134,36 +780,12 @@ public class CustomData {
 		try {
 			ret = Double.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("ディスカス")) {
-				ret = ret + getFullSetBonus(0.075);
-			}
-			else if(isFullSet("ザオレン")) {
-				ret = ret + getFullSetBonus(0.050);
-			}
-			else if(isFullSet("セイバー")) {
-				ret = ret + getFullSetBonus(0.050);
-			}
-			else if(isFullSet("迅牙")) {
-				ret = ret + getFullSetBonus(0.050);
-			}
-
 			// チップセットボーナス
 			if(existChip("SP供給率")) {
-				ret = ret + 0.03;
+				ret = ret + 0.030;
 			}
 			else if(existChip("SP供給率II")) {
-				ret = ret + 0.09;
-			}
-			else if(existChip("SP供給率III")) {
-				ret = ret + 0.15;
-			}
-			
-			if(existChip("胴部パーツ強化")) {
-				ret = ret + 0.03;
-			}
-			else if(existChip("胴部パーツ強化II")) {
-				ret = ret + 0.06;
+				ret = ret + 0.045;
 			}
 
 		} catch(Exception e) {
@@ -1186,39 +808,12 @@ public class CustomData {
 		
 		try {
 			ret = Double.valueOf(value);
-			
-			// フルセットボーナス
-			if(isFullSet("セイバー")) {
-				ret = ret - getFullSetBonus(0.5);
-			}
-			else if(isFullSet("ジーシェン")) {
-				ret = ret - getFullSetBonus(0.5);
-			}
-			else if(isFullSet("雷花")) {
-				ret = ret - getFullSetBonus(0.5);
-			}
-			else if(isFullSet("ガルム")) {
-				ret = ret - getFullSetBonus(0.5);
-			}
-			
+
 			// チップセットボーナス
 			if(existChip("エリア移動")) {
-				ret = ret - 0.25;
+				ret = ret - 0.20;
 			}
-			else if(existChip("エリア移動II")) {
-				ret = ret - 0.5;
-			}
-			else if(existChip("エリア移動III")) {
-				ret = ret - 1.0;
-			}
-			
-			if(existChip("胴部パーツ強化")) {
-				ret = ret - 0.25;
-			}
-			else if(existChip("胴部パーツ強化II")) {
-				ret = ret - 0.50;
-			}
-			
+
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -1245,36 +840,12 @@ public class CustomData {
 		try {
 			ret = Double.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("ヘヴィガード")) {
-				ret = ret + getFullSetBonus(250);
-			}
-			else if(isFullSet("グライフ")) {
-				ret = ret + getFullSetBonus(250);
-			}
-			else if(isFullSet("ヤマ")) {
-				ret = ret + getFullSetBonus(375);
-			}
-			else if(isFullSet("PLUS：S")) {
-				ret = ret + getFullSetBonus(250);
-			}
-			
 			// チップボーナス
 			if(existChip("DEF耐久")) {
-				ret = ret + 100;
+				ret = ret + 80;
 			}
 			else if(existChip("DEF耐久II")) {
-				ret = ret + 175;
-			}
-			else if(existChip("DEF耐久III")) {
-				ret = ret + 250;
-			}
-
-			if(existChip("胴部パーツ強化")) {
-				ret = ret + 100;
-			}
-			else if(existChip("胴部パーツ強化II")) {
-				ret = ret + 175;
+				ret = ret + 120;
 			}
 			
 		} catch(Exception e) {
@@ -1288,8 +859,8 @@ public class CustomData {
 	 * 反動吸収の値を取得する。
 	 * @return 反動吸収の値。単位は%。
 	 */
-	public int getRecoil() {
-		int ret = 0;
+	public double getRecoil() {
+		double ret = 0;
 
 		BBData arms_parts = mRecentParts[ARMS_IDX];
 		String point = arms_parts.get("反動吸収");
@@ -1297,41 +868,13 @@ public class CustomData {
 		
 		try {
 			ret = Integer.valueOf(value);
-			
-			// フルセットボーナス
-			if(isFullSet("ケーファー")) {
-				ret = ret + getFullSetBonus(5);
-			}
 
 			// チップセットボーナス
 			if(existChip("反動吸収")) {
-				ret = ret + 3;
+				ret = ret + 3.0;
 			}
 			else if(existChip("反動吸収II")) {
-				ret = ret + 10;
-			}
-			else if(existChip("反動吸収III")) {
-				ret = ret + 15;
-			}
-			
-			if(existChip("腕部パーツ強化")) {
-				ret = ret + 3;
-			}
-			else if(existChip("腕部パーツ強化II")) {
-				ret = ret + 6;
-			}
-			
-			// ロックオン時のみ
-			if(mMode == MODE_ROCKON) {
-				if(existChip("近距離ロック射撃")) {
-					ret = ret + 5;
-				}
-				else if(existChip("近距離ロック射撃II")) {
-					ret = ret + 10;
-				}
-				else if(existChip("近距離ロック射撃III")) {
-					ret = ret + 15;    // IとIIの効果からの暫定値
-				}
+				ret = ret + 4.5;
 			}
 			
 		} catch(Exception e) {
@@ -1352,39 +895,12 @@ public class CustomData {
 			String spec = mRecentParts[ARMS_IDX].get("リロード");
 			ret = Double.valueOf(SpecValues.RELOAD.get(spec));
 
-			// フルセットボーナス
-			if(isFullSet("E.D.G.")) {
-				ret = ret - getFullSetBonus(0.045);
-			}
-			else if(isFullSet("月影")) {
-				ret = ret - getFullSetBonus(0.03);
-			}
-			else if(isFullSet("ツェーブラ")) {
-				ret = ret - getFullSetBonus(0.03);
-			}
-			else if(isFullSet("ランドバルク")) {
-				ret = ret - getFullSetBonus(0.03);
-			}
-			else if(isFullSet("X－")) {
-				ret = ret - getFullSetBonus(0.03);
-			}
-
 			// チップセットボーナス
 			if(existChip("リロード")) {
-				ret = ret - 0.01;
+				ret = ret - 0.010;
 			}
 			else if(existChip("リロードII")) {
-				ret = ret - 0.03;
-			}
-			else if(existChip("リロードIII")) {
-				ret = ret - 0.05;
-			}
-			
-			if(existChip("腕部パーツ強化")) {
-				ret = ret - 0.01;
-			}
-			else if(existChip("腕部パーツ強化II")) {
-				ret = ret - 0.02;
+				ret = ret - 0.015;
 			}
 
 		} catch (Exception e) {
@@ -1405,33 +921,9 @@ public class CustomData {
 			String spec = mRecentParts[ARMS_IDX].get("武器変更");
 			ret = Double.valueOf(SpecValues.CHANGEWEAPON.get(spec));
 
-			// フルセットボーナス
-			if(isFullSet("アスラ")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			else if(isFullSet("月影")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			else if(isFullSet("アイアンフォート")) {
-				ret = ret + getFullSetBonus(5);
-			}
-			
 			// チップセットボーナス
 			if(existChip("武器変更")) {
-				ret = ret + getFullSetBonus(2);
-			}
-			else if(existChip("武器変更II")) {
-				ret = ret + getFullSetBonus(6);
-			}
-			else if(existChip("武器変更III")) {
-				ret = ret + getFullSetBonus(10);
-			}
-			
-			if(existChip("腕部パーツ強化")) {
-				ret = ret + getFullSetBonus(2);
-			}
-			else if(existChip("腕部パーツ強化II")) {
-				ret = ret + getFullSetBonus(4);
+				ret = ret + 2;
 			}
 			
 		} catch(Exception e) {
@@ -1455,32 +947,11 @@ public class CustomData {
 		try {
 			ret = Double.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("アイアンフォート")) {
-				ret = ret + getFullSetBonus(3);
-			}
-			else if(isFullSet("ザオレン")) {
-				ret = ret + getFullSetBonus(3);
-			}
-			
 			// チップボーナス
 			if(existChip("予備弾数")) {
 				ret = ret + 2;
 			}
-			else if(existChip("予備弾数II")) {
-				ret = ret + 4;
-			}
-			else if(existChip("予備弾数III")) {
-				ret = ret + 6;
-			}
 
-			if(existChip("腕部パーツ強化")) {
-				ret = ret + 1;
-			}
-			else if(existChip("腕部パーツ強化II")) {
-				ret = ret + 3;
-			}
-			
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -1504,42 +975,18 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス(km/h)
-			if(existChip("歩行/通常移動")) {
-				ret = ret + 0.972;
+			if(existChip("歩行")) {
+				ret = ret + 1.08;
 			}
-			else if(existChip("歩行/通常移動II")) {
-				ret = ret + 2.916;
-			}
-			else if(existChip("歩行/通常移動III")) {
-				ret = ret + 4.860;
-			}
-			
-			if(existChip("脚部パーツ強化")) {
-				ret = ret + 0.972;
-			}
-			else if(existChip("脚部パーツ強化II")) {
-				ret = ret + 1.944; // 0.54 [m/s]
+			else if(existChip("歩行II")) {
+				ret = ret + 1.62;
 			}
 
 			// ホバー脚部の場合の補正値を計算する
 			if(is_hover) {
 				ret = ret * 4 / 3;
 			}
-			
-			// フルセットボーナス
-			if(isFullSet("シュライク")) {
-				ret = ret + getFullSetBonus(1.62);    // +0.45[m/s]
-			}
-			else if(isFullSet("B.U.Z.")) {
-				ret = ret + getFullSetBonus(2.16);
-			}
-			else if(isFullSet("ケーファー")) {
-				ret = ret + getFullSetBonus(1.62);    // +0.45[m/s]
-			}
-			else if(isFullSet("PLUS：S")) {
-				ret = ret + getFullSetBonus(1.62);    // +0.45[m/s]
-			}
-			
+
 			// 上限値によるガードを行う (ホバー：14.70[m/s], 二脚：11.02[m/s])
 			if(is_hover && ret > 52.92) {
 				ret = 52.92;
@@ -1596,92 +1043,40 @@ public class CustomData {
 		String name = legs_parts.get("名称");
 		int ret = SpecValues.getAntiWeight(point, name);
 
-		// フルセットボーナス
-		if(isFullSet("クーガー")) {
-			ret = ret + getFullSetBonus(150);
-		}
-		else if(isFullSet("ランドバルク")) {
-			ret = ret + getFullSetBonus(150);
-		}
-		else if(isFullSet("スペクター")) {
-			ret = ret + getFullSetBonus(150);
-		}
-		else if(isFullSet("X－")) {
-			ret = ret + getFullSetBonus(150);
-		}
-		else if(isFullSet("PLUS：G")) {
-			ret = ret + getFullSetBonus(150);
-		}
-
 		// チップセットボーナス
 		if(existChip("重量耐性")) {
-			ret = ret + 60;
-		}
-		else if(existChip("重量耐性II")) {
-			ret = ret + 150;
-		}
-		else if(existChip("重量耐性III")) {
-			ret = ret + 240;
-		}
-
-		if(existChip("脚部パーツ強化")) {
-			ret = ret + 30;
-		}
-		else if(existChip("脚部パーツ強化II")) {
-			ret = ret + 100;
+			ret = ret + 40;
 		}
 
 		return ret;
 	}
 
 	/**
-	 * 加速の値を取得する。
+	 * 巡航の値を取得する。
 	 * @return 加速の値。
 	 */
 	public double getAcceleration() {
 		double ret = 0;
 
 		BBData legs_parts = mRecentParts[LEGS_IDX];
-		String point = legs_parts.get("加速");
+		String point = legs_parts.get("巡航");
 		String value = SpecValues.ACCELERATION.get(point);
 		
 		try {
 			ret = Double.valueOf(value);
 
-			// フルセットボーナス
-			if(isFullSet("ガルム")) {
-				ret = ret - getFullSetBonus(0.27);
-			}
-			else if(isFullSet("ジーシェン")) {
-				ret = ret - getFullSetBonus(0.27);
-			}
-			else if(isFullSet("ネレイド")) {
-				ret = ret - getFullSetBonus(0.27);
-			}
-			else if(isFullSet("フォーミュラ")) {
-				ret = ret - getFullSetBonus(0.27);
-			}
-
-			// チップボーナス
-			if(existChip("加速")) {
-				ret = ret * 0.96;  /* 4% */
-			}
-			else if(existChip("加速II")) {
-				ret = ret * 0.92;  /* 8% */
-			}
-			else if(existChip("加速III")) {
-				ret = ret * 0.89;  /* 11% */
-			}
-
-			if(existChip("脚部パーツ強化")) {
-				ret = ret * 0.98;  /* 2% */
-			}
-			else if(existChip("脚部パーツ強化II")) {
-				ret = ret * 0.96;  /* 4% */
+			// チップボーナス (km/h)
+			if(existChip("巡航")) {
+				ret = ret + 0.36;
 			}
 			
 		} catch(Exception e) {
 			ret = 0;
+		}
+
+		// 単位を合わせる
+		if(!mIsKmPerHour) {
+			ret = ret * 1000 / 3600;
 		}
 
 		return ret;
@@ -1924,7 +1319,7 @@ public class CustomData {
 	 * @param blust_type 兵装の種類。
 	 * @return 反動吸収の値。
 	 */
-	public int getRecoil(String blust_type) {
+	public double getRecoil(String blust_type) {
 		return getRecoil();
 	}
 
@@ -2048,40 +1443,16 @@ public class CustomData {
 		try {
 			ret = Double.valueOf(value);
 			
-			// チップセットボーナス
-			if(existChip("ダッシュ/高速移動")) {
-				ret = ret + 1.08;
+			// チップセットボーナス (km/h)
+			if(existChip("ダッシュ")) {
+				ret = ret + 0.36;
 			}
-			else if(existChip("ダッシュ/高速移動II")) {
-				ret = ret + 2.16;
-			}
-			else if(existChip("ダッシュ/高速移動III")) {
-				ret = ret + 3.24;
-			}
-			
-			if(existChip("脚部パーツ強化")) {
-				ret = ret + 1.08;
-			}
-			else if(existChip("脚部パーツ強化II")) {
-				ret = ret + 2.16; // 0.60 [m/s]
+			else if(existChip("ダッシュII")) {
+				ret = ret + 0.54;
 			}
 
 			// ホバー補正計算を行う。
 			ret = calcHover(ret, is_start);
-			
-			// フルセットボーナス
-			if(isFullSet("ヤクシャ")) {
-				ret = ret + getFullSetBonus(2.16);
-			}
-			else if(isFullSet("フォーミュラ")) {
-				ret = ret + getFullSetBonus(2.592);
-			}
-			else if(isFullSet("ヤーデ")) {
-				ret = ret + getFullSetBonus(2.16);
-			}
-			else if(isFullSet("Z.t.")) {
-				ret = ret + getFullSetBonus(2.16);
-			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -3542,9 +2913,6 @@ public class CustomData {
 		else if(key.equals("初速")) {
 			ret = getStartDush(blust_type);
 		}
-		else if(key.equals("巡航")) {
-			ret = getNormalDush(blust_type);
-		}
 		else if(key.equals("歩速")) {
 			ret = getWalk(blust_type);
 		}
@@ -3605,7 +2973,7 @@ public class CustomData {
 		else if(key.equals("歩行")) {
 			ret = getWalk(blust_type);
 		}
-		else if(key.equals("加速")) {
+		else if(key.equals("巡航")) {
 			ret = getAcceleration(blust_type);
 		}
 		else {
@@ -3623,10 +2991,7 @@ public class CustomData {
 	public double getSpecValue(String key) {
 		double ret = 0;
 		
-		if(key.equals("チップ容量")) {
-			ret = getChipCapacity();
-		}
-		else if(key.equals("装甲平均値")) {
+		if(key.equals("装甲平均値")) {
 			ret = getArmorAve();
 		}
 		else if(key.equals("射撃補正")) {
@@ -3680,7 +3045,7 @@ public class CustomData {
 		else if(key.equals("歩行")) {
 			ret = getWalk();
 		}
-		else if(key.equals("加速")) {
+		else if(key.equals("巡航")) {
 			ret = getAcceleration();
 		}
 		else if(key.equals("低下率")) {
@@ -3688,138 +3053,5 @@ public class CustomData {
 		}
 		
 		return ret;
-	}
-	
-	//----------------------------------------------------------
-	// Twitter向け
-	//----------------------------------------------------------
-	
-	/**
-	 * アセンデータIDの基数
-	 */
-	private static final int CUSTOM_DATA_ID_RADIX = 36;
-	
-	private static final String CUSTOM_DATA_ID_HEADER = "[[BBView:";
-	
-	private static final String CUSTOM_DATA_ID_FOOTER = "]]";
-	
-	public static final int RET_SUCCESS                  = 0;
-	
-	public static final int ERROR_CODE_TARGET_NOTHING    = 1;
-	
-	public static final int ERROR_CODE_VERSION_NOT_EQUAL = 2;
-	
-	public static final int ERROR_CODE_ITEM_NOTHING      = 3;
-	
-	/**
-	 * 現在のアセンデータの生成IDを取得する。
-	 * @param version BBViewのバージョン
-	 */
-	public String getCustomDataID(int version) {
-		String ret = CUSTOM_DATA_ID_HEADER + String.format("%04d", version);
-		BBData[][] data_set = { mRecentParts, mRecentAssalt, mRecentHeavy, mRecentSniper, mRecentSupport };
-		
-		int size = data_set.length;
-		for(int i=0; i<size; i++) {
-			BBData[] recent_target = data_set[i];
-			
-			int target_size = recent_target.length;
-			for(int j=0; j<target_size; j++) {
-				BBData buf = recent_target[j];
-				ret = ret + createCustomIDParts(buf.id);
-			}
-		}
-		
-		size = mRecentChips.size();
-		for(int i=0; i<size; i++) {
-			BBData buf = mRecentChips.get(i);
-			ret = ret + createCustomIDParts(buf.id);
-		}
-
-		return ret + CUSTOM_DATA_ID_FOOTER;
-	}
-	
-	/**
-	 * パーツ/武器のIDからアセンデータの生成IDの一部を生成する
-	 * @param id パーツ/武器のID値
-	 * @return アセンデータの生成IDの一部
-	 */
-	private String createCustomIDParts(int id) {
-		String ret = Integer.toString(id, CUSTOM_DATA_ID_RADIX);
-		if(ret.length() == 1) {
-			ret = "0" + ret;
-		}
-		
-		return ret;
-	}
-	
-	/**
-	 * アセンコードに対応したアセンデータを読み込む
-	 * @param code_str アセンコードの文字列 
-	 */
-	public int setCustomDataID(int version, String code_str) {
-		if(code_str == null) {
-			return ERROR_CODE_TARGET_NOTHING;
-		}
-		
-		BBData[][] data_set = { mRecentParts, mRecentAssalt, mRecentHeavy, mRecentSniper, mRecentSupport };
-		BBDataManager manager = BBDataManager.getInstance();
-
-		int header_idx = code_str.indexOf(CUSTOM_DATA_ID_HEADER);
-		int footer = code_str.indexOf(CUSTOM_DATA_ID_FOOTER);
-		if(header_idx < 0 || footer < 0) {
-			return ERROR_CODE_TARGET_NOTHING;
-		}
-
-		code_str = code_str.substring(header_idx + CUSTOM_DATA_ID_HEADER.length(), footer);
-
-		// バージョン情報読み込み
-		//int target_ver = Integer.valueOf(id_str.substring(0, 4));
-		//if(version != target_ver) {
-		//	return ERROR_CODE_VERSION_NOT_EQUAL;
-		//}
-		
-		code_str = code_str.substring(4);
-
-		// パーツ/武器データ読み込み
-		int size = data_set.length;
-		for(int i=0; i<size; i++) {
-			BBData[] recent_target = data_set[i];
-			
-			int target_size = recent_target.length;
-			for(int j=0; j<target_size; j++) {
-				int id = Integer.parseInt(code_str.substring(0, 2), CUSTOM_DATA_ID_RADIX);
-				BBData target = manager.getData(id);
-				if(target.id == BBData.ID_ITEM_NOTHING) {
-					return ERROR_CODE_ITEM_NOTHING;
-				}
-				recent_target[j] = target;
-				code_str = code_str.substring(2);
-			}
-		}
-
-		// チップデータ読み込み
-		mRecentChips.clear();
-		size = code_str.length() / 2;
-		for(int i=0; i<size; i++) {
-			int id = Integer.parseInt(code_str.substring(0, 2), CUSTOM_DATA_ID_RADIX);
-			BBData target = manager.getData(id);
-			if(target.id == BBData.ID_ITEM_NOTHING) {
-				return ERROR_CODE_ITEM_NOTHING;
-			}
-			mRecentChips.add(target);
-			code_str = code_str.substring(2);
-		}
-		
-		return RET_SUCCESS;
-	}
-	
-	/**
-	 * カスタムデータ変更を検出時の処理を行うリスナーインターフェース
-	 * @author kaede
-	 *
-	 */
-	public interface OnChangedListener {
-		public void onDataChanged(CustomData data);
 	}
 }

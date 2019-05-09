@@ -22,11 +22,10 @@ public class SelectPartsExpandableAdapter extends SelectBBDataExpandableAdapter 
         super(property);
 
         clear();
-        ArrayList<String> series_list = SpecValues.SETBONUS.getKeys();
-        int series_count = series_list.size();
+        int series_count = SpecValues.SERIES_NAME_LIST.size();
 
         for(int i=0; i<series_count; i++) {
-            addGroup(series_list.get(i));
+            addGroup(SpecValues.SERIES_NAME_LIST.get(i));
         }
 
         addGroup(FavoriteManager.FAVORITE_CATEGORY_NAME);

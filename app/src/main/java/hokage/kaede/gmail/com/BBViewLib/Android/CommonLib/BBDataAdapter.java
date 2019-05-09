@@ -58,7 +58,7 @@ public class BBDataAdapter extends NormalAdapter<BBData> {
         Context context = viewGroup.getContext();
         BBData data = get(position);
         BBDataAdapterItem item_view;
-        ControlPanel control_panel;
+        ControlPanel control_panel = null;
 
         if(view == null) {
             item_view = new BBDataAdapterItem(context, mProperty);
@@ -67,17 +67,25 @@ public class BBDataAdapter extends NormalAdapter<BBData> {
             item_view.setTextColor(mTextColor);
             item_view.setBackGroundColor(mBackGroundColor);
 
-            control_panel = mControlPanelBuilder.createControlPanel(context);
-            item_view.addView(control_panel, 0); // 先頭(一番左)に置く
+            if(mControlPanelBuilder != null) {
+                control_panel = mControlPanelBuilder.createControlPanel(context);
+                item_view.addView(control_panel, 0); // 先頭(一番左)に置く
+            }
         }
         else {
             item_view = (BBDataAdapterItem)view;
-            control_panel = (ControlPanel)item_view.getChildAt(0);
+
+            if(control_panel != null) {
+                control_panel = (ControlPanel) item_view.getChildAt(0);
+            }
         }
 
         item_view.setData(data);
         item_view.updateView();
-        control_panel.updateView(data);
+
+        if(control_panel != null) {
+            control_panel.updateView(data);
+        }
 
         return item_view;
     }

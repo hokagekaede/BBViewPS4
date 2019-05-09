@@ -214,23 +214,38 @@ public class CustomFileManager extends FileManager {
         }
 
         // チップのデータを設定する。
-        ArrayList<BBData> chip_list = data.getChips();
-        int size = chip_list.size();
-
-        for(int i=0; i<size; i++) {
-            BBData chip_data = chip_list.get(i);
-            String key = SAVEKEY_CHIP + String.format("%02d", i);
-            String name = chip_data.get("名称");
-            file_data.set(key, name);
-        }
-
-        file_data.set(SAVEKEY_CHIP_COUNT, String.valueOf(size));
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_HEAD, 0);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_HEAD, 1);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_BODY, 0);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_BODY, 1);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_ARMS, 0);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_ARMS, 1);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_LEGS, 0);
+        writeChip(data, file_data, BBDataManager.BLUST_PARTS_LEGS, 1);
+        writeChip(data, file_data, "", 0);  // サポートチップ
+        writeChip(data, file_data, "", 1);  // サポートチップ
 
         // 要請兵器のデータを設定する。
         file_data.set(BBDataManager.REQARM_STR, data.getReqArm().get("名称"));
 
         // ファイルに書き込む。
         file_data.save();
+    }
+
+    /**
+     * チップデータを書き込む。
+     * @param data 対象のアセンデータ
+     * @param file_data 保存先のファイルデータ
+     * @param type 種類
+     * @param index チップの設定位置
+     */
+    private void writeChip(CustomData data, FileKeyValueStore file_data, String type, int index) {
+        BBData chip_data = data.getChip(type, index);
+
+        String key = SAVEKEY_CHIP + "_" + type + "_" + String.format("%02d", index);
+        String name = chip_data.get("名称");
+
+        file_data.set(key, name);
     }
 
     /**
@@ -282,24 +297,16 @@ public class CustomFileManager extends FileManager {
         }
 
         // チップデータを読み込む
-        int size = 0;
-        try {
-            size = Integer.valueOf(file_data.get(SAVEKEY_CHIP_COUNT));
-
-        } catch(NumberFormatException e) {
-            size = 0;
-        }
-
-        for(int i=0; i<size; i++) {
-            String key = SAVEKEY_CHIP + String.format("%02d", i);
-            String name = file_data.get(key);
-            BBData chip_data = data_mng.getChipData(name);
-
-            // チップデータが存在する場合、データを登録する。
-            if(chip_data.id != BBData.ID_ITEM_NOTHING) {
-                custom_data.addChip(chip_data);
-            }
-        }
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_HEAD, 0);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_HEAD, 1);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_BODY, 0);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_BODY, 1);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_ARMS, 0);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_ARMS, 1);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_LEGS, 0);
+        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_LEGS, 1);
+        readChip(custom_data, file_data, "", 0);  // サポートチップ
+        readChip(custom_data, file_data, "", 1);  // サポートチップ
 
         // 要請兵器のデータを読み込む
         String reqarm_name = file_data.get(BBDataManager.REQARM_STR);
@@ -317,6 +324,28 @@ public class CustomFileManager extends FileManager {
         custom_data.setReqArm(reqarm_data);
 
         return custom_data;
+    }
+
+    /**
+     * チップデータを読み込む
+     * @param data 対象のアセンデータ
+     * @param file_data 保存先のファイルデータ
+     * @param type 種類
+     * @param index チップの設定位置
+     */
+    private void readChip(CustomData data, FileKeyValueStore file_data, String type, int index) {
+        BBDataManager data_mng = BBDataManager.getInstance();
+
+        String key = SAVEKEY_CHIP + "_" + type + "_" + String.format("%02d", index);
+        String name = file_data.get(key);
+
+        BBData chip_data = data_mng.getChipData(name);
+
+        if(chip_data.id == BBData.ID_ITEM_NOTHING) {
+            chip_data = data_mng.getUnselectedChipData();
+        }
+
+        data.setChip(chip_data, type, index);
     }
 
 }

@@ -42,6 +42,8 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 	public static final String SEED_STR     = "シード";
 	public static final String REQARM_STR   = "要請兵器";
 
+	public static final String UNSELECTED_CHIP_STR = "≪未設定≫";
+
 	public static final String[] ROOT_LIST         = { ROOT_PARTS, ROOT_WEAPON };
 	public static final String[] BLUST_PARTS_LIST  = { BLUST_PARTS_HEAD, BLUST_PARTS_BODY, BLUST_PARTS_ARMS, BLUST_PARTS_LEGS };
 	public static final String[] BLUST_TYPE_LIST   = { BLUST_TYPE_ASSALT, BLUST_TYPE_HEAVY, BLUST_TYPE_SNIPER, BLUST_TYPE_SUPPORT };
@@ -208,6 +210,27 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 		}
 		
 		return list;
+	}
+
+	// 未設定を示すチップデータ
+	private static BBData sUnselectedChip = null;
+	private static final int UNSELECTED_CHIP_ID = -3000;
+
+	/**
+	 * 未設定を示すチップデータを取得する。
+	 * @return 未設定チップデータ
+	 */
+	public BBData getUnselectedChipData() {
+
+		if(sUnselectedChip == null) {
+			sUnselectedChip = new BBData();
+			sUnselectedChip.set("名称", UNSELECTED_CHIP_STR);
+			sUnselectedChip.addCategory("チップ");
+
+			sUnselectedChip.id = UNSELECTED_CHIP_ID;
+		}
+
+		return sUnselectedChip;
 	}
 	
 	/**

@@ -1018,11 +1018,11 @@ public class WeaponSimView extends LinearLayout implements OnClickListener {
 	 * @param is_setting 現在の設定状態
 	 */
 	private void updateAttackChip(String chip_series, ArrayList<BBData> chip_list, int level, boolean is_setting) {
-		mAttackBlust.removeChipSeries(chip_series);
+		//mAttackBlust.removeChipSeries(chip_series);
 
-		if(!is_setting) {
-			mAttackBlust.addChip(chip_list.get(level));
-		}
+		//if(!is_setting) {
+		//	mAttackBlust.addChip(chip_list.get(level));
+		//}
 		
 	}
 
@@ -1034,11 +1034,11 @@ public class WeaponSimView extends LinearLayout implements OnClickListener {
 	 * @param is_setting 現在の設定状態
 	 */
 	private void updateDefenceChip(String chip_series, ArrayList<BBData> chip_list, int level, boolean is_setting) {
-		mDefenceBlust.removeChipSeries(chip_series);
+		//mDefenceBlust.removeChipSeries(chip_series);
 
-		if(!is_setting) {
-			mDefenceBlust.addChip(chip_list.get(level));
-		}
+		//if(!is_setting) {
+		//	mDefenceBlust.addChip(chip_list.get(level));
+		//}
 		
 	}
 	/**

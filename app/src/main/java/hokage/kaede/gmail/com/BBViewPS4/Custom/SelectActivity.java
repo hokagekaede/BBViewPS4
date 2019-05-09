@@ -151,7 +151,7 @@ public class SelectActivity extends BaseActivity implements OnItemClickListener,
 		String req_arm = intent.getStringExtra(INTENTKEY_REQARM);
 		
 		BBData recent_data = IntentManager.getSelectedData(intent);
-		
+
 		// 表示項目のフラグ設定
 		mFilter = new BBDataFilter();
 		String shown_save_key = "";
@@ -185,7 +185,7 @@ public class SelectActivity extends BaseActivity implements OnItemClickListener,
 		// ソート選択ダイアログを初期化する
 		mSortKeyDialog = new SortKeyDialog(this, key_list);
 		mSortKeyDialog.setSelectItemListener(this);
-		
+
 		// ソート設定をロードする
 		if(BBViewSetting.IS_MEMORY_SORT) {
 			mSortKeyDialog.setSaveKey(shown_save_key);
@@ -193,11 +193,11 @@ public class SelectActivity extends BaseActivity implements OnItemClickListener,
 			mDataManager.setSortKey(mSortKeyDialog.getSortKey());
 			mDataManager.setASC(mSortKeyDialog.getAsc());
 		}
-		
+
 		// 表示項目選択ダイアログを初期化する
 		mShownKeysDialog = new ShownKeysDialog(this, key_list);
 		mShownKeysDialog.setOnButtonClickListener(this);
-		
+
 		// 表示項目設定をロードする
 		if(BBViewSetting.IS_MEMORY_SHOWSPEC) {
 			mShownKeysDialog.setSaveKey(shown_save_key);
@@ -208,7 +208,7 @@ public class SelectActivity extends BaseActivity implements OnItemClickListener,
 		mFilterManager = new ValueFilterDialog(mFilter, key_list);
 		mFilterManager.setOnClickValueFilterButtonListener(this);
 		mFilterManager.setBBData(recent_data);
-		
+
 		// フィルタ設定をロードする
 		if(BBViewSetting.IS_MEMORY_FILTER) {
 			mFilterManager.setSaveKey(shown_save_key);
@@ -222,7 +222,7 @@ public class SelectActivity extends BaseActivity implements OnItemClickListener,
 		mProperty.setShowFavorite(true);
 		mProperty.setBaseItem(recent_data);
 		mProperty.setShownKeys(mShownKeysDialog.getShownKeys());
-		
+
 		// アダプタの生成
 		ArrayList<BBData> item_list = mDataManager.getList(mFilter);
 		mAdapter = new BBDataAdapter(mProperty);

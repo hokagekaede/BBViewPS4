@@ -35,7 +35,7 @@ public class BBDataComparator implements Comparator<BBData> {
 		"射撃補正",   "索敵",     "ロックオン", "DEF回復", 
 		"ブースター", "SP供給率", "エリア移動", "DEF耐久",
 		"反動吸収",   "リロード", "武器変更",   "予備弾数",
-		"歩行",       "ダッシュ", "重量耐性",   "加速"
+		"歩行",       "ダッシュ", "重量耐性",   "巡航"
 	};
 	
 	private static final String[] SORT_REVERSE_TARGET = {
@@ -46,7 +46,6 @@ public class BBDataComparator implements Comparator<BBData> {
 		"総重量",
 		"DEF回復時間",
 		"ブースター回復時間",
-		"加速",
 		"チャージ時間",
 		"OH復帰時間",
 		"充填時間"

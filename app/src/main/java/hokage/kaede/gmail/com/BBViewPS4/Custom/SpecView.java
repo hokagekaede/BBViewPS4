@@ -458,7 +458,7 @@ public class SpecView extends FrameLayout {
 			layout_chip.setOrientation(LinearLayout.HORIZONTAL);
 			layout_chip.setGravity(Gravity.LEFT | Gravity.TOP);
 
-			ArrayList<BBData> chip_list = custom_data.getChips();
+			ArrayList<BBData> chip_list = custom_data.getChipList();
 			int size = chip_list.size();
 			
 			String chip_names = "";
@@ -508,7 +508,7 @@ public class SpecView extends FrameLayout {
 		}
 		
 		private static final String[] TOTAL_SPEC_LIST = {
-			"兵装", "重量(猶予)", "初速(巡航)", "歩速", "低下率"
+			"兵装", "重量(猶予)", "初速", "歩速", "低下率"
 		};
 		
 		/**
@@ -539,7 +539,7 @@ public class SpecView extends FrameLayout {
 				String[] cols = {
 						blust_name.substring(0, 2),
 						String.format("%d", data.getWeight(blust_name)) + "(" + String.format("%d", data.getSpaceWeight(blust_name)) + ")",
-						String.format("%.2f", data.getStartDush(blust_name)) + "(" + String.format("%.2f", data.getNormalDush(blust_name)) + ")",
+						SpecValues.getSpecUnit(data.getStartDush(blust_name), "初速", BBViewSetting.IS_KM_PER_HOUR),
 						SpecValues.getSpecUnit(data.getWalk(blust_name), "歩速", BBViewSetting.IS_KM_PER_HOUR),
 						SpecValues.getSpecUnit(rate, "低下率", BBViewSetting.IS_KM_PER_HOUR),
 					};
@@ -557,7 +557,7 @@ public class SpecView extends FrameLayout {
 	private static class CommonSpecViewSimpleBuilder {
 
 		/**
-		 * 総合スペックテーブルを生成する。(セットボーナス、チップ容量、装甲平均値、総重量(猶予))
+		 * 総合スペックテーブルを生成する。(セットボーナス、装甲平均値、総重量(猶予))
 		 * @param context
 		 * @return 総合スペックテーブル
 		 */
@@ -568,14 +568,7 @@ public class SpecView extends FrameLayout {
 			
 			TableLayout table = new TableLayout(context);
 			table.setLayoutParams(new TableLayout.LayoutParams(FP, WC));
-			
-			// セットボーナス
-			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "セットボーナス", custom_data.getSetBonus()));
-			
-			// チップ容量
-			String chip_capacity_str = String.format("%.1f", custom_data.getChipCapacity());
-			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "チップ容量", chip_capacity_str));
-			
+
 			// 装甲平均値
 			double armor_value = custom_data.getArmorAve();
 			double life_value = custom_data.getLife(false);
@@ -645,13 +638,6 @@ public class SpecView extends FrameLayout {
 			
 			TableLayout table = new TableLayout(context);
 			table.setLayoutParams(new TableLayout.LayoutParams(FP, WC));
-			
-			// セットボーナス
-			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "セットボーナス", custom_data.getSetBonus()));
-			
-			// チップ容量
-			String chip_capacity_str = String.format("%.1f", custom_data.getChipCapacity());
-			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "チップ容量", chip_capacity_str));
 
 			// 総重量(猶予)
 			String weight_str = String.format("%d (%d)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight());
@@ -808,7 +794,6 @@ public class SpecView extends FrameLayout {
 				getSpecString(custom_data, "装甲", custom_data.getArmorAve(blust_type)),
 				String.format("%d (%d)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight()),
 				SpecValues.getSpecUnit(custom_data.getSpeedDownRate(blust_type), "低下率", BBViewSetting.IS_KM_PER_HOUR),
-				SpecValues.getSpecUnit(custom_data.getChipCapacity(), "チップ容量", BBViewSetting.IS_KM_PER_HOUR)
 			};
 			
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), BASE_COL_STR));

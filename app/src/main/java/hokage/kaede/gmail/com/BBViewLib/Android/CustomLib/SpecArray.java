@@ -307,20 +307,6 @@ public class SpecArray {
 	}
 
 	/**
-	 * アセン比較用のチップ使用量の配列を生成する
-	 * @param from_data 比較元のアセンデータ
-	 * @param to_data 比較先のアセンデータ
-	 * @return 配列
-	 */
-	public static SpecRow getCmpChipWeight(CustomData from_data, CustomData to_data) {
-		double from_value, to_value;
-		from_value = from_data.getChipWeight();
-		to_value = to_data.getChipWeight();
-
-		return new SpecRow("チップ使用量", from_value, to_value, BBViewSetting.IS_KM_PER_HOUR);
-	}
-	
-	/**
 	 * アセン比較用の装甲平均値の配列を生成する
 	 * @param from_data 比較元のアセンデータ
 	 * @param to_data 比較先のアセンデータ
@@ -418,19 +404,6 @@ public class SpecArray {
 	}
 
 	/**
-	 * アセン比較用の巡航速度の配列を生成する
-	 * @param from_data 比較元のアセンデータ
-	 * @param to_data 比較先のアセンデータ
-	 * @return 配列
-	 */
-	public static SpecRow getCmpNormalDushSpecArray(CustomData from_data, CustomData to_data, String blust_type) {
-		double from_value = from_data.getNormalDush(blust_type);
-		double to_value = to_data.getNormalDush(blust_type);
-
-		return new SpecRow("巡航", from_value, to_value, BBViewSetting.IS_KM_PER_HOUR);
-	}
-
-	/**
 	 * アセン比較用の歩行速度の配列を生成する
 	 * @param from_data 比較元のアセンデータ
 	 * @param to_data 比較先のアセンデータ
@@ -491,15 +464,6 @@ public class SpecArray {
 		double normal_value = weapon.getOneShotPower();
 		double real_value = data.getOneShotPower(weapon);
 
-		if(data.existChipGroup("アンチスタビリティ")) {
-			double real_value_stn = data.getShotAntiStability(weapon, false);
-			String real_value_stn_str = "転倒Dmg値：" + SpecValues.getSpecUnit(real_value_stn, key, BBViewSetting.IS_KM_PER_HOUR);
-			
-			SpecRow row = new SpecRow(key, normal_value, real_value, real_value_stn, BBViewSetting.IS_KM_PER_HOUR);
-			row.setValues(real_value_stn_str, SpecRow.KEY_MEMO);
-			return row;
-		}
-
 		return new SpecRow(key, normal_value, real_value, BBViewSetting.IS_KM_PER_HOUR);
 	}
 
@@ -529,16 +493,6 @@ public class SpecArray {
 		String key = "単発火力(CS時)";
 		double normal_value = weapon.getCsShotPower();
 		double real_value = data.getCsShotPower(weapon);
-		
-		if(data.existChipGroup("アンチスタビリティ")) {
-			double real_value_stn = data.getShotAntiStability(weapon, true);
-			String real_value_stn_str = "転倒Dmg値：" + SpecValues.getSpecUnit(real_value_stn, key, BBViewSetting.IS_KM_PER_HOUR);
-			
-			SpecRow row = new SpecRow(key, normal_value, real_value, real_value_stn, BBViewSetting.IS_KM_PER_HOUR);
-			row.setValues(real_value_stn_str, SpecRow.KEY_MEMO);
-			
-			return row;
-		}
 
 		return new SpecRow(key, normal_value, real_value, BBViewSetting.IS_KM_PER_HOUR);
 	}
@@ -642,16 +596,6 @@ public class SpecArray {
 		double normal_value = weapon.getBattlePower();
 		double real_value = data.getBattlePower(weapon);
 
-		if(data.existChipGroup("クイックリロード")) {
-			double real_value_quick = data.getBattlePower(weapon, true);
-			String real_value_quick_str = "手動リロ時：" + SpecValues.getSpecUnit(real_value_quick, key, BBViewSetting.IS_KM_PER_HOUR);
-			
-			SpecRow row = new SpecRow(key, normal_value, real_value, real_value_quick, BBViewSetting.IS_KM_PER_HOUR);
-			row.setValues(real_value_quick_str, SpecRow.KEY_MEMO);
-			
-			return row;
-		}
-
 		return new SpecRow(key, normal_value, real_value, BBViewSetting.IS_KM_PER_HOUR);
 	}
 
@@ -719,16 +663,6 @@ public class SpecArray {
 		String key = "リロード時間";
 		double normal_value = weapon.getReloadTime();
 		double real_value = data.getReloadTime(weapon);
-
-		if(data.existChipGroup("クイックリロード")) {
-			double real_value_quick = data.getReloadTime(weapon, true);
-			String real_value_quick_str = "手動リロ時：" + SpecValues.getSpecUnit(real_value_quick, key, BBViewSetting.IS_KM_PER_HOUR);
-			
-			SpecRow row = new SpecRow(key, normal_value, real_value, real_value_quick, BBViewSetting.IS_KM_PER_HOUR);
-			row.setValues(real_value_quick_str, SpecRow.KEY_MEMO);
-			
-			return row;
-		}
 
 		return new SpecRow(key, normal_value, real_value, BBViewSetting.IS_KM_PER_HOUR);
 	}

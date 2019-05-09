@@ -37,14 +37,10 @@ public class CustomMainActivity extends BaseActivity {
 	private static final String MENU_SHOW_CHIPS      = "チップを表示する";
 	private static final String MENU_RESET_CUSTOM    = "アセンをリセットする";
 	private static final String MENU_SHOW_SIMPLE     = "簡易表示する";
-	private static final String MENU_CHIP_FILTER     = "フィルタ設定";
-	private static final String MENU_CHIP_HAVING     = "所持品のみ表示";
 	private static final String MENU_RESIST_FILTER   = "フィルタ設定";
-	private static final String MENU_SHARE           = "アセン共有";
 	
 	private boolean mIsShowTypeB = false;
 	private boolean mIsShowChips = false;
-	private boolean mIsChipHavingOnly = false;
 	private boolean mIsShowSimple = false;
 	private int mSpecViewMode = SpecView.MODE_BASE;
 	
@@ -121,9 +117,6 @@ public class CustomMainActivity extends BaseActivity {
 			if(view instanceof SpecView) {
 				mSpecViewMode = ((SpecView)view).getMode();
 			}
-			else if(view instanceof ChipView) {
-				((ChipView)view).saveCustomData();
-			}
 			
 		} catch(Exception e) {
 			mSpecViewMode = SpecView.MODE_BASE;
@@ -135,10 +128,10 @@ public class CustomMainActivity extends BaseActivity {
 		View target_view = null;
 
 		if(mViewMode.equals(VIEWMODE_STR_CUSTOM)) {
-			target_view = new CustomView(this, custom_data, mIsShowChips);
+			target_view = new CustomView(this, custom_data);
 		}
 		else if(mViewMode.equals(VIEWMODE_STR_CHIP)) {
-			target_view = new ChipView(this, mIsChipHavingOnly);
+			target_view = new ChipView(this, custom_data);
 		}
 		else if(mViewMode.equals(VIEWMODE_STR_SPEC)) {
 			target_view = new SpecView(this, mIsShowSimple, mSpecViewMode, mIsShowTypeB);
@@ -179,8 +172,6 @@ public class CustomMainActivity extends BaseActivity {
 		custom_text_view.setTextSize(text_size);
 		custom_text_view.setOnClickListener(new OnClickTopMenuListener(VIEWMODE_STR_CUSTOM));
 
-		// 一時的にチップを非表示にする
-		/*
 		TextView chip_text_view = new TextView(this);
 		chip_text_view.setTextColor(text_color);
 		chip_text_view.setPadding(5, 15, 5, 15);
@@ -189,7 +180,6 @@ public class CustomMainActivity extends BaseActivity {
 		chip_text_view.setText(VIEWMODE_STR_CHIP);
 		chip_text_view.setTextSize(text_size);
 		chip_text_view.setOnClickListener(new OnClickTopMenuListener(VIEWMODE_STR_CHIP));
-		*/
 
 		TextView spec_text_view = new TextView(this);
 		spec_text_view.setTextColor(text_color);
@@ -224,9 +214,8 @@ public class CustomMainActivity extends BaseActivity {
 			custom_text_view.setBackgroundColor(SettingManager.getColorBlack());
 		}
 		else if(mViewMode.equals(VIEWMODE_STR_CHIP)) {
-			// 一時的にチップを非表示にする
-			//chip_text_view.setTextColor(SettingManager.getColorCyan());
-			//chip_text_view.setBackgroundColor(SettingManager.getColorBlack());
+			chip_text_view.setTextColor(SettingManager.getColorCyan());
+			chip_text_view.setBackgroundColor(SettingManager.getColorBlack());
 		}
 		else if(mViewMode.equals(VIEWMODE_STR_SPEC)) {
 			spec_text_view.setTextColor(SettingManager.getColorCyan());
@@ -247,8 +236,7 @@ public class CustomMainActivity extends BaseActivity {
 		layout.setBackgroundColor(SettingManager.getColorGray());
 		
 		layout.addView(custom_text_view);
-		// 一時的にチップを非表示にする
-		//layout.addView(chip_text_view);
+		layout.addView(chip_text_view);
 		layout.addView(spec_text_view);
 		layout.addView(resist_text_view);
 		layout.addView(file_text_view);
@@ -290,15 +278,6 @@ public class CustomMainActivity extends BaseActivity {
 			item = menu.add(MENU_RESET_CUSTOM);
 			item.setOnMenuItemClickListener(new OnMenuResetCustomListener());
 		}
-		else if(mViewMode.equals(VIEWMODE_STR_CHIP)) {
-			MenuItem item = menu.add(MENU_CHIP_FILTER);
-			item.setOnMenuItemClickListener(new OnMenuFilterChipListener());
-
-			item = menu.add(MENU_CHIP_HAVING);
-			item.setCheckable(true);
-			item.setChecked(mIsChipHavingOnly);
-			item.setOnMenuItemClickListener(new OnMenuShorChipHavingListener());
-		}
 		else if(mViewMode.equals(VIEWMODE_STR_SPEC)) {
 			MenuItem item = menu.add(MENU_SHOW_SIMPLE);
 			item.setCheckable(true);
@@ -319,9 +298,7 @@ public class CustomMainActivity extends BaseActivity {
 			item.setChecked(mIsShowTypeB);
 			item.setOnMenuItemClickListener(new OnMenuShowTypeBListener());
 		}
-		
-		menu.add(MENU_SHARE);
-		
+
 		return true;
 	}
 	
@@ -404,48 +381,6 @@ public class CustomMainActivity extends BaseActivity {
 	}
 
 	/**
-	 * 所持品のみ表示(チップ)選択時の処理を行う。
-	 */
-	private class OnMenuShorChipHavingListener implements OnMenuItemClickListener {
-
-		@Override
-		public boolean onMenuItemClick(MenuItem item) {
-			mIsChipHavingOnly = !mIsChipHavingOnly;
-			item.setChecked(mIsChipHavingOnly);
-
-			LinearLayout main_layout = (LinearLayout)CustomMainActivity.this.findViewById(MAIN_LAYOUT_ID);
-			View view = main_layout.findViewById(SHOW_VIEW_ID);
-
-			if(view instanceof ChipView) {
-				ChipView targetview = ((ChipView)view);
-				targetview.setHavingMode(mIsChipHavingOnly);
-				targetview.updateFilter();
-				targetview.redraw();
-			}
-
-			return false;
-		}
-	}
-
-	/**
-	 * チップのフィルタ設定起動時の処理を行う。
-	 */
-	private class OnMenuFilterChipListener implements OnMenuItemClickListener {
-
-		@Override
-		public boolean onMenuItemClick(MenuItem arg0) {
-			LinearLayout main_layout = (LinearLayout)CustomMainActivity.this.findViewById(MAIN_LAYOUT_ID);
-			View view = main_layout.findViewById(SHOW_VIEW_ID);
-			
-			if(view instanceof ChipView) {
-				((ChipView)view).showFilterDialog(CustomMainActivity.this);
-			}
-			
-			return false;
-		}
-	}
-
-	/**
 	 * 耐性画面のフィルタ設定起動時の処理を行う。
 	 */
 	private class OnMenuFilterResistListener implements OnMenuItemClickListener {
@@ -486,30 +421,7 @@ public class CustomMainActivity extends BaseActivity {
 			return false;
 		}
 	}
-	
-	/**
-	 * オプションメニュー選択時の処理を行う。
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		String menu_title = item.getTitle().toString();
 
-		if(menu_title.equals(MENU_SHARE)) {
-			Toast.makeText(this, "Twitterアプリを選択してください。", Toast.LENGTH_LONG).show();
-
-			String file_dir = getFilesDir().toString();
-			CustomFileManager custom_mng = CustomFileManager.getInstance(file_dir);
-			CustomData custom_data = custom_mng.getCacheData();
-			
-			Intent intent = new Intent(Intent.ACTION_SEND);
-			intent.setType("text/plain");
-			intent.putExtra(Intent.EXTRA_TEXT, custom_data.getCustomDataID(BBViewSetting.getVersionCode(this)));
-			startActivity(intent);
-		}
-		
-		return true;
-	}
-	
 	/**
 	 * Backキーを押下した際の処理を行う。
 	 * アセン画面の場合はトップ画面に遷移し、アセン画面以外の場合はアセン画面に遷移する。

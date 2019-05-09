@@ -23,7 +23,7 @@ public class SpecValues {
 	/**
 	 * 	セットボーナスの文字列一覧
 	 */
-	public static KeyValueStore SETBONUS;
+	public static ArrayList<String> SERIES_NAME_LIST;
 	
 	/**
 	 * 装甲のデータ一覧
@@ -175,7 +175,8 @@ public class SpecValues {
 	 * スペック値の初期化を行う。
 	 */
 	public static void init() {
-		initSetBonus();
+		initSeries();
+
 		initArmor();
 		initShotBonus();
 		initSearch();
@@ -195,6 +196,20 @@ public class SpecValues {
 		initDefGuard();
 		initSpareBullet();
 		initAcceleration();
+	}
+
+	private static void initSeries() {
+		SERIES_NAME_LIST = new ArrayList<String>();
+		SERIES_NAME_LIST.add("クーガー");
+		SERIES_NAME_LIST.add("ヘヴィガード");
+		SERIES_NAME_LIST.add("シュライク");
+		SERIES_NAME_LIST.add("ツェーブラ");
+		SERIES_NAME_LIST.add("エンフォーサー");
+		SERIES_NAME_LIST.add("ケーファー");
+		SERIES_NAME_LIST.add("E.D.G.");
+		SERIES_NAME_LIST.add("ヤクシャ");
+		SERIES_NAME_LIST.add("セイバー");
+		SERIES_NAME_LIST.add("ディスカス");
 	}
 
 	/**
@@ -271,63 +286,25 @@ public class SpecValues {
 	 */
 	private static void initAcceleration() {
 		ACCELERATION = new KeyValueStore();
-		ACCELERATION.set("S",  "0.84");  // 対象無し
-		ACCELERATION.set("S-", "1.11");  // 対象無し
-		ACCELERATION.set("A+", "79.20");  // 対象無し
-		ACCELERATION.set("A",  "77.04");  // 対象無し
-		ACCELERATION.set("A-", "72.72");  // 対象無し
+		ACCELERATION.set("S",  "90.00");  // 対象無し
+		ACCELERATION.set("S-", "87.84");  // 対象無し
+		ACCELERATION.set("A+", "85.68");  // 対象無し
+		ACCELERATION.set("A",  "83.52");  // 対象無し
+		ACCELERATION.set("A-", "81.36");  // 対象無し
 		ACCELERATION.set("B+", "79.20");
 		ACCELERATION.set("B",  "77.04");
-		ACCELERATION.set("B-", "2.73");  // 対象無し
+		ACCELERATION.set("B-", "74.88");  // 対象無し
 		ACCELERATION.set("C+", "72.72");
 		ACCELERATION.set("C",  "70.92");
 		ACCELERATION.set("C-", "69.12");
 		ACCELERATION.set("D+", "67.32");
 		ACCELERATION.set("D",  "65.52");
-		ACCELERATION.set("D-", "4.35");  // 対象無し
+		ACCELERATION.set("D-", "64.08");  // 対象無し
 		ACCELERATION.set("E+", "61.92");
 		ACCELERATION.set("E",  "60.12");
-		ACCELERATION.set("E-", "5.16");  // 対象無し
+		ACCELERATION.set("E-", "59.60");  // 対象無し
 	}
 
-	/**
-	 * セットボーナスの説明文を初期化する
-	 */
-	private static void initSetBonus() {
-		SETBONUS = new KeyValueStore();
-		SETBONUS.set("クーガー", "重量耐性UP / 射撃補正UP");
-		SETBONUS.set("ヘヴィガード", "装甲UP / DEF耐久UP");
-		SETBONUS.set("シュライク", "歩行UP / ブースターUP");
-		SETBONUS.set("ツェーブラ", "索敵UP / リロードUP");
-		SETBONUS.set("エンフォーサー", "ブースターUP");
-		SETBONUS.set("ケーファー", "反動吸収UP / 歩行UP");
-		SETBONUS.set("E.D.G.", "リロードUP");
-		SETBONUS.set("ヤクシャ", "ダッシュUP / ロックオンUP");
-		SETBONUS.set("セイバー", "エリア移動UP / SP供給UP");
-		SETBONUS.set("ディスカス", "SP供給UP");
-		SETBONUS.set("ネレイド", "射撃補正UP / 加速UP");
-		SETBONUS.set("迅牙", "ロックオンUP / SP供給UP");
-		SETBONUS.set("ロージー", "装甲UP");
-		SETBONUS.set("B.U.Z.", "通常移動UP / DEF回復UP");
-		SETBONUS.set("ランドバルク", "重量耐性UP / リロードUP");
-		SETBONUS.set("フォーミュラ", "高速移動UP / 加速UP");
-		SETBONUS.set("雷花", "ブースターUP / エリア移動UP");
-		SETBONUS.set("ヤーデ", "ダッシュUP / ロックオンUP");
-		SETBONUS.set("アスラ", "武器変更UP / 射撃補正UP");
-		SETBONUS.set("ジーシェン", "エリア移動UP / 加速UP");
-		SETBONUS.set("月影", "リロードUP / 武器変更UP");
-		SETBONUS.set("スペクター", "重量耐性UP / ブースターUP");
-		SETBONUS.set("グライフ", "DEF回復UP / DEF耐久UP");
-		SETBONUS.set("ザオレン", "SP供給UP / 予備弾数UP");
-		SETBONUS.set("ガルム", "加速UP / エリア移動UP");
-		SETBONUS.set("アイアンフォート", "予備弾数UP / 武器変更UP");
-		SETBONUS.set("X", "リロードUP / 重量耐性UP");
-		SETBONUS.set("ヤマ", "DEF耐久UP");
-		SETBONUS.set("Z.t.", "ダッシュUP / DEF回復UP");
-		SETBONUS.set("PLUS：G", "装甲UP / 重量耐性UP");
-		SETBONUS.set("PLUS：S", "DEF耐久UP / 歩行UP");
-	}
-	
 	/**
 	 * 装甲の値を初期化する
 	 */
@@ -958,8 +935,12 @@ public class SpecValues {
 			point = getPointAsc(SpecValues.SPARE_BULLET, tmp_value);
 		}
 		else if(key.equals("巡航")) {
+			if(!is_km_per_hour) {
+				tmp_value = tmp_value * 3600 / 1000;
+			}
+
 			tmp_value = Math.round(tmp_value * 100.0) / 100.0;
-			point = getPointDsc(SpecValues.ACCELERATION, tmp_value);
+			point = getPointAsc(SpecValues.ACCELERATION, tmp_value);  // 現状ホバーはないので変換テーブルは作成していない
 		}
 		
 		return point;
@@ -1100,6 +1081,7 @@ public class SpecValues {
 		}
 		else if(key.equals("巡航")) {
 			value_str = SpecValues.ACCELERATION.get(point);
+			is_speed = true;
 		}
 		else {
 			value_str = point;
@@ -1159,10 +1141,6 @@ public class SpecValues {
 		}
 		else if(key.equals("初速")) {
 			ret = String.format("%.3f", value);
-			is_speed = true;
-		}
-		else if(key.equals("巡航")) {
-			ret = String.format("%.2f", value);
 			is_speed = true;
 		}
 		else if(key.equals("歩速")) {
@@ -1240,8 +1218,9 @@ public class SpecValues {
 		else if(key.equals("予備弾数")) {
 			ret = String.format("%.0f(%%)", value);
 		}
-		else if(key.equals("加速")) {
-			ret = String.format("%.2f (秒)", value);
+		else if(key.equals("巡航")) {
+			ret = String.format("%.2f", value);
+			is_speed = true;
 		}
 		// 武器データ系
 		else if(key.equals("威力")) {
