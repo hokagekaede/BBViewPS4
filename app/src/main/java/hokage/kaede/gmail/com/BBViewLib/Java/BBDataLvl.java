@@ -73,10 +73,10 @@ public abstract class BBDataLvl extends KVCStore {
     }
 
     /**
-     * データを取得する。
+     * データを取得する。内部の強化段階値は置き換えない。
      * @param key 取得するスペックのキー
      * @param level 強化段階
-     * @return 取得したデータ
+     * @return 引数の強化段階に応じたデータ。
      */
     public String get(String key, int level) {
         String ret = STR_VALUE_NOTHING;

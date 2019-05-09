@@ -278,7 +278,7 @@ public class BBDataFilter {
 			}
 			else {
 				BBDataComparator comparator = new BBDataComparator(key, true, true);
-				if(comparator.compareString(target.get(key), value) < 0) {
+				if(comparator.compareFilter(target, value) < 0) {
 					ret = false;
 					break;
 				}

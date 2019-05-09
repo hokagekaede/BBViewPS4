@@ -1,5 +1,7 @@
 package hokage.kaede.gmail.com.BBViewLib.Java;
 
+import android.util.Log;
+
 import hokage.kaede.gmail.com.StandardLib.Java.KeyValueStore;
 
 import java.math.BigDecimal;
@@ -1054,14 +1056,22 @@ public class SpecValues {
 
 	/**
 	 * 指定のデータの指定キーの具体値を取得する
-	 * @param point 指定のポイント値
+	 * @param point 指定の評価値
 	 * @param key 指定キー
 	 * @param parts_name パーツ名
 	 * @return 具体値の数値データ。ポイントタイプ以外の値を数値に変換して返す。
 	 */
 	public static double getSpecValue(String point, String key, String parts_name) {
 		String value_str = null;
-		
+
+		// 強化済みのパーツの場合はスペック値そのものが入っているので、
+		// 数値に変換して戻り値にする
+		double value = changeDouble(point);
+		if(value != ERROR_VALUE) {
+			return value;
+		}
+
+		// 評価値から実スペックを取得する
 		if(key.equals("装甲")) {
 			value_str = SpecValues.ARMOR.get(point);
 		}
@@ -1126,7 +1136,7 @@ public class SpecValues {
 	 * @param value_str 実スペック値の文字列
 	 * @return 実スペックの数値。
 	 */
-	public static double changeDouble(String value_str) {
+	private static double changeDouble(String value_str) {
 		double value = 0;
 
 		try {
@@ -1141,20 +1151,81 @@ public class SpecValues {
 	}
 
 	/**
+	 * 値を単位つきの文字列で取得する。
+	 * @param data データ
+	 * @param target_key ターゲットのキー
+	 * @param level 強化段階
+	 * @return スペック値の文字列
+	 */
+	public static String getSpecUnit(BBData data, String target_key, int level) {
+		String value = data.get(target_key, level);
+		return getSpecUnit(data, target_key, value);
+	}
+
+	/**
 	 * 値を単位つきの文字列で取得する
-	 * @param item パーツまたは武器データ
-	 * @param key キー
+	 * @param data パーツまたは武器データ
+	 * @param target_key キー
 	 * @return スペック値の文字列。スペック値を数値変換できなかった場合はvalueの文字列をそのまま返す。
 	 */
-	public static String getSpecUnit(BBData item, String key) {
-		String value = item.get(key);
-		String name = item.get("名称");
+	public static String getSpecUnit(BBData data, String target_key) {
+		String value = data.get(target_key);
+		return getSpecUnit(data, target_key, value);
+	}
 
-		double value_num = getSpecValue(value, key, name);
-		String ret = value;
+	/**
+	 * 値を単位付きの文字列で取得する。(クラス内で使用する中間関数のため、privateのままにしておくこと)
+	 * @param data データ
+	 * @param target_key ターゲットのキー
+	 * @param value ターゲットのデータ
+	 * @return スペック値の文字列
+	 */
+	private static String getSpecUnit(BBData data, String target_key, String value) {
+		String ret = "";
+
+		if(value.equals(BBData.STR_VALUE_NOTHING)) {
+			return BBData.STR_VALUE_NOTHING;
+		}
+
+		if(BBDataComparator.isPointKey(target_key)) {
+			String point = getPoint(target_key, value, false);
+
+			// 評価値算出に失敗した場合は対象の文字が評価値そのもの
+			if(point.equals(SpecValues.NOTHING_STR)) {
+				String data_str = getSpecValueUnit(data, target_key, value);
+				ret = value + " (" + data_str + ")";
+			}
+			else {
+				double value_num = changeDouble(value);
+				String data_str = getSpecUnit(value_num, target_key);
+				ret = point + " (" + data_str + ")";
+			}
+		}
+		else {
+			ret = getSpecValueUnit(data, target_key, value);
+
+		}
+
+		return ret;
+	}
+
+	/**
+	 * 値を単位付きの文字列で取得する。(評価値は付けない)
+	 * @param data データ
+	 * @param target_key ターゲットのキー
+	 * @param value ターゲットのデータ
+	 * @return スペック値の文字列
+	 */
+	private static String getSpecValueUnit(BBData data, String target_key, String value) {
+		String ret = "";
+		String name = data.get("名称");
+		double value_num = getSpecValue(value, target_key, name);
 
 		if(value_num != ERROR_VALUE) {
-			ret = getSpecUnit(value_num, key);
+			ret = getSpecUnit(value_num, target_key);
+		}
+		else {
+			ret = value;
 		}
 
 		return ret;

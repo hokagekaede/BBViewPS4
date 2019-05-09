@@ -144,7 +144,7 @@ public class InfoView extends LinearLayout {
         values[0] = target_key;
 
         for(int j = 0; j<= BBDataLvl.MAX_LEVEL; j++) {
-            String buf = getSpecValue(data, target_key, j);
+            String buf = SpecValues.getSpecUnit(data, target_key, j);
 
             if(buf.equals(BBData.STR_VALUE_NOTHING)) {
                 return null;
@@ -156,46 +156,4 @@ public class InfoView extends LinearLayout {
         return ViewBuilder.createTableRow(context, color, values);
     }
 
-    /**
-     * 一般情報の文字列を取得する。
-     * @param data データ
-     * @param target_key ターゲットのキー
-     * @param level 強化段階
-     * @return 一般情報の文字列
-     */
-    private String getSpecValue(BBData data, String target_key, int level) {
-        String ret = "";
-        String value = data.get(target_key, level);
-
-        if(value.equals(BBData.STR_VALUE_NOTHING)) {
-            return BBData.STR_VALUE_NOTHING;
-        }
-
-        if(BBDataComparator.isPointKey(target_key)) {
-            String point = SpecValues.getPoint(target_key, value, false);
-
-            // 評価値算出に失敗した場合は対象の文字が評価値そのもの
-            if(point.equals(SpecValues.NOTHING_STR)) {
-                String data_str = SpecValues.getSpecUnit(data, target_key);
-                ret = value + " (" + data_str + ")";
-            }
-            else {
-                double value_num = SpecValues.changeDouble(value);
-                String data_str = SpecValues.getSpecUnit(value_num, target_key);
-                ret = point + " (" + data_str + ")";
-            }
-        }
-        else {
-            double value_num = SpecValues.getSpecValue(value, target_key, "");
-
-            if(value_num != SpecValues.ERROR_VALUE) {
-                ret = SpecValues.getSpecUnit(value_num, target_key);
-            }
-            else {
-                ret = value;
-            }
-        }
-
-        return ret;
-    }
 }

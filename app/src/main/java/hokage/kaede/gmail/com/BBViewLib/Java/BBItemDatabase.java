@@ -82,7 +82,6 @@ public class BBItemDatabase {
     }
 
     public void setPartsLevel(BBData data, int level) {
-        String name = data.get("名称");
 
         if(data.existCategory(BBDataManager.BLUST_PARTS_HEAD)) {
             setData(mHeadPartsStore, data, level);

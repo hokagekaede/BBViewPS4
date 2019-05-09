@@ -157,19 +157,19 @@ public class SpecInfoPanel extends LinearLayout {
             String cmp_str = "";
             if(from_item != null) {
                 BBDataComparator cmp_data = new BBDataComparator(shown_key, true);
-                cmp_data.compare(to_item, from_item);
-                double cmp = cmp_data.getCmpValue();
+                int comp_ret = cmp_data.compare(from_item, to_item);
+                double cmp_value = cmp_data.getCmpValue();
 
                 if(cmp_data.isCmpOK()) {
-                    if(cmp > 0) {
+                    if(comp_ret < 0) {
                         color_stag = SettingManager.getCodeCyan();
                         color_etag = COLOR_TAG_END;
-                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key) + "↑)";
+                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp_value), shown_key) + "↑)";
                     }
-                    else if(cmp < 0) {
+                    else if(comp_ret > 0) {
                         color_stag = SettingManager.getCodeMagenta();
                         color_etag = COLOR_TAG_END;
-                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key) + "↓)";
+                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp_value), shown_key) + "↓)";
                     }
                 }
             }
@@ -177,9 +177,7 @@ public class SpecInfoPanel extends LinearLayout {
             // 表示する値の文字列を取得する
             String value_str = "";
             if(BBDataComparator.isPointKey(shown_key)) {
-                String value = to_item.get(shown_key);
-                value_str = value + " (" + SpecValues.getSpecUnit(to_item, shown_key) + ")";
-
+                value_str = SpecValues.getSpecUnit(to_item, shown_key);
             }
             else if(shown_key.equals(BBData.ARMOR_BREAK_KEY)) {
                 value_str = createArmorBreakString(BBData.ARMOR_BREAK_KEY, to_item);

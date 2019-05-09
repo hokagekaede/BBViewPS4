@@ -149,7 +149,7 @@ public class PartsSeriesView extends LinearLayout  {
 
         int data_count = datalist.size();
         for(int j=0; j<data_count; j++) {
-            String buf = getSpecValue(datalist.get(j), target_key);
+            String buf = SpecValues.getSpecUnit(datalist.get(j), target_key);
 
             if(buf.equals(BBData.STR_VALUE_NOTHING)) {
                 return null;

@@ -156,37 +156,12 @@ public class CmpWeaponTableBuilder {
 			String to_str = SpecValues.getShowValue(to_data, target_key);
 			
 			if(!from_str.equals(BBData.STR_VALUE_NOTHING) && !to_str.equals(BBData.STR_VALUE_NOTHING)) {
-				int[] colors = getColors(from_data, to_data, target_key);
+				int[] colors = ViewBuilder.getColors(from_data, to_data, target_key);
 				table.addView(ViewBuilder.createTableRow(mActivity, colors, target_key, from_str, to_str));
 			}
 		}
 	}
-	
-	private int[] getColors(BBData from_data, BBData to_data, String target_key) {
-		int[] ret = new int[3];
-		
-		BBDataComparator cmp_data = new BBDataComparator(target_key, true, true);
-		int cmp = cmp_data.compare(from_data, to_data);
-		
-		if(cmp > 0) {
-			ret[0] = SettingManager.getColorWhite();
-			ret[1] = SettingManager.getColorCyan();
-			ret[2] = SettingManager.getColorMazenta();
-		}
-		else if(cmp < 0) {
-			ret[0] = SettingManager.getColorWhite();
-			ret[1] = SettingManager.getColorMazenta();
-			ret[2] = SettingManager.getColorCyan();
-		}
-		else {
-			ret[0] = SettingManager.getColorWhite();
-			ret[1] = SettingManager.getColorWhite();
-			ret[2] = SettingManager.getColorWhite();
-		}
-		
-		return ret;
-	}
-	
+
 	/**
 	 * 切り替えボタン押下時の動作を処理するリスナー
 	 */

@@ -93,147 +93,65 @@ public class BBDataComparator implements Comparator<BBData> {
 	}
 	
 	/**
-	 * 比較を行う。
+	 * パーツ同士または武器同士の比較を行う。
+	 * @param from_data パーツや武器のデータ
+	 * @param to_data パーツや武器のデータ
+	 * @return 正の値の場合は引数1側が高い、0の場合は同値、負の値の場合は引数2側が高い。
 	 */
 	@Override
-	public int compare(BBData arg0, BBData arg1) {
-		int ret = 0;
-		mCmpLastValue = 0;
-		
-		BBData from_item = arg0;
-		BBData to_item = arg1;
-		
-		// スイッチ武器の判定対象判別処理
-		if(mIsSortTypeB) {
-			if(arg0.getTypeB() != null) {
-				from_item = arg0.getTypeB();
-			}
-			
-			if(to_item.getTypeB() != null) {
-				to_item = to_item.getTypeB();
-			}
-		}
-		
-		// 比較処理
-		if(mTargetKey == null) {
-			return 0;
-		}
-		else if(mTargetKey.equals("威力")) {
-			if(mIsAsc) {
-				mCmpLastValue = from_item.getOneShotPower() - to_item.getOneShotPower();
-			}
-			else {
-				mCmpLastValue = to_item.getOneShotPower() - from_item.getOneShotPower();
-			}
-			ret = (int)(mCmpLastValue * CMP_DOUBLE_SIZE);
-			mIsCmpOk = true;
-		}
-		else if(mTargetKey.equals("耐久力")) {
-			boolean is_from_item_plane = from_item.existCategory("偵察機系統");
-			boolean is_to_item_plane = to_item.existCategory("偵察機系統");
-			
-			if(is_from_item_plane && is_to_item_plane) {
-				ret = 0;
-				mIsCmpOk = false;
-			}
-			else if(is_from_item_plane) {
-				ret = 1;
-				mIsCmpOk = false;
-			}
-			else if(is_to_item_plane) {
-				ret = -1;
-				mIsCmpOk = false;
-			}
-			else {
-				ret = compareString(from_item.get(mTargetKey), to_item.get(mTargetKey));
-				mIsCmpOk = true;
-			}
+	public int compare(BBData from_data, BBData to_data) {
+		BBDataComparatorItem item0 = new BBDataComparatorItem(from_data, mTargetKey, mIsSortTypeB);
+		BBDataComparatorItem item1 = new BBDataComparatorItem(to_data, mTargetKey, mIsSortTypeB);
 
-			return ret;
-		}
-		else if(mTargetKey.equals("重量耐性")) {
-			double value0 = SpecValues.getSpecValue(from_item, mTargetKey);
-			double value1 = SpecValues.getSpecValue(to_item, mTargetKey);
-			ret = compareValue(value0, value1);
-			mIsCmpOk = true;
-		}
-		else {
-			ret = compareString(from_item.get(mTargetKey), to_item.get(mTargetKey));
-		}
-		
-		return ret;
+		return compareMain(item0, item1);
 	}
-	
+
 	/**
-	 * 比較結果の差分値を返す。
-	 * @return 比較結果の差分値。
+	 * パーツや武器のデータとスペック値を比較する。
+	 * @param from_data パーツや武器のデータ
+	 * @param value スペック値
+	 * @return 正の値の場合は引数1側が高い、0の場合は同値、負の値の場合は引数2側が高い。
 	 */
-	public double getCmpValue() {
-		return mCmpLastValue;
+	public int compareFilter(BBData from_data, String value) {
+		BBDataComparatorItem item0 = new BBDataComparatorItem(from_data, mTargetKey, mIsSortTypeB);
+		BBDataComparatorItem item1 = new BBDataComparatorItem(value, mTargetKey);
+
+		return compareMain(item0, item1);
 	}
-	
+
 	/**
-	 * 比較に成功したかどうかを返す。
-	 * @return 比較に成功した場合はtrueを返し、失敗した場合はfalseを返す。
-	 */
-	public boolean isCmpOK() {
-		return mIsCmpOk;
-	}
-	
-	/**
-	 * 比較処理を行う。
-	 * @param arg0 比較対象の文字列１
-	 * @param arg1 比較対象の文字列２
-	 * @return 
-	 */
-	public int compareString(String arg0, String arg1) {
-		mCmpLastValue = 0;
-		
-		double value0 = SpecValues.getSpecValue(arg0, mTargetKey, "");
-		double value1 = SpecValues.getSpecValue(arg1, mTargetKey, "");
-		
-		// 数値変換できなかった場合、ポイント自体の値(E-～A+)で比較する
-		if(value0 == SpecValues.ERROR_VALUE && value1 == SpecValues.ERROR_VALUE) {
-			int len = BBDataManager.SPEC_POINT.length;
-			for(int i=0; i<len; i++) {
-				if(BBDataManager.SPEC_POINT[i].equals(arg0)) {
-					value0 = len - i;
-				}
-				
-				if(BBDataManager.SPEC_POINT[i].equals(arg1)) {
-					value1 = len - i;
-				}
-			}
-			
-			if(value0 == SpecValues.ERROR_VALUE || value1 == SpecValues.ERROR_VALUE) {
-				mIsCmpOk = false;
-			}
-			else {
-				mIsCmpOk = true;
-			}
-		}
-		else if(value0 == SpecValues.ERROR_VALUE) {
-			mIsCmpOk = false;
-			value0 = mMinValue;
-		}
-		else if(value1 == SpecValues.ERROR_VALUE) {
-			mIsCmpOk = false;
-			value1 = mMinValue;
-		}
-		else {
-			mIsCmpOk = true;
-		}
-		
-		return compareValue(value0, value1);
-	}
-	
-	/**
-	 * 比較処理を行う。
-	 * @param from_value 比較対象の数値１
-	 * @param to_value 比較対象の数値２
-	 * @return
+	 * スペック値同士の比較処理を行う。
+	 * @param from_value 比較対象のスペック値1
+	 * @param to_value 比較対象のスペック値2
+	 * @return 正の値の場合は引数1側が高い、0の場合は同値、負の値の場合は引数2側が高い。
 	 */
 	public int compareValue(double from_value, double to_value) {
+		BBDataComparatorItem item0 = new BBDataComparatorItem(from_value);
+		BBDataComparatorItem item1 = new BBDataComparatorItem(to_value);
+
+		return compareMain(item0, item1);
+	}
+
+	/**
+	 * 比較用のデータについて比較処理を行う。
+	 * @param from_item 比較用データ1
+	 * @param to_item 比較用データ2
+	 * @return 正の値の場合は引数1側が高い、0の場合は同値、負の値の場合は引数2側が高い。
+	 */
+	public int compareMain(BBDataComparatorItem from_item, BBDataComparatorItem to_item) {
+		int from_comptype = from_item.getCompType();
+		int to_comptype = to_item.getCompType();
+
+		// 比較の種類が同じ場合のみ比較成功扱いにする。
+		if(from_comptype == to_comptype) {
+			mIsCmpOk = true;
+		}
+		else {
+			mIsCmpOk = false;
+		}
+
+		double from_value = from_item.getCompValue();
+		double to_value = to_item.getCompValue();
 
 		if(mIsAsc) {
 			mCmpLastValue = from_value - to_value;
@@ -244,7 +162,23 @@ public class BBDataComparator implements Comparator<BBData> {
 
 		return (int)(mCmpLastValue * CMP_DOUBLE_SIZE);
 	}
-	
+
+	/**
+	 * 比較結果の差分値を返す。
+	 * @return 比較結果の差分値。
+	 */
+	public double getCmpValue() {
+		return mCmpLastValue;
+	}
+
+	/**
+	 * 比較に成功したかどうかを返す。
+	 * @return 比較に成功した場合はtrueを返し、失敗した場合はfalseを返す。
+	 */
+	public boolean isCmpOK() {
+		return mIsCmpOk;
+	}
+
 	/**
 	 * 性能値がポイント表示の項目かどうかを判別する。
 	 * @param key 項目名
