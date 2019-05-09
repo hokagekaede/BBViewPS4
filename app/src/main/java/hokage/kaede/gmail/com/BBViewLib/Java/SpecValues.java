@@ -290,7 +290,7 @@ public class SpecValues {
 		SPARE_BULLET.set("S",  "68"); // 対象無し
 		SPARE_BULLET.set("S-", "63"); // 対象無し
 		SPARE_BULLET.set("A+", "55");
-		SPARE_BULLET.set("A",  "54"); // 対象無し
+		SPARE_BULLET.set("A",  "50"); // 対象無し
 		SPARE_BULLET.set("A-", "45");
 		SPARE_BULLET.set("B+", "40");
 		SPARE_BULLET.set("B",  "35");
@@ -299,14 +299,14 @@ public class SpecValues {
 		SPARE_BULLET.set("C",  "20");
 		SPARE_BULLET.set("C-", "15");
 		SPARE_BULLET.set("D+", "10");
-		SPARE_BULLET.set("D",  "14"); // 対象無し
+		SPARE_BULLET.set("D",  "5"); // 対象無し
 		SPARE_BULLET.set("D-",  "0");
-		SPARE_BULLET.set("E+",  "5"); // 対象無し
-		SPARE_BULLET.set("E",   "0"); // 対象無し
+		SPARE_BULLET.set("E+",  "-5"); // 対象無し (比較処理向けの暫定値)
+		SPARE_BULLET.set("E",   "-10"); // 対象無し (比較処理向けの暫定値)
 	}
 
 	/**
-	 * 巡航のデータの初期化
+	 * 巡航のデータの初期化 (m/s)
 	 */
 	private static void initAcceleration() {
 		ACCELERATION = new KeyValueStore();
@@ -536,13 +536,13 @@ public class SpecValues {
 		RELOAD.set("B-", "13.5");
 		RELOAD.set("C+", "9.0");
 		RELOAD.set("C",  "4.5");
-		RELOAD.set("C-", "-4.5");
-		RELOAD.set("D+", "-9.0");
-		RELOAD.set("D",  "-13.5");
-		RELOAD.set("D-", "-18.0");
-		RELOAD.set("E+", "-22.5");
-		RELOAD.set("E",  "-40.0");
-		RELOAD.set("E-", "-50.0");  // 対象無し
+		RELOAD.set("C-", "0");
+		RELOAD.set("D+", "-4.5");
+		RELOAD.set("D",  "-9.0");
+		RELOAD.set("D-", "-13.5");
+		RELOAD.set("E+", "-18.0");
+		RELOAD.set("E",  "-22.5");
+		RELOAD.set("E-", "-40.0");  // 対象無し
 	}
 
 	/**
@@ -581,14 +581,14 @@ public class SpecValues {
 		ANTIWEIGHT.set("A-", "6450");
 		ANTIWEIGHT.set("B+", "6150");
 		ANTIWEIGHT.set("B",  "5950");
-		ANTIWEIGHT.set("B-", "5600"); // 対象無し
-		ANTIWEIGHT.set("C+", "5250"); // 対象無し
+		ANTIWEIGHT.set("B-", "5700"); // 対象無し
+		ANTIWEIGHT.set("C+", "5500"); // 対象無し
 		ANTIWEIGHT.set("C",  "5350");
 		ANTIWEIGHT.set("C-", "5000");
 		ANTIWEIGHT.set("D+", "4850");
 		ANTIWEIGHT.set("D",  "4500");
 		ANTIWEIGHT.set("D-", "4250"); // 対象無し
-		ANTIWEIGHT.set("E+", "3800"); // 対象無し
+		ANTIWEIGHT.set("E+", "4000"); // 対象無し
 		ANTIWEIGHT.set("E",  "3800");
 		ANTIWEIGHT.set("E-", "3700");
 	}
@@ -643,7 +643,7 @@ public class SpecValues {
 				ret = 6750;
 			}
 			else if(parts_name.equals("ケーファーB2")) {
-				ret = 6750;
+				ret = 6200;
 			}
 			else if(parts_name.equals("ケーファーB5")) {
 				ret = 6200;
@@ -675,7 +675,7 @@ public class SpecValues {
 	}
 	
 	/**
-	 * ダッシュ(初速)のデータを初期化する (km/h)
+	 * ダッシュ(初速)のデータを初期化する (m/s)
 	 */
 	private static void initDush() {
 		DASH = new KeyValueStore();
@@ -711,7 +711,7 @@ public class SpecValues {
 	}
 
 	/**
-	 * 歩行のデータを初期化する
+	 * 歩行のデータを初期化する (m/s)
 	 */
 	private static void initWalk() {
 		WALK = new KeyValueStore();
