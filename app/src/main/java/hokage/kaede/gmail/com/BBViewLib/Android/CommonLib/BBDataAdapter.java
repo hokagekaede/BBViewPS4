@@ -74,10 +74,7 @@ public class BBDataAdapter extends NormalAdapter<BBData> {
         }
         else {
             item_view = (BBDataAdapterItem)view;
-
-            if(control_panel != null) {
-                control_panel = (ControlPanel) item_view.getChildAt(0);
-            }
+            control_panel = (ControlPanel) item_view.getChildAt(0);
         }
 
         item_view.setData(data);
