@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import hokage.kaede.gmail.com.BBViewLib.Java.BBData;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataManager;
+import hokage.kaede.gmail.com.BBViewLib.Java.BBItemDatabase;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBNetDatabase;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBViewSetting;
 
@@ -25,9 +26,6 @@ public class OwnerInfoPanel extends LinearLayout {
      */
     public OwnerInfoPanel(Context context) {
         super(context);
-
-        // BBPS4は所持情報を非表示にする。
-        this.setVisibility(View.GONE);
     }
 
     /**
@@ -49,6 +47,21 @@ public class OwnerInfoPanel extends LinearLayout {
      * @param target_item 表示対象のデータ
      */
     public void updateView(BBData target_item) {
+        update(target_item);
+    }
+
+    /**
+     * レベルを更新する。
+     */
+    public void changeLevel(BBData target_item) {
+        changeNext(target_item);
+        update(target_item);
+    }
+
+    /**
+     * ビューの更新をする。
+     */
+    private void update(BBData target_item) {
         String text = createExistText(target_item);
         mExistTextView.setText(text);
     }
@@ -60,64 +73,65 @@ public class OwnerInfoPanel extends LinearLayout {
      */
     private String createExistText(BBData target_item) {
         String item_name = "";
-        String data_name = target_item.get("名称");
 
-        BBNetDatabase net_database = BBNetDatabase.getInstance();
-        if(!net_database.getCardName().equals(BBNetDatabase.NO_CARD_DATA)) {
-
-            if(BBDataManager.isParts(target_item)) {
-                if(net_database.existParts(target_item)) {
-                    item_name = "(所持)";
-                }
-                else {
-                    item_name = "(未購入)";
-                }
-            }
-            else if(BBDataManager.isWeapon(target_item)) {
-                if(net_database.existWeapon(data_name)) {
-                    item_name = "(所持)";
-                }
-                else {
-                    item_name = "(未購入)";
-                }
-            }
-            else if(target_item.existCategory(BBDataManager.CHIP_STR)) {
-                if(net_database.existChip(data_name)) {
-                    item_name = "(所持)";
-                }
-                else {
-                    item_name = "(未開発)";
-                }
-            }
-            else if(target_item.existCategory(BBDataManager.MATERIAL_STR)) {
-                String value = net_database.getMaterials().get(data_name);
-                if(value.equals("null")) {
-                    item_name = "(情報なし)";
-                }
-                else {
-                    item_name = value + "個";
-                }
-            }
-            else if(target_item.existCategory(BBDataManager.MEDAL_STR)) {
-                String value = net_database.getMedals().get(data_name);
-                if(value.equals("null")) {
-                    item_name = "(情報なし)";
-                }
-                else {
-                    item_name = value + "個";
-                }
-            }
-            else if(target_item.existCategory(BBDataManager.SEED_STR)) {
-                String value = net_database.getSeeds().get(data_name);
-                if(value.equals("null")) {
-                    item_name = "(情報なし)";
-                }
-                else {
-                    item_name = value + "個";
-                }
-            }
+        BBItemDatabase database = BBItemDatabase.getInstance();
+        if(BBDataManager.isParts(target_item)) {
+            item_name = database.getPartsLevelText(target_item);
+        }
+        else if(BBDataManager.isWeapon(target_item)) {
+            item_name = database.getWeaponLevelText(target_item);
+        }
+        else if(target_item.existCategory(BBDataManager.CHIP_STR)) {
+            item_name = database.getChipInfoText(target_item);
         }
 
         return item_name;
+    }
+
+    /**
+     * 購入した項目かどうかの文字列を生成する。
+     * @param target_item 表示対象のデータ
+     * @return 購入した武器(開発済みのチップ)かどうかを示す文字列
+     */
+    private void changeNext(BBData target_item) {
+
+        BBItemDatabase database = BBItemDatabase.getInstance();
+        if(BBDataManager.isParts(target_item)) {
+            int level = database.getPartsLevel(target_item);
+
+            if(level == BBItemDatabase.ITEM_LEVEL3) {
+                database.setPartsLevel(target_item, BBItemDatabase.ITEM_NOT_HAVING);
+            }
+            else if(level == BBItemDatabase.ITEM_NOT_HAVING) {
+                database.setPartsLevel(target_item, BBItemDatabase.ITEM_LEVEL0);
+            }
+            else {
+                database.setPartsLevel(target_item, level + 1);
+            }
+        }
+        else if(BBDataManager.isWeapon(target_item)) {
+            int level = database.getWeaponLevel(target_item);
+
+            if(level == BBItemDatabase.ITEM_LEVEL3) {
+                database.setWeaponLevel(target_item, BBItemDatabase.ITEM_NOT_HAVING);
+            }
+            else if(level == BBItemDatabase.ITEM_NOT_HAVING) {
+                database.setWeaponLevel(target_item, BBItemDatabase.ITEM_LEVEL0);
+            }
+            else {
+                database.setWeaponLevel(target_item, level + 1);
+            }
+        }
+        else if(target_item.existCategory(BBDataManager.CHIP_STR)) {
+            int is_having = database.getChipInfo(target_item);
+
+            if(is_having == BBItemDatabase.ITEM_HAVING) {
+                database.setChipInfo(target_item, BBItemDatabase.ITEM_NOT_HAVING);
+            }
+            else {
+                database.setChipInfo(target_item, BBItemDatabase.ITEM_HAVING);
+            }
+        }
+
     }
 }

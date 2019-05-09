@@ -1,7 +1,10 @@
 package hokage.kaede.gmail.com.BBViewPS4.Main;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
+import hokage.kaede.gmail.com.BBViewLib.Java.BBData;
+import hokage.kaede.gmail.com.BBViewLib.Java.BBItemDatabase;
 import hokage.kaede.gmail.com.BBViewPS4.Custom.CustomMainActivity;
 import hokage.kaede.gmail.com.BBViewPS4.Item.CategoryListActivity;
 import hokage.kaede.gmail.com.BBViewPS4.R;
@@ -75,9 +78,6 @@ public class TopActivity extends BaseActivity {
 		// アプリの設定値を読み込む
 		BBViewSettingManager.loadSettings(this);
 
-		// BB.NETのデータを更新する
-		BBNetDatabase.getInstance().init(this.getFilesDir().toString());
-		
 		// 初回起動時は説明ページを起動し、アップデート時は更新情報をダイアログ表示する。
 		if(BBViewSetting.isFirstFlag(this)) {
 			BBViewSetting.setVersionCode(this);
@@ -167,6 +167,12 @@ public class TopActivity extends BaseActivity {
 		} catch(Resources.NotFoundException res_e) {
 			Toast.makeText(this, "パーツ・武器のデータが見つかりません。", Toast.LENGTH_LONG).show();
 		}
+
+		// 所持情報のデータを更新する
+		ArrayList<BBData> list = data_mng.getList();
+		BBItemDatabase owner_data = BBItemDatabase.getInstance();
+		owner_data.init(this.getFilesDir().toString());
+		owner_data.load(list);
 	}
 	
 	/**

@@ -210,11 +210,11 @@ public class BBNetDatabase {
 	public FileKeyValueStore getChips() {
 		return mChipStore[mCardNumber];
 	}
-	
+
 	public FileKeyValueStore getMaterials() {
 		return mMaterialStore[mCardNumber];
 	}
-	
+
 	public FileKeyValueStore getMedals() {
 		return mMedalStore[mCardNumber];
 	}
@@ -222,7 +222,7 @@ public class BBNetDatabase {
 	public FileKeyValueStore getSeeds() {
 		return mSeedStore[mCardNumber];
 	}
-	
+
 	public boolean existChip(String name) {
 		return mChipStore[mCardNumber].existKey(name);
 	}
@@ -237,8 +237,8 @@ public class BBNetDatabase {
 		if(mHeadPartsStore[mCardNumber].size()>0) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 }

@@ -5,6 +5,7 @@ import hokage.kaede.gmail.com.StandardLib.Android.NormalAdapterItem;
 import hokage.kaede.gmail.com.StandardLib.Java.FileArrayList;
 
 import android.content.Context;
+import android.view.View;
 
 /**
  * 一般的なBBDataリストの各項目のアイテムクラス
@@ -42,6 +43,7 @@ public class BBDataAdapterItem extends NormalAdapterItem<BBData> {
 
 		mOwnerInfoPanel = new OwnerInfoPanel(context);
 		mOwnerInfoPanel.createView();
+		mOwnerInfoPanel.setOnClickListener(new OnClickOwnerInfoTextListener());
 		this.addView(mOwnerInfoPanel);
 
 		if(mProperty.isShowFavorite()) {
@@ -83,6 +85,19 @@ public class BBDataAdapterItem extends NormalAdapterItem<BBData> {
 	public void setOnClickFavListener(OnClickListener listener) {
 		if(mProperty.isShowFavorite()) {
 			mFavoritePanel.setOnClickListener(listener);
+		}
+	}
+
+	/**
+	 * 所持情報のテキストをクリックした時に動作するリスナー
+	 */
+	private class OnClickOwnerInfoTextListener implements OnClickListener {
+
+		@Override
+		public void onClick(View view) {
+			BBData target_item = getData();
+			mOwnerInfoPanel.changeLevel(target_item);
+			mSpecInfoPanel.updateView(target_item);
 		}
 	}
 }

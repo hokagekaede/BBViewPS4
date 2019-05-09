@@ -1002,17 +1002,13 @@ public class BBData extends BBDataLvl {
 	 */
 	public int getMagazine() {
 		int ret = 0;
-		int bullet_index = super.indexOf("総弾数");
-		
-		if(bullet_index >= 0) {
-			String[] bullet_str = super.get(bullet_index).split("x");
 
-			try {
-				ret = Integer.valueOf(bullet_str[0]);
+		try {
+			String[] bullet_str = super.get("総弾数").split("x");
+			ret = Integer.valueOf(bullet_str[0]);
 
-			} catch(NumberFormatException e) {
-				e.printStackTrace();
-			}
+		} catch(NumberFormatException e) {
+			//e.printStackTrace();
 		}
 		
 		return ret;
@@ -1045,17 +1041,14 @@ public class BBData extends BBDataLvl {
 	 */
 	public int getShotSpeed() {
 		int ret = -1;
-		int speed_index = super.indexOf("連射速度");
-		
-		if(speed_index >= 0) {
-			String speed_str = super.get(speed_index);
-			
-			try {
-				ret = Integer.valueOf(speed_str);
-				
-			} catch(NumberFormatException e) {
-				e.printStackTrace();
-			}
+
+		String speed_str = super.get("連射速度");
+
+		try {
+			ret = Integer.valueOf(speed_str);
+
+		} catch(NumberFormatException e) {
+			// e.printStackTrace();
 		}
 		
 		return ret;
