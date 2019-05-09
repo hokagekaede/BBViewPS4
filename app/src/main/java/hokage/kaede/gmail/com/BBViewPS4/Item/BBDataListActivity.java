@@ -72,13 +72,7 @@ public class BBDataListActivity extends BaseActivity implements OnItemClickListe
 			filter_name = main_filter_str + "/" + sub_filter_str;
 		}
 
-		String card_name = BBNetDatabase.getInstance().getCardName();
-		if(card_name.equals(BBNetDatabase.NO_CARD_DATA)) {
-			setTitle(getTitle() + " (" + filter_name + ")");
-		}
-		else {
-			setTitle(getTitle() + " (" + filter_name + "/カード名：" + card_name + ")");
-		}
+		setTitle(getTitle() + " (" + filter_name + ")");
 
 		// 全体レイアウト設定
 		LinearLayout layout_all = new LinearLayout(this);

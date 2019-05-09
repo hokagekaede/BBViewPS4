@@ -130,10 +130,10 @@ public class TopActivity extends BaseActivity {
 		custom_btn.setOnClickListener(new OnMoveCustomListener());
 		layout.addView(custom_btn);
 
-		//Button item_btn = new Button(this);
-		//item_btn.setText(BTN_TEXT_ITEM);
-		//item_btn.setOnClickListener(new OnMoveItemListener());
-		//layout.addView(item_btn);
+		Button item_btn = new Button(this);
+		item_btn.setText(BTN_TEXT_ITEM);
+		item_btn.setOnClickListener(new OnMoveItemListener());
+		layout.addView(item_btn);
 
 		Button blog_btn = new Button(this);
 		blog_btn.setText(BTN_TEXT_BLOG);
