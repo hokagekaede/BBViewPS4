@@ -155,7 +155,9 @@ public class SpecArray {
 	 */
 	public static SpecRow getPartsSpecArray(CustomData data, String blust_type, String target_key) {
 		String normal_point = data.getPoint(target_key);
-		double normal_value = SpecValues.getSpecValue(normal_point, target_key, BBViewSetting.IS_KM_PER_HOUR);
+		String parts_name = data.getPartsName(target_key);
+
+		double normal_value = SpecValues.getSpecValue(normal_point, target_key, parts_name, BBViewSetting.IS_KM_PER_HOUR);
 		String normal_value_str = SpecValues.getSpecUnit(normal_value, target_key, BBViewSetting.IS_KM_PER_HOUR);
 		
 		double real_value;
@@ -226,7 +228,8 @@ public class SpecArray {
 	public static SpecRow getDefRecoverArray(CustomData data, String blust_type) {
 		String key = "DEF回復";
 		String normal_point = data.getPoint(key);
-		double normal_value = SpecValues.getSpecValue(normal_point, key, BBViewSetting.IS_KM_PER_HOUR);
+		String parts_name = data.getPartsName(key);
+		double normal_value = SpecValues.getSpecValue(normal_point, key, parts_name, BBViewSetting.IS_KM_PER_HOUR);
 		String normal_value_str = SpecValues.getSpecUnit(normal_value, key, BBViewSetting.IS_KM_PER_HOUR);
 		
 		double real_value = data.getDefRecover(blust_type);
@@ -258,7 +261,8 @@ public class SpecArray {
 	public static SpecRow getBoostArray(CustomData data, String blust_type) {
 		String key = "ブースター";
 		String normal_point = data.getPoint(key);
-		double normal_value = SpecValues.getSpecValue(normal_point, key, BBViewSetting.IS_KM_PER_HOUR);
+		String parts_name = data.getPartsName(key);
+		double normal_value = SpecValues.getSpecValue(normal_point, key, parts_name, BBViewSetting.IS_KM_PER_HOUR);
 		String normal_value_str = SpecValues.getSpecUnit(normal_value, key, BBViewSetting.IS_KM_PER_HOUR);
 		
 		double real_value = data.getBoost(blust_type);

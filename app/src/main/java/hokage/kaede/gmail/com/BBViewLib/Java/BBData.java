@@ -321,6 +321,7 @@ public class BBData extends KVCStore {
 		int ret = 0;
 		String weight_str = super.get("重量");
 		String anti_weight_str = super.get("重量耐性");
+		String name = super.get("名称");
 		
 		if(weight_str.equals(BBData.EMPTY_VALUE) || anti_weight_str.equals(BBData.EMPTY_VALUE)) {
 			return 0;
@@ -328,7 +329,7 @@ public class BBData extends KVCStore {
 		
 		try {
 			int weight = Integer.valueOf(weight_str);
-			int anti_weight = (int)(SpecValues.getSpecValue(anti_weight_str, "重量耐性", false));
+			int anti_weight = SpecValues.getAntiWeight(anti_weight_str, name);
 			ret = anti_weight - weight;
 			
 		} catch(NumberFormatException e) {

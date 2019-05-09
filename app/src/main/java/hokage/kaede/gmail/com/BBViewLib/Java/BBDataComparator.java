@@ -158,6 +158,12 @@ public class BBDataComparator implements Comparator<BBData> {
 
 			return ret;
 		}
+		else if(mTargetKey.equals("重量耐性")) {
+			double value0 = SpecValues.getSpecValue(from_item, mTargetKey, mIsKmPerHour);
+			double value1 = SpecValues.getSpecValue(to_item, mTargetKey, mIsKmPerHour);
+			ret = compareValue(value0, value1);
+			mIsCmpOk = true;
+		}
 		else {
 			ret = compareString(from_item.get(mTargetKey), to_item.get(mTargetKey));
 		}
@@ -190,8 +196,8 @@ public class BBDataComparator implements Comparator<BBData> {
 	public int compareString(String arg0, String arg1) {
 		mCmpLastValue = 0;
 		
-		double value0 = SpecValues.getSpecValue(arg0, mTargetKey, mIsKmPerHour);
-		double value1 = SpecValues.getSpecValue(arg1, mTargetKey, mIsKmPerHour);
+		double value0 = SpecValues.getSpecValue(arg0, mTargetKey, "", mIsKmPerHour);
+		double value1 = SpecValues.getSpecValue(arg1, mTargetKey, "", mIsKmPerHour);
 		
 		// 数値変換できなかった場合、ポイント自体の値(E-～A+)で比較する
 		if(value0 == SpecValues.ERROR_VALUE && value1 == SpecValues.ERROR_VALUE) {

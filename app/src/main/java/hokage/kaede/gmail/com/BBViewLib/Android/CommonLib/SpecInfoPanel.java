@@ -241,8 +241,7 @@ public class SpecInfoPanel extends LinearLayout {
             ret = "BS:対象無し";
         }
         else {
-            ret = String.format("BS:%s(%s)以下",
-                    point, SpecValues.getSpecUnit(point, "装甲", true));
+            ret = String.format("BS:%s(%s)以下", point, SpecValues.getSpecUnit(value, "装甲", true));
         }
 
         // CS時の情報を追加

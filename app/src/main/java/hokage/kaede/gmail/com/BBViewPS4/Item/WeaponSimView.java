@@ -520,7 +520,7 @@ public class WeaponSimView extends LinearLayout implements OnClickListener {
 		
 		for(int i=0; i<size; i++) {
 			String point = BBDataManager.SPEC_POINT[i];
-			double value = SpecValues.getSpecValue(point, "装甲", false);
+			double value = SpecValues.getSpecValue(point, "装甲", "", false);
 			String armor_str = SpecValues.getSpecUnit(value, "装甲", false);
 			
 			spec_strs[i] = point + " (" + armor_str + ")";
@@ -572,7 +572,7 @@ public class WeaponSimView extends LinearLayout implements OnClickListener {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			String selected_armor = BBDataManager.SPEC_POINT[position];
-			mArmorArray[mOffset] = SpecValues.getSpecValue(selected_armor, "装甲", false);
+			mArmorArray[mOffset] = SpecValues.getSpecValue(selected_armor, "装甲", "",false);
 			
 			updateView();
 		}

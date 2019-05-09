@@ -733,6 +733,22 @@ public class CustomData {
 		return "";
 	}
 
+    /**
+     * 指定のキーを保持するパーツ名を取得する。
+     * @param key 性能名
+     * @return パーツ名
+     */
+	public String getPartsName(String key) {
+        int parts_len = mRecentParts.length;
+        for(int i=0; i<parts_len; i++) {
+            if(mRecentParts[i].existKey(key)) {
+                return mRecentParts[i].get("名称");
+            }
+        }
+
+        return "";
+    }
+
 	/**
 	 * 指定部位のチップ容量を取得する。
 	 * @param parts_type 指定のパーツ種類
@@ -1575,52 +1591,44 @@ public class CustomData {
 	 * @return 重量耐性の値。
 	 */
 	public int getAntiWeight() {
-		int ret = 0;
-
 		BBData legs_parts = mRecentParts[LEGS_IDX];
 		String point = legs_parts.get("重量耐性");
-		String value = SpecValues.ANTIWEIGHT.get(point);
-		
-		try {
-			ret = Integer.valueOf(value);
-			
-			// フルセットボーナス
-			if(isFullSet("クーガー")) {
-				ret = ret + getFullSetBonus(150);
-			}
-			else if(isFullSet("ランドバルク")) {
-				ret = ret + getFullSetBonus(150);
-			}
-			else if(isFullSet("スペクター")) {
-				ret = ret + getFullSetBonus(150);
-			}
-			else if(isFullSet("X－")) {
-				ret = ret + getFullSetBonus(150);
-			}
-			else if(isFullSet("PLUS：G")) {
-				ret = ret + getFullSetBonus(150);
-			}
+		String name = legs_parts.get("名称");
+		int ret = SpecValues.getAntiWeight(point, name);
 
-			// チップセットボーナス
-			if(existChip("重量耐性")) {
-				ret = ret + 60;
-			}
-			else if(existChip("重量耐性II")) {
-				ret = ret + 150;
-			}
-			else if(existChip("重量耐性III")) {
-				ret = ret + 240;
-			}
-			
-			if(existChip("脚部パーツ強化")) {
-				ret = ret + 30;
-			}
-			else if(existChip("脚部パーツ強化II")) {
-				ret = ret + 100;
-			}
+		// フルセットボーナス
+		if(isFullSet("クーガー")) {
+			ret = ret + getFullSetBonus(150);
+		}
+		else if(isFullSet("ランドバルク")) {
+			ret = ret + getFullSetBonus(150);
+		}
+		else if(isFullSet("スペクター")) {
+			ret = ret + getFullSetBonus(150);
+		}
+		else if(isFullSet("X－")) {
+			ret = ret + getFullSetBonus(150);
+		}
+		else if(isFullSet("PLUS：G")) {
+			ret = ret + getFullSetBonus(150);
+		}
 
-		} catch(Exception e) {
-			ret = 0;
+		// チップセットボーナス
+		if(existChip("重量耐性")) {
+			ret = ret + 60;
+		}
+		else if(existChip("重量耐性II")) {
+			ret = ret + 150;
+		}
+		else if(existChip("重量耐性III")) {
+			ret = ret + 240;
+		}
+
+		if(existChip("脚部パーツ強化")) {
+			ret = ret + 30;
+		}
+		else if(existChip("脚部パーツ強化II")) {
+			ret = ret + 100;
 		}
 
 		return ret;
@@ -3515,49 +3523,6 @@ public class CustomData {
 	//----------------------------------------------------------
 	// 性能取得系(指定キー)
 	//----------------------------------------------------------
-	
-	/**
-	 * 任意の性能値を取得する。
-	 * @param key 取得する性能値のキー
-	 * @param blust_type 兵装名
-	 * @param weapon_type 武器の種類
-	 * @return 性能値
-	 */
-	public double getSpecValue(String key, String blust_type, String weapon_type) {
-		double ret = 0;
-		
-		BBData data = getWeapon(blust_type, weapon_type);
-		
-		if(key.equals("重量")) {
-			ret = SpecValues.getSpecValue(data, "重量", mIsKmPerHour);
-		}
-		else if(key.equals("威力")) {
-			ret = SpecValues.getSpecValue(data, "威力", mIsKmPerHour);
-		}
-		else if(key.equals("連射速度")) {
-			ret = SpecValues.getSpecValue(data, "連射速度", mIsKmPerHour);
-		}
-		else if(key.equals("リロード時間")) {
-			ret = getReloadTime(data);
-		}
-		else if(key.equals("総火力")) {
-			ret = SpecValues.getSpecValue(data, "総火力", mIsKmPerHour);
-		}
-		else if(key.equals("マガジン火力")) {
-			ret = SpecValues.getSpecValue(data, "マガジン火力", mIsKmPerHour);
-		}
-		else if(key.equals("瞬間火力")) {
-			ret = SpecValues.getSpecValue(data, "瞬間火力", mIsKmPerHour);
-		}
-		else if(key.equals("全弾数")) {
-			ret = SpecValues.getSpecValue(data, "全弾数", mIsKmPerHour);
-		}
-		else {
-			ret = getSpecValue(key, blust_type);
-		}
-		
-		return ret;
-	}
 
 	/**
 	 * 兵装依存の指定データを取得する

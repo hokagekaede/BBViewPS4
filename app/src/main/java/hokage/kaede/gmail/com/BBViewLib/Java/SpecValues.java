@@ -78,7 +78,7 @@ public class SpecValues {
 	/**
 	 * 重量耐性のデータ一覧
 	 */
-	public static KeyValueStore ANTIWEIGHT;
+	private static KeyValueStore ANTIWEIGHT;
 	
 	/**
 	 * ダッシュ速度(初速)のデータ一覧
@@ -587,9 +587,72 @@ public class SpecValues {
 		ANTIWEIGHT.set("D+", "4850");
 		ANTIWEIGHT.set("D",  "4500");
 		ANTIWEIGHT.set("D-", "4250"); // 対象無し
-		ANTIWEIGHT.set("E+", "3800");
-		ANTIWEIGHT.set("E",  "3700");
-		ANTIWEIGHT.set("E-", "3600"); // 対象無し
+		ANTIWEIGHT.set("E+", "3800"); // 対象無し
+		ANTIWEIGHT.set("E",  "3800");
+		ANTIWEIGHT.set("E-", "3700");
+	}
+
+	/**
+	 * 重量耐性の値を取得する。
+	 * @param point 評価値
+	 * @param parts_name パーツ名
+	 * @return 重量耐性の値
+	 */
+	public static int getAntiWeight(String point, String parts_name) {
+		int ret = 0;
+		String value = SpecValues.ANTIWEIGHT.get(point);
+
+		try {
+			ret = Integer.valueOf(value);
+
+			if(parts_name.equals("クーガーI型")) {
+				ret = 4650;
+			}
+			else if(parts_name.equals("クーガーII型")) {
+				ret = 4600;
+			}
+			else if(parts_name.equals("クーガーS型")) {
+				ret = 5100;
+			}
+			else if(parts_name.equals("エンフォーサーII型")) {
+				ret = 5150;
+			}
+			else if(parts_name.equals("エンフォーサーIII型")) {
+				ret = 5150;
+			}
+			else if(parts_name.equals("ツェーブラA1")) {
+				ret = 4900;
+			}
+			else if(parts_name.equals("ツェーブラA4")) {
+				ret = 5100;
+			}
+			else if(parts_name.equals("輝星・弐式")) {
+				ret = 5150;
+			}
+			else if(parts_name.equals("輝星・参式")) {
+				ret = 5100;
+			}
+			else if(parts_name.equals("ヘヴィガードIII")) {
+				ret = 6700;
+			}
+			else if(parts_name.equals("ヘヴィガードG")) {
+				ret = 6750;
+			}
+			else if(parts_name.equals("ケーファーB2")) {
+				ret = 6750;
+			}
+			else if(parts_name.equals("ケーファーB5")) {
+				ret = 6200;
+			}
+			else if(parts_name.equals("シュライクW")) {
+				ret = 3900;
+			}
+
+		} catch(Exception e) {
+			ret = 0;
+		}
+
+		return ret;
 	}
 	
 	/**
@@ -959,7 +1022,6 @@ public class SpecValues {
 		
 		return point;
 	}
-	
 	/**
 	 * 指定のデータの指定キーの具体値を取得する
 	 * @param item 指定データ
@@ -968,16 +1030,19 @@ public class SpecValues {
 	 */
 	public static double getSpecValue(BBData item, String key, boolean is_km_per_hour) {
 		String point = item.get(key);
-		return getSpecValue(point, key, is_km_per_hour);
+		String name = item.get("名称");
+		return getSpecValue(point, key, name, is_km_per_hour);
 	}
 
 	/**
 	 * 指定のデータの指定キーの具体値を取得する
 	 * @param point 指定のポイント値
 	 * @param key 指定キー
+	 * @param parts_name パーツ名
+	 * @param is_km_per_hour 速度の単位をkm/hにするかどうか
 	 * @return 具体値の数値データ。ポイントタイプ以外の値を数値に変換して返す。
 	 */
-	public static double getSpecValue(String point, String key, boolean is_km_per_hour) {
+	public static double getSpecValue(String point, String key, String parts_name, boolean is_km_per_hour) {
 		String value_str = null;
 		double value = 0;
 		boolean is_speed = false;
@@ -1021,7 +1086,7 @@ public class SpecValues {
 			is_speed = true;
 		}
 		else if(key.equals("重量耐性")) {
-			value_str = SpecValues.ANTIWEIGHT.get(point);
+			return getAntiWeight(point, parts_name);
 		}
 		// 4.5対応
 		else if(key.equals("DEF回復")) {
@@ -1054,7 +1119,7 @@ public class SpecValues {
 		
 		return value;
 	}
-	
+
 	/**
 	 * 値を単位つきの文字列で取得する
 	 * @param item パーツまたは武器データ
@@ -1063,26 +1128,18 @@ public class SpecValues {
 	 */
 	public static String getSpecUnit(BBData item, String key, boolean is_km_per_hour) {
 		String value = item.get(key);
-		return getSpecUnit(value, key, is_km_per_hour);
-	}
-	
-	/**
-	 * 値を単位つきの文字列で取得する
-	 * @param value スペック値
-	 * @param key キー
-	 * @return スペック値の文字列。スペック値を数値変換できなかった場合はvalueの文字列をそのまま返す。
-	 */
-	public static String getSpecUnit(String value, String key, boolean is_km_per_hour) {
-		double value_num = getSpecValue(value, key, is_km_per_hour);
+		String name = item.get("名称");
+
+		double value_num = getSpecValue(value, key, name, is_km_per_hour);
 		String ret = value;
-		
+
 		if(value_num != ERROR_VALUE) {
 			ret = getSpecUnit(value_num, key, is_km_per_hour);
 		}
-		
+
 		return ret;
 	}
-	
+
 	/**
 	 * 値を単位つきの文字列で取得する
 	 * @param value スペック値

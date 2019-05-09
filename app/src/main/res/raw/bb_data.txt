@@ -4,6 +4,10 @@
 クーガーII型	640	C+	C	C	D+	C+
 クーガーS型	650	C+	B+	D	B+	D-
 クーガーNX	670	B-	B	D	B-	D+
+エンフォーサーI型	560	C	B-	C-	C+	D+
+エンフォーサーII型	550	D+	C+	D+	A-	D+
+エンフォーサーIII型	580	C	B	B-	C	C-
+エンフォーサーX型	650	C+	B	C	C+	C
 ツェーブラA1	580	C	B	C+	D+	D+
 ツェーブラA2	590	C	B+	B	E+	C
 ツェーブラA4	600	C	A-	C	C	D+
@@ -31,6 +35,10 @@
 クーガーII型	1320	C+	B-	D+	C+	C
 クーガーS型	1360	B	C	C+	C+	D+
 クーガーNX	1370	B-	B+	D	B-	C+
+エンフォーサーI型	1250	C	B-	D+	B-	D+
+エンフォーサーII型	1340	B	C	D+	C+	D+
+エンフォーサーIII型	1290	C	A	E+	C+	C+
+エンフォーサーX型	1330	B-	B-	D-	A-	B-
 ツェーブラA1	1200	C	C-	C	C+	D-
 ツェーブラA2	1210	C	E+	A-	C+	E+
 ツェーブラA4	1250	C	A-	D	C+	D-
@@ -58,6 +66,10 @@
 クーガーII型	890	C+	B-	D	C-	C+
 クーガーS型	920	B	B	C-	C-	B+
 クーガーNX	950	B-	C-	C+	B-	B-
+エンフォーサーI型	800	C	C-	C+	C+	C-
+エンフォーサーII型	880	B	C-	C+	D	C
+エンフォーサーIII型	890	C+	B+	C+	D	C+
+エンフォーサーX型	890	B	B+	C	D+	C+
 ツェーブラA1	800	C	C+	C+	E+	B
 ツェーブラA2	820	D+	D+	B+	E	B-
 ツェーブラA4	860	C+	A+	C	E	B+
@@ -85,6 +97,10 @@
 クーガーII型	880	C	C-	C	C+	D
 クーガーS型	1000	C+	C-	B-	C-	C-
 クーガーNX	1090	B-	D+	B+	C-	C-
+エンフォーサーI型	840	C	C+	C+	D	C-
+エンフォーサーII型	910	C	D+	C	C-	C-
+エンフォーサーIII型	1030	C+	D	B	D	C-
+エンフォーサーX型	1080	B-	D	B-	D+	C
 ツェーブラA1	860	C	B	C+	C-	D+
 ツェーブラA2	840	C	B	C	C	C-
 ツェーブラA4	890	C	C	C+	C+	C-
