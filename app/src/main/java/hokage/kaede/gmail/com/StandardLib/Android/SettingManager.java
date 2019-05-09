@@ -83,7 +83,7 @@ public class SettingManager {
 	
 	public static final String THEME_KEY = "THEME_KEY";
 	public static final String[] THEME_LIST = { "Default", "Light", "Black" };
-	public static final String THEME_DEFAULT = "Default";
+	public static final String THEME_DEFAULT = "Black";
 	public static final int THEME_DEFAULT_ID = -1;
 	public static int sThemeID = THEME_DEFAULT_ID;
 	
