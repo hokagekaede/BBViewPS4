@@ -287,25 +287,23 @@ public class CustomData {
 	}
 
 	/**
-	 * チップがセットされているかどうかを判定する。
-	 * @param name チップの名前
-	 * @return セットされている場合はtrueを返し、セットされていない場合はfalseを返す。
+	 * 中量機体かどうかを判別する。
+	 * @param parts_idx パーツの部位
+	 * @return 中量機体の場合はtrueを返し、中量機体でない場合はfalseを返す。
 	 */
-	public boolean existChip(String name) {
+	public boolean isNormalWeightParts(int parts_idx) {
+		String parts_name = mRecentParts[parts_idx].get("名称");
 
-		if(existChipArray(name, mRecentHeadChips)) {
+		if(parts_name.startsWith("クーガー")) {
 			return true;
 		}
-		else if(existChipArray(name, mRecentBodyChips)) {
+		else if(parts_name.startsWith("エンフォーサー")) {
 			return true;
 		}
-		else if(existChipArray(name, mRecentArmsChips)) {
+		else if(parts_name.startsWith("ツェーブラ")) {
 			return true;
 		}
-		else if(existChipArray(name, mRecentLegsChips)) {
-			return true;
-		}
-		else if(existChipArray(name, mRecentSupportChips)) {
+		else if(parts_name.startsWith("輝星")) {
 			return true;
 		}
 
@@ -313,23 +311,59 @@ public class CustomData {
 	}
 
 	/**
-	 * 所定の設定個所にチップがセットされているかどうかを判定する。
+	 * 重量機体かどうかを判別する。
+	 * @param parts_idx パーツの部位
+	 * @return 重量機体の場合はtrueを返し、重量機体でない場合はfalseを返す。
+	 */
+	public boolean isHeavyWeightParts(int parts_idx) {
+		String parts_name = mRecentParts[parts_idx].get("名称");
+
+		if(parts_name.startsWith("ヘヴィガード")) {
+			return true;
+		}
+		else if(parts_name.startsWith("ケーファー")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * チップのセット数を取得する。
+	 * @param name チップの名前
+	 * @return セットされている場合はtrueを返し、セットされていない場合はfalseを返す。
+	 */
+	private int countChip(String name) {
+		int count = 0;
+
+		count += countChipArray(name, mRecentHeadChips);
+		count += countChipArray(name, mRecentBodyChips);
+		count += countChipArray(name, mRecentArmsChips);
+		count += countChipArray(name, mRecentLegsChips);
+		count += countChipArray(name, mRecentSupportChips);
+
+		return count;
+	}
+
+	/**
+	 * 所定の設定個所のチップのセット数を取得する。
 	 * @param name チップの名前
 	 * @param chips 設定場所
 	 * @return セットされている場合はtrueを返し、セットされていない場合はfalseを返す。
 	 */
-	private boolean existChipArray(String name, BBData[] chips) {
+	private int countChipArray(String name, BBData[] chips) {
 		int size = chips.length;
+		int count = 0;
 
 		for(int i=0; i<size; i++) {
 			BBData item = chips[i];
 			String item_name = item.get("名称");
 			if(item_name.equals(name)) {
-				return true;
+				count++;
 			}
 		}
 
-		return false;
+		return count;
 	}
 
 	//----------------------------------------------------------
@@ -461,7 +495,8 @@ public class CustomData {
 		else if(mMode == MODE_REQARM) {
 			carried_weight = reqarm_weight;
 		}
-		
+
+		/*
 		// チップの効果を反映する
 		if(existChip("運搬適性")) {
 			ret = ret + (int)(carried_weight * 0.85);
@@ -472,7 +507,8 @@ public class CustomData {
 		else {
 			ret = ret + carried_weight;
 		}
-			
+		*/
+
 		return ret;
 	}
 	
@@ -585,24 +621,23 @@ public class CustomData {
 
 		// チップ上乗せ分を反映する
 		if(idx == HEAD_IDX) {
-			if(existChip("頭部装甲")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("頭部装甲"));
 		}
 		else if(idx == BODY_IDX) {
-			if(existChip("胴部装甲")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("胴部装甲"));
 		}
 		else if(idx == ARMS_IDX) {
-			if(existChip("腕部装甲")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("腕部装甲"));
 		}
 		else if(idx == LEGS_IDX) {
-			if(existChip("脚部装甲")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("脚部装甲"));
+		}
+
+		if(isNormalWeightParts(idx)) {
+			ret = ret + (1 * countChip("中量機体強化"));
+		}
+		else if(isHeavyWeightParts(idx)) {
+			ret = ret + (1 * countChip("重量機体強化"));
 		}
 
 		return ret;
@@ -623,12 +658,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("射撃補正")) {
-				ret = ret + 0.010;
-			}
-			else if(existChip("射撃補正II")) {
-				ret = ret + 0.015;
-			}
+			ret = ret + (0.010 * countChip("射撃補正"));
+			ret = ret + (0.015 * countChip("射撃補正II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -652,12 +683,8 @@ public class CustomData {
 			ret = Integer.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("索敵")) {
-				ret = ret + 15;
-			}
-			else if(existChip("索敵II")) {
-				ret = ret + 24;
-			}
+			ret = ret + (15 * countChip("索敵"));
+			ret = ret + (24 * countChip("索敵II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -681,13 +708,9 @@ public class CustomData {
 			ret = Integer.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("ロックオン")) {
-				ret = ret + 3;
-			}
-			else if(existChip("ロックオンII")) {
-				ret = ret + 5;
-			}
-			
+			ret = ret + (3 * countChip("ロックオン"));
+			ret = ret + (5 * countChip("ロックオンII"));
+
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -710,9 +733,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップボーナス
-			if(existChip("DEF回復")) {
-				ret = ret + 2.0;
-			}
+			ret = ret + (3.0 * countChip("DEF回復"));
+			ret = ret + (5.0 * countChip("DEF回復II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -738,12 +760,8 @@ public class CustomData {
 		double ret = body_parts.getBoost();
 
 		// チップセットボーナス
-		if(existChip("ブースター")) {
-			ret = ret + 2;
-		}
-		else if(existChip("ブースターII")) {
-			ret = ret + 3;
-		}
+		ret = ret + (2 * countChip("ブースター"));
+		ret = ret + (3 * countChip("ブースターII"));
 			
 		return ret;
 	}
@@ -781,12 +799,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("SP供給率")) {
-				ret = ret + 0.030;
-			}
-			else if(existChip("SP供給率II")) {
-				ret = ret + 0.045;
-			}
+			ret = ret + (0.030 * countChip("SP供給率"));
+			ret = ret + (0.045 * countChip("SP供給率II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -810,9 +824,7 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("エリア移動")) {
-				ret = ret - 0.20;
-			}
+			ret = ret - (0.20 * countChip("エリア移動"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -841,13 +853,9 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップボーナス
-			if(existChip("DEF耐久")) {
-				ret = ret + 80;
-			}
-			else if(existChip("DEF耐久II")) {
-				ret = ret + 120;
-			}
-			
+			ret = ret + (80 * countChip("DEF耐久"));
+			ret = ret + (120 * countChip("DEF耐久II"));
+
 		} catch(Exception e) {
 			ret = 0;
 		}
@@ -870,12 +878,8 @@ public class CustomData {
 			ret = Integer.valueOf(value);
 
 			// チップセットボーナス
-			if(existChip("反動吸収")) {
-				ret = ret + 3.0;
-			}
-			else if(existChip("反動吸収II")) {
-				ret = ret + 4.5;
-			}
+			ret = ret + (3.0 * countChip("反動吸収"));
+			ret = ret + (4.5 * countChip("反動吸収II"));
 			
 		} catch(Exception e) {
 			ret = 0;
@@ -896,12 +900,8 @@ public class CustomData {
 			ret = Double.valueOf(SpecValues.RELOAD.get(spec));
 
 			// チップセットボーナス
-			if(existChip("リロード")) {
-				ret = ret - 0.010;
-			}
-			else if(existChip("リロードII")) {
-				ret = ret - 0.015;
-			}
+			ret = ret - (0.010 * countChip("リロード"));
+			ret = ret - (0.015 * countChip("リロードII"));
 
 		} catch (Exception e) {
 			ret = 0;
@@ -922,9 +922,8 @@ public class CustomData {
 			ret = Double.valueOf(SpecValues.CHANGEWEAPON.get(spec));
 
 			// チップセットボーナス
-			if(existChip("武器変更")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("武器変更"));
+			ret = ret + (3 * countChip("武器変更II"));
 			
 		} catch(Exception e) {
 			ret = 0;
@@ -948,9 +947,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップボーナス
-			if(existChip("予備弾数")) {
-				ret = ret + 2;
-			}
+			ret = ret + (2 * countChip("予備弾数"));
+			ret = ret + (3 * countChip("予備弾数II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -975,12 +973,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス(km/h)
-			if(existChip("歩行")) {
-				ret = ret + 1.08;
-			}
-			else if(existChip("歩行II")) {
-				ret = ret + 1.62;
-			}
+			ret = ret + (1.08 * countChip("歩行"));
+			ret = ret + (1.62 * countChip("歩行II"));
 
 			// ホバー脚部の場合の補正値を計算する
 			if(is_hover) {
@@ -1044,9 +1038,8 @@ public class CustomData {
 		int ret = SpecValues.getAntiWeight(point, name);
 
 		// チップセットボーナス
-		if(existChip("重量耐性")) {
-			ret = ret + 40;
-		}
+		ret = ret + (40 * countChip("重量耐性"));
+		ret = ret + (60 * countChip("重量耐性II"));
 
 		return ret;
 	}
@@ -1066,9 +1059,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップボーナス (km/h)
-			if(existChip("巡航")) {
-				ret = ret + 0.36;
-			}
+			ret = ret + (0.36 * countChip("巡航"));
+			ret = ret + (0.54 * countChip("巡航II"));
 			
 		} catch(Exception e) {
 			ret = 0;
@@ -1147,13 +1139,15 @@ public class CustomData {
 	 */
 	public double getArmor(String blust_type, int idx) {
 		double ret = getArmor(idx);
-		
+
+		/*
 		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
 			ret = ret + 1;
 		}
 		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {
 			ret = ret + 2;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1166,12 +1160,14 @@ public class CustomData {
 	public double getArmorAve(String blust_type) {
 		double ret = getArmorAve();
 
+		/*
 		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
 			ret = ret + 1;
 		}
 		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {  // 暫定対応。値は不明。
 			ret = ret + 2;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1183,13 +1179,15 @@ public class CustomData {
 	 */
 	public double getShotBonus(String blust_type) {
 		double ret = getShotBonus();
-		
+
+		/*
 		if(existChip("遊撃兵装強化") && blust_type.equals("遊撃兵装")) {
 			ret = ret + 0.03;
 		}
 		else if(existChip("遊撃兵装強化II") && blust_type.equals("遊撃兵装")) {  // 暫定対応。値は不明。
 			ret = ret + 0.06;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1229,12 +1227,14 @@ public class CustomData {
 	public double getBoost(String blust_type) {
 		double ret = getBoost();
 
+		/*
 		if(existChip("強襲兵装強化") && blust_type.equals("強襲兵装")) {
 			ret = ret + 3;
 		}
 		else if(existChip("強襲兵装強化II") && blust_type.equals("強襲兵装")) {  // 暫定対応。値は不明。
 			ret = ret + 6;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1254,12 +1254,14 @@ public class CustomData {
 	public double getBoostChargeTime(String blust_type) {
 		double charge = 50;
 
+		/*
 		if(existChip("ブースター回復")) {
 			charge = charge * 1.1;
 		}
 		else if(existChip("ブースター回復II")) {
 			charge = charge * 1.25;
 		}
+		*/
 		
 		return getBoost(blust_type) / charge;
 	}
@@ -1271,13 +1273,15 @@ public class CustomData {
 	 */
 	public double getSP(String blust_type) {
 		double ret = getSP();
-		
+
+		/*
 		if(existChip("支援兵装強化") && blust_type.equals("支援兵装")) {
 			ret = ret + 0.04;
 		}
 		else if(existChip("支援兵装強化II") && blust_type.equals("支援兵装")) {  // 暫定対応。値は不明。
 			ret = ret + 0.08;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1290,12 +1294,14 @@ public class CustomData {
 	public double getAreaMove(String blust_type) {
 		double ret = getAreaMove();
 
+		/*
 		if(existChip("支援兵装強化") && blust_type.equals("支援兵装")) {
 			ret = ret - 0.50;
 		}
 		else if(existChip("支援兵装強化II") && blust_type.equals("支援兵装")) {  // 暫定対応。値は不明。
 			ret = ret - 1.00;
 		}
+		*/
 
 		// エリア移動の上限設定
 		if(ret < 2.0) {
@@ -1331,12 +1337,14 @@ public class CustomData {
 	public double getReload(String blust_type) {
 		double ret = getReload();
 
+		/*
 		if(existChip("遊撃兵装強化") && blust_type.equals("遊撃兵装")) {
 			ret = ret - 0.02;
 		}
 		else if(existChip("遊撃兵装強化II") && blust_type.equals("遊撃兵装")) {  // 暫定対応。値は不明。
 			ret = ret - 0.04;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1395,6 +1403,7 @@ public class CustomData {
 	private double getDashBlust(String blust_type, boolean is_start) {
 		double ret = calcDash(is_start);
 
+		/*
 		// 兵装強化チップの効果を反映する
 		if(existChip("強襲兵装強化") && blust_type.equals("強襲兵装")) {
 			ret = ret + calcHover(1.08, is_start);
@@ -1402,6 +1411,7 @@ public class CustomData {
 		else if(existChip("強襲兵装強化II") && blust_type.equals("強襲兵装")) {  // 暫定対応。値は不明。
 			ret = ret + calcHover(2.16, is_start);
 		}
+		*/
 
 		// 超過を考慮した速度計算を行う
 		ret = calcSpeed(blust_type, ret, SpecValues.MIN_DASH);
@@ -1444,12 +1454,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 			
 			// チップセットボーナス (km/h)
-			if(existChip("ダッシュ")) {
-				ret = ret + 0.36;
-			}
-			else if(existChip("ダッシュII")) {
-				ret = ret + 0.54;
-			}
+			ret = ret + (0.36 * countChip("ダッシュ"));
+			ret = ret + (0.54 * countChip("ダッシュII"));
 
 			// ホバー補正計算を行う。
 			ret = calcHover(ret, is_start);
@@ -1572,6 +1578,7 @@ public class CustomData {
 	private double getValueResistOverWeightChip() {
 		double ret = 0.0;
 
+		/*
 		// チップの効果を反映
 		if(existChip("重量超過耐性")) {
 			ret = 20.0;
@@ -1582,6 +1589,7 @@ public class CustomData {
 		else if(existChip("重量超過耐性III")) {
 			ret = 70.0;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1595,6 +1603,7 @@ public class CustomData {
 		double ret = base_speed;
 		double chip_bonus = 0;
 
+		/*
 		// チップの効果を反映
 		if(existChip("水中移動適性")) {
 			chip_bonus = 0.25;
@@ -1602,6 +1611,7 @@ public class CustomData {
 		else if(existChip("水中移動適性II")) {
 			chip_bonus = 0.5;
 		}
+		*/
 		
 		// 各種状態による速度低下倍率を反映する
 		if(mMode == MODE_MOVE_HIWATER) {
@@ -1625,12 +1635,14 @@ public class CustomData {
 	public int getAntiWeight(String blust_type) {
 		int ret = getAntiWeight();
 
+		/*
 		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
 			ret = ret + 100;
 		}
 		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {  // 暫定対応。値は不明。
 			ret = ret + 200;
 		}
+		*/
 		
 		return ret;
 	}
@@ -1742,15 +1754,8 @@ public class CustomData {
 		if(is_critical) {
 			double cs_rate = SpecValues.CS_SHOT_RATE;
 
-			if(existChip("プリサイスショット")) {
-				cs_rate = cs_rate + 0.1;
-			}
-			else if(existChip("プリサイスショットII")) {
-				cs_rate = cs_rate + 0.3;
-			}
-			else if(existChip("プリサイスショットIII")) {
-				cs_rate = cs_rate + 0.5;
-			}
+			cs_rate = cs_rate + (0.1 * countChip("プリサイスショット"));
+			cs_rate = cs_rate + (0.125 * countChip("プリサイスショットII"));
 			
 			power = power * cs_rate;
 		}
@@ -1759,6 +1764,7 @@ public class CustomData {
 		if(is_stn) {
 			double rate = 0;
 
+			/*
 			// チップの補正値を取得
 			if(existChip("アンチスタビリティ")) {
 				rate = 0.03;
@@ -1769,6 +1775,7 @@ public class CustomData {
 			else if(existChip("アンチスタビリティIII")) {
 				rate = 0.10;
 			}
+			*/
 			
 			power = power * (1.0 + rate);
 		}
@@ -1783,6 +1790,7 @@ public class CustomData {
 			power += base_power * (1.2 * data.getNewdAbsPer() / 100.0);
 			power += base_power * (1.0 * data.getSlashAbsPer() / 100.0);
 
+			/*
 			if(existChip("対DEF破壊適性")) {
 				rate = 0.20;
 			}
@@ -1792,6 +1800,7 @@ public class CustomData {
 			else if(existChip("対DEF破壊適性III")) {
 				rate = 0.60;   // IとIIからの暫定値
 			}
+			*/
 			
 			power = power * (1 + rate);
 		}
@@ -1804,6 +1813,7 @@ public class CustomData {
 			power += base_power * (1.2 * data.getNewdAbsPer() / 100.0);
 			power += base_power * (1.0 * data.getSlashAbsPer() / 100.0);
 
+			/*
 			if(existChip("対物破壊適性")) {
 				rate = 0.07;
 			}
@@ -1813,6 +1823,7 @@ public class CustomData {
 			else if(existChip("対物破壊適性III")) {
 				rate = 0.15;
 			}
+			*/
 			
 			power = power * (1 + rate);
 		}
@@ -1877,6 +1888,7 @@ public class CustomData {
 	private double getShotSpeed(BBData data) {
 		double shot_chip_bonus = 1.0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("実弾速射")) {
 			shot_chip_bonus += 0.03 * (data.getBulletAbsPer() / 100.0);
@@ -1887,6 +1899,7 @@ public class CustomData {
 		else if(existChip("実弾速射III")) {
 			shot_chip_bonus += 0.12 * (data.getBulletAbsPer() / 100.0);
 		}
+		*/
 
 		return data.getShotSpeed() * shot_chip_bonus;
 	}
@@ -1984,6 +1997,7 @@ public class CustomData {
 		// リロード時間の計算
 		ret = reload_time_value * reload_spec_value;
 
+		/*
 		// チップの補正値を取得
 		if(is_quickreload) {
 			if(existChip("クイックリロード")) {
@@ -1993,6 +2007,7 @@ public class CustomData {
 				ret = ret * (5.0 / 8.0);
 			}
 		}
+		*/
 		
 		return ret;
 	}
@@ -2016,6 +2031,7 @@ public class CustomData {
 		double ret = 0;
 		double chip_bonus = 1.0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("高速冷却")) {
 			chip_bonus = 0.8;
@@ -2023,6 +2039,7 @@ public class CustomData {
 		else if(existChip("高速冷却II")) {
 			chip_bonus = 0.5;
 		}
+		*/
 		
 		ret = data.getOverheatRepairTime(is_overheat) * chip_bonus;
 		
@@ -2219,6 +2236,7 @@ public class CustomData {
 	private double getNewdChipBonus(double newd_percent) {
 		double newd_chip_bonus = 0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("ニュード威力上昇")) {
 			newd_chip_bonus = 0.025;
@@ -2229,6 +2247,7 @@ public class CustomData {
 		else if(existChip("ニュード威力上昇III")) {
 			newd_chip_bonus = 0.09;
 		}
+		*/
 		
 		return 1.0 + (newd_chip_bonus * (newd_percent / 100.0));
 	}
@@ -2241,6 +2260,7 @@ public class CustomData {
 	private double getSlashChipBonus(double slash_percent) {
 		double slash_chip_bonus = 0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("近接攻撃強化")) {
 			slash_chip_bonus = 0.00005;
@@ -2251,6 +2271,7 @@ public class CustomData {
 		else if(existChip("近接攻撃強化III")) {
 			slash_chip_bonus = 0.00020;
 		}
+		*/
 		
 		return 1.0 + ((getPartsWeight() - 2000) * slash_chip_bonus) * (slash_percent / 100.0);
 	}
@@ -2264,6 +2285,7 @@ public class CustomData {
 		double range = data.getExplosionRange();
 		double chip_bonus = 0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("爆発範囲拡大")) {
 			chip_bonus = 1;
@@ -2274,6 +2296,7 @@ public class CustomData {
 		else if(existChip("爆発範囲拡大III")) {
 			chip_bonus = 3;
 		}
+		*/
 		
 		return range + (chip_bonus * ((double)data.getExplosionAbsPer() / 100.0));
 	}
@@ -2287,6 +2310,7 @@ public class CustomData {
 		int ret = data.getSearchTime();
 		int chip_bonus = 0;
 
+		/*
 		// チップの補正値を取得
 		if(existChip("索敵継続延長")) {
 			chip_bonus = 2;
@@ -2294,6 +2318,7 @@ public class CustomData {
 		else if(existChip("索敵継続延長II")) {
 			chip_bonus = 5;
 		}
+		*/
 		
 		return ret + chip_bonus;
 	}
@@ -2438,6 +2463,7 @@ public class CustomData {
 	public double getChargeTime(BBData data) {
 		double ret = data.getChargeTime();
 
+		/*
 		// チップの補正値を取得
 		if(existChip("高速充填")) {
 			ret = ret / 1.4;
@@ -2445,6 +2471,7 @@ public class CustomData {
 		else if(existChip("高速充填II")) {
 			ret = ret / 1.7;
 		}
+		*/
 		
 		return ret;
 	}
@@ -2585,19 +2612,9 @@ public class CustomData {
 	 */
 	private double getBulletDamage(BBData data, double attack_value, double armor) {
 		double chip_bonus = 1.0;
-		
-		if(existChip("対実弾防御")) {
-			chip_bonus = 0.960;
-		}
-		else if(existChip("対実弾防御II")) {
-			chip_bonus = 0.920;
-		}
-		else if(existChip("対実弾防御III")) {
-			chip_bonus = 0.800;
-		}
-		else if(existChip("対実弾防御IV")) {
-			chip_bonus = 0.756;
-		}
+
+		chip_bonus = chip_bonus - (0.04 * countChip("対実弾防御"));
+		chip_bonus = chip_bonus - (0.06 * countChip("対実弾防御II"));
 
 		return calcDamage(attack_value, chip_bonus, data.getBulletAbsPer(), armor);
 	}
@@ -2611,19 +2628,8 @@ public class CustomData {
 	 */
 	private double getExplosionDamage(BBData data, double attack_value, double armor) {
 		double chip_bonus = 1.0;
-		
-		if(existChip("対爆発防御")) {
-			chip_bonus = 0.950;
-		}
-		else if(existChip("対爆発防御II")) {
-			chip_bonus = 0.900;
-		}
-		else if(existChip("対爆発防御III")) {
-			chip_bonus = 0.830;
-		}
-		else if(existChip("対爆発防御IV")) {
-			chip_bonus = 0.700;
-		}
+
+		chip_bonus = chip_bonus - (0.05 * countChip("対爆発防御"));
 
 		return calcDamage(attack_value, chip_bonus, data.getExplosionAbsPer(), armor);
 	}
@@ -2637,19 +2643,9 @@ public class CustomData {
 	 */
 	private double getNewdDamage(BBData data, double attack_value, double armor) {
 		double chip_bonus = 1.0;
-		
-		if(existChip("対ニュード防御")) {
-			chip_bonus = 0.970;
-		}
-		else if(existChip("対ニュード防御II")) {
-			chip_bonus = 0.940;
-		}
-		else if(existChip("対ニュード防御III")) {
-			chip_bonus = 0.900;
-		}
-		else if(existChip("対ニュード防御IV")) {
-			chip_bonus = 0.800;
-		}
+
+		chip_bonus = chip_bonus - (0.04 * countChip("対ニュード防御"));
+		chip_bonus = chip_bonus - (0.06 * countChip("対ニュード防御II"));
 
 		return calcDamage(attack_value, chip_bonus, data.getNewdAbsPer(), armor);
 	}
@@ -2663,19 +2659,8 @@ public class CustomData {
 	 */
 	private double getSlashDamage(BBData data, double attack_value, double armor) {
 		double chip_bonus = 1.0;
-		
-		if(existChip("対近接防御")) {
-			chip_bonus = 0.950;
-		}
-		else if(existChip("対近接防御II")) {
-			chip_bonus = 0.900;
-		}
-		else if(existChip("対近接防御III")) {
-			chip_bonus = 0.830;
-		}
-		else if(existChip("対近接防御IV")) {
-			chip_bonus = 0.700;
-		}
+
+		chip_bonus = chip_bonus - (0.05 * countChip("対近接防御"));
 
 		return calcDamage(attack_value, chip_bonus, data.getSlashAbsPer(), armor);
 	}
@@ -2787,10 +2772,11 @@ public class CustomData {
 		double blust_break_damage = life + 5000;
 		
 		// チップの効果を反映する
+		/*
 		if(existChip("大破抑制")) {
 			attack_value_calc = attack_value_calc - 1500;
 		}
-
+		*/
 		// フェイタルアタックチップの効果を反映する
 		if(fatal_attack_lv == 1) {
 			blust_break_damage = blust_break_damage - 1000;
@@ -2818,7 +2804,8 @@ public class CustomData {
 	public boolean isDown(double attack_value) {
 		boolean ret = false;
 		int resist_chip_value = 0;
-		
+
+		/*
 		// 転倒耐性チップの効果を反映する
 		if(existChip("転倒耐性")) {
 			resist_chip_value = 1000;
@@ -2829,6 +2816,7 @@ public class CustomData {
 		else if(existChip("転倒耐性III")) {
 			resist_chip_value = 3000;
 		}
+		*/
 		
 		if(isHoverLegs()) {
 			if(attack_value >= SpecValues.HOVER_DOWN_DAMAGE + resist_chip_value) {
@@ -2858,7 +2846,8 @@ public class CustomData {
 	public boolean isBack(double attack_value) {
 		boolean ret = false;
 		int resist_chip_value = 0;
-		
+
+		/*
 		// 転倒耐性チップの効果を反映する
 		if(existChip("転倒耐性")) {
 			resist_chip_value = 500;
@@ -2869,6 +2858,7 @@ public class CustomData {
 		else if(existChip("転倒耐性III")) {
 			resist_chip_value = 1500;
 		}
+		*/
 		
 		if(isHoverLegs()) {
 			if(attack_value >= SpecValues.HOVER_KB_DAMAGE + resist_chip_value) {
