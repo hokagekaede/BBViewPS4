@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="hokage.kaede.gmail.com.BBViewPS4"
+    android:versionCode="1000"
+    android:versionName="1.0.00">
+    
+    <uses-permission android:name="android.hardware.touchscreen" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14" />
+
+    <application android:allowBackup="true" android:icon="@drawable/ic_launcher" android:label="@string/app_name" >
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Main.TopActivity" android:launchMode="singleTask">
+        	<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+				<data android:mimeType="text/plain" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Main.AboutActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Main.SettingActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.CustomMainActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.SelectActivity" />
+
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Custom.CompareActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Item.CategoryListActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Item.BBDataListActivity" />
+        
+        <activity android:name="hokage.kaede.gmail.com.BBViewPS4.Item.InfoActivity" />
+
+    </application>
+
+</manifest>
