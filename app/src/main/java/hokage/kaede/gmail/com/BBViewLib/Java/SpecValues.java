@@ -30,52 +30,52 @@ public class SpecValues {
 	/**
 	 * 装甲のデータ一覧
 	 */
-	public static KeyValueStore ARMOR;
+	private static KeyValueStore ARMOR;
 	
 	/**
 	 * 射撃補正のデータ一覧
 	 */
-	public static KeyValueStore SHOTBONUS;
+	private static KeyValueStore SHOTBONUS;
 	
 	/**
 	 * 索敵のデータ一覧
 	 */
-	public static KeyValueStore SEARCH;
+	private static KeyValueStore SEARCH;
 	
 	/**
 	 * ロックオン距離のデータ一覧
 	 */
-	public static KeyValueStore ROCKON;
+	private static KeyValueStore ROCKON;
 	
 	/**
 	 * ブースト容量のデータ一覧
 	 */
-	public static KeyValueStore BOOST;
+	private static KeyValueStore BOOST;
 	
 	/**
 	 * SP供給のデータ一覧
 	 */
-	public static KeyValueStore SP;
+	private static KeyValueStore SP;
 	
 	/**
 	 * エリア移動のデータ一覧
 	 */
-	public static KeyValueStore AREAMOVE;
+	private static KeyValueStore AREAMOVE;
 	
 	/**
 	 * 反動吸収のデータ一覧
 	 */
-	public static KeyValueStore RECOIL;
+	private static KeyValueStore RECOIL;
 	
 	/**
 	 * リロードのデータ一覧
 	 */
-	public static KeyValueStore RELOAD;
+	private static KeyValueStore RELOAD;
 	
 	/**
 	 * 武器変更のデータ一覧
 	 */
-	public static KeyValueStore CHANGEWEAPON;
+	private static KeyValueStore CHANGEWEAPON;
 	
 	/**
 	 * 重量耐性のデータ一覧
@@ -85,22 +85,22 @@ public class SpecValues {
 	/**
 	 * ダッシュ速度(初速)のデータ一覧
 	 */
-	public static KeyValueStore DASH;
+	private static KeyValueStore DASH;
 	
 	/**
 	 * ダッシュ速度(初速)のデータ一覧(ホバー)
 	 */
-	public static KeyValueStore DASH_HOVER;
+	private static KeyValueStore DASH_HOVER;
 	
 	/**
 	 * 歩行のデータ一覧
 	 */
-	public static KeyValueStore WALK;
+	private static KeyValueStore WALK;
 	
 	/**
 	 * 歩行のデータ一覧(ホバー)
 	 */
-	public static KeyValueStore WALK_HOVER;
+	private static KeyValueStore WALK_HOVER;
 	
 	/**
 	 * ブラストの最大HP

@@ -217,22 +217,20 @@ public class SpecInfoPanel extends LinearLayout {
         String ret = "";
         String point = "";
 
-        double min_value = Double.MIN_VALUE;
+        double min_value = SpecValues.getSpecValue("E-", "装甲", "");
         double value = target_data.getCalcValue(key);
 
-        try {
-            min_value = Double.valueOf(SpecValues.ARMOR.get("E-"));
-
+        if(min_value == SpecValues.ERROR_VALUE) {
+            min_value = Double.MIN_VALUE;
+            point = SpecValues.NOTHING_STR;
+        }
+        else {
             if(value >= min_value) {
                 point = SpecValues.getPoint("装甲", value, false);
             }
             else {
                 point = SpecValues.NOTHING_STR;
             }
-
-        } catch(Exception e) {
-            min_value = Double.MIN_VALUE;
-            point = SpecValues.NOTHING_STR;
         }
 
         if(point.equals(SpecValues.NOTHING_STR)) {

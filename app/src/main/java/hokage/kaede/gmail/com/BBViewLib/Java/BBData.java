@@ -223,12 +223,10 @@ public class BBData extends BBDataLvl {
 	public double getArmor() {
 		double ret = 0;
 
-		// パーツの設定値の読み込み
-		try {
-			String spec = super.get("装甲");
-			ret = Integer.valueOf(SpecValues.ARMOR.get(spec));
+		String spec = super.get("装甲");
+		ret = SpecValues.getSpecValue(spec, "装甲", "");
 
-		} catch (Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = NUM_VALUE_NOTHING;
 		}
 
@@ -277,16 +275,13 @@ public class BBData extends BBDataLvl {
 	public double getBoost() {
 		double ret = 0;
 
-		String point = super.get("ブースター");
-		String value = SpecValues.BOOST.get(point);
-		
-		try {
-			ret = Integer.valueOf(value);
-			
-		} catch(Exception e) {
-			ret = 0;
+		String spec = super.get("ブースター");
+		ret = SpecValues.getSpecValue(spec, "ブースター", "");
+
+		if(ret == SpecValues.ERROR_VALUE) {
+			ret = NUM_VALUE_NOTHING;
 		}
-			
+
 		return ret;
 	}
 	/**

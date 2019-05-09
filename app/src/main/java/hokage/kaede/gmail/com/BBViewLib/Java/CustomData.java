@@ -632,20 +632,17 @@ public class CustomData {
 		double ret = 0;
 
 		BBData head_parts = mRecentParts[HEAD_IDX];
-		String point = head_parts.get("射撃補正");
-		String value = SpecValues.SHOTBONUS.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = head_parts.get("射撃補正");
+		ret = SpecValues.getSpecValue(spec, "射撃補正", "");
 
-			// チップセットボーナス
-			ret = ret + (1.0 * countChip("射撃補正"));
-			ret = ret + (1.5 * countChip("射撃補正II"));
+		// チップセットボーナス
+		ret = ret + (1.0 * countChip("射撃補正"));
+		ret = ret + (1.5 * countChip("射撃補正II"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
+
 		return ret;
 	}
 	
@@ -654,24 +651,21 @@ public class CustomData {
 	 * @return 索敵の値。単位はm。
 	 */
 	public int getSearch() {
-		int ret = 0;
+		double ret = 0;
 
 		BBData head_parts = mRecentParts[HEAD_IDX];
-		String point = head_parts.get("索敵");
-		String value = SpecValues.SEARCH.get(point);
-		
-		try {
-			ret = Integer.valueOf(value);
+		String spec = head_parts.get("索敵");
+		ret = SpecValues.getSpecValue(spec, "索敵", "");
 
-			// チップセットボーナス
-			ret = ret + (15 * countChip("索敵"));
-			ret = ret + (24 * countChip("索敵II"));
+		// チップセットボーナス
+		ret = ret + (15 * countChip("索敵"));
+		ret = ret + (24 * countChip("索敵II"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
-		return ret;
+
+		return (int)ret;
 	}
 	
 	/**
@@ -679,24 +673,21 @@ public class CustomData {
 	 * @return ロックオンの値。単位はm。
 	 */
 	public int getRockOn() {
-		int ret = 0;
+		double ret = 0;
 
 		BBData head_parts = mRecentParts[HEAD_IDX];
-		String point = head_parts.get("ロックオン");
-		String value = SpecValues.ROCKON.get(point);
-		
-		try {
-			ret = Integer.valueOf(value);
+		String spec = head_parts.get("ロックオン");
+		ret = SpecValues.getSpecValue(spec, "ロックオン", "");
 
-			// チップセットボーナス
-			ret = ret + (3 * countChip("ロックオン"));
-			ret = ret + (5 * countChip("ロックオンII"));
+		// チップセットボーナス
+		ret = ret + (3 * countChip("ロックオン"));
+		ret = ret + (5 * countChip("ロックオンII"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
-		return ret;
+
+		return (int)ret;
 	}
 
 	/**
@@ -707,20 +698,17 @@ public class CustomData {
 		double ret = 0;
 
 		BBData head_parts = mRecentParts[HEAD_IDX];
-		String point = head_parts.get("DEF回復");
-		String value = SpecValues.DEF_RECOVER.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = head_parts.get("DEF回復");
+		ret = SpecValues.getSpecValue(spec, "DEF回復", "");
 
-			// チップボーナス
-			ret = ret + (3.0 * countChip("DEF回復"));
-			ret = ret + (5.0 * countChip("DEF回復II"));
+		// チップセットボーナス
+		ret = ret + (3.0 * countChip("DEF回復"));
+		ret = ret + (5.0 * countChip("DEF回復II"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
+
 		return ret;
 	}
 
@@ -773,17 +761,14 @@ public class CustomData {
 		double ret = 0;
 
 		BBData body_parts = mRecentParts[BODY_IDX];
-		String point = body_parts.get("SP供給");
-		String value = SpecValues.SP.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = body_parts.get("SP供給");
+		ret = SpecValues.getSpecValue(spec, "SP供給", "");
 
-			// チップセットボーナス
-			ret = ret + (3.0 * countChip("SP供給"));
-			ret = ret + (4.5 * countChip("SP供給II"));
+		// チップセットボーナス
+		ret = ret + (3.0 * countChip("SP供給"));
+		ret = ret + (4.5 * countChip("SP供給II"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
 
@@ -798,24 +783,21 @@ public class CustomData {
 		double ret = 0;
 
 		BBData body_parts = mRecentParts[BODY_IDX];
-		String point = body_parts.get("エリア移動");
-		String value = SpecValues.AREAMOVE.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = body_parts.get("エリア移動");
+		ret = SpecValues.getSpecValue(spec, "エリア移動", "");
 
-			// チップセットボーナス
-			ret = ret - (0.20 * countChip("エリア移動"));
+		// チップセットボーナス
+		ret = ret - (0.20 * countChip("エリア移動"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
+
 		// エリア移動の上限設定
 		if(ret < 2.0) {
 			ret = 2.0;
 		}
-			
+
 		return ret;
 	}
 
@@ -827,20 +809,17 @@ public class CustomData {
 		double ret = 0;
 
 		BBData body_parts = mRecentParts[BODY_IDX];
-		String point = body_parts.get("DEF耐久");
-		String value = SpecValues.DEF_GUARD.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = body_parts.get("DEF耐久");
+		ret = SpecValues.getSpecValue(spec, "DEF耐久", "");
 
-			// チップボーナス
-			ret = ret + (80 * countChip("DEF耐久"));
-			ret = ret + (120 * countChip("DEF耐久II"));
+		// チップセットボーナス
+		ret = ret + (80 * countChip("DEF耐久"));
+		ret = ret + (120 * countChip("DEF耐久II"));
 
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-			
+
 		return ret;
 	}
 	
@@ -852,20 +831,17 @@ public class CustomData {
 		double ret = 0;
 
 		BBData arms_parts = mRecentParts[ARMS_IDX];
-		String point = arms_parts.get("反動吸収");
-		String value = SpecValues.RECOIL.get(point);
-		
-		try {
-			ret = Integer.valueOf(value);
+		String spec = arms_parts.get("反動吸収");
+		ret = SpecValues.getSpecValue(spec, "反動吸収", "");
 
-			// チップセットボーナス
-			ret = ret + (3.0 * countChip("反動吸収"));
-			ret = ret + (4.5 * countChip("反動吸収II"));
-			
-		} catch(Exception e) {
+		// チップセットボーナス
+		ret = ret + (3.0 * countChip("反動吸収"));
+		ret = ret + (4.5 * countChip("反動吸収II"));
+
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-			
+
 		return ret;
 	}
 	
@@ -876,15 +852,15 @@ public class CustomData {
 	public double getReload() {
 		double ret = 0;
 
-		try {
-			String spec = mRecentParts[ARMS_IDX].get("リロード");
-			ret = Double.valueOf(SpecValues.RELOAD.get(spec));
+		BBData arms_parts = mRecentParts[ARMS_IDX];
+		String spec = arms_parts.get("リロード");
+		ret = SpecValues.getSpecValue(spec, "リロード", "");
 
-			// チップセットボーナス
-			ret = ret + (1.0 * countChip("リロード"));
-			ret = ret + (1.5 * countChip("リロードII"));
+		// チップセットボーナス
+		ret = ret + (1.0 * countChip("リロード"));
+		ret = ret + (1.5 * countChip("リロードII"));
 
-		} catch (Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
 
@@ -898,18 +874,18 @@ public class CustomData {
 	public double getChangeWeapon() {
 		double ret = 0;
 
-		try {
-			String spec = mRecentParts[ARMS_IDX].get("武器変更");
-			ret = Double.valueOf(SpecValues.CHANGEWEAPON.get(spec));
+		BBData arms_parts = mRecentParts[ARMS_IDX];
+		String spec = arms_parts.get("武器変更");
+		ret = SpecValues.getSpecValue(spec, "武器変更", "");
 
-			// チップセットボーナス
-			ret = ret + (2 * countChip("武器変更"));
-			ret = ret + (3 * countChip("武器変更II"));
-			
-		} catch(Exception e) {
+		// チップセットボーナス
+		ret = ret + (2 * countChip("武器変更"));
+		ret = ret + (3 * countChip("武器変更II"));
+
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
+
 		return ret;
 	}
 
@@ -921,20 +897,17 @@ public class CustomData {
 		double ret = 0;
 
 		BBData arms_parts = mRecentParts[ARMS_IDX];
-		String point = arms_parts.get("予備弾数");
-		String value = SpecValues.SPARE_BULLET.get(point);
+		String spec = arms_parts.get("予備弾数");
+		ret = SpecValues.getSpecValue(spec, "予備弾数", "");
 
-		try {
-			ret = Double.valueOf(value);
+		// チップセットボーナス
+		ret = ret + (2 * countChip("予備弾数"));
+		ret = ret + (3 * countChip("予備弾数II"));
 
-			// チップボーナス
-			ret = ret + (2 * countChip("予備弾数"));
-			ret = ret + (3 * countChip("予備弾数II"));
-
-		} catch(Exception e) {
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
-		
+
 		return ret;
 	}
 
@@ -945,34 +918,30 @@ public class CustomData {
 	public double getWalk() {
 		double ret = 0.0;
 
-		String spec = mRecentParts[LEGS_IDX].get("歩行");
-		String value = SpecValues.WALK.get(spec);
-		
+		BBData legs_parts = mRecentParts[LEGS_IDX];
+		String spec = legs_parts.get("歩行");
+		ret = SpecValues.getSpecValue(spec, "歩行", "");
+
+		// チップセットボーナス(km/h)
+		ret = ret + (1.08 * countChip("歩行"));
+		ret = ret + (1.62 * countChip("歩行II"));
+
+		// ホバー脚部の場合の補正値を計算する
 		boolean is_hover = isHoverLegs();
-	
-		try {
-			ret = Double.valueOf(value);
+		if(is_hover) {
+			ret = ret * 4 / 3;
+		}
 
-			// チップセットボーナス(km/h)
-			ret = ret + (1.08 * countChip("歩行"));
-			ret = ret + (1.62 * countChip("歩行II"));
+		// 上限値によるガードを行う (ホバー：14.70[m/s], 二脚：11.02[m/s])
+		if(is_hover && ret > 14.70) {
+			ret = 14.70;
+		}
+		else if(!is_hover && ret > 11.02) {
+			ret = 11.02;
+		}
 
-			// ホバー脚部の場合の補正値を計算する
-			if(is_hover) {
-				ret = ret * 4 / 3;
-			}
-
-			// 上限値によるガードを行う (ホバー：14.70[m/s], 二脚：11.02[m/s])
-			if(is_hover && ret > 52.92) {
-				ret = 52.92;
-			}
-			else if(!is_hover && ret > 39.672) {
-				ret = 39.672;
-			}
-			
-
-		} catch (Exception e) {
-			// e.printStackTrace();
+		if(ret == SpecValues.ERROR_VALUE) {
+			ret = 0;
 		}
 
 		return ret;
@@ -1005,16 +974,22 @@ public class CustomData {
 	 * @return 重量耐性の値。
 	 */
 	public int getAntiWeight() {
+		double ret = 0;
+
 		BBData legs_parts = mRecentParts[LEGS_IDX];
-		String point = legs_parts.get("重量耐性");
+		String spec = legs_parts.get("重量耐性");
 		String name = legs_parts.get("名称");
-		int ret = SpecValues.getAntiWeight(point, name);
+		ret = SpecValues.getSpecValue(spec, "重量耐性", name);
 
 		// チップセットボーナス
 		ret = ret + (40 * countChip("重量耐性"));
 		ret = ret + (60 * countChip("重量耐性II"));
 
-		return ret;
+		if(ret == SpecValues.ERROR_VALUE) {
+			ret = 0;
+		}
+
+		return (int)ret;
 	}
 
 	/**
@@ -1025,17 +1000,14 @@ public class CustomData {
 		double ret = 0;
 
 		BBData legs_parts = mRecentParts[LEGS_IDX];
-		String point = legs_parts.get("巡航");
-		String value = SpecValues.ACCELERATION.get(point);
-		
-		try {
-			ret = Double.valueOf(value);
+		String spec = legs_parts.get("巡航");
+		ret = SpecValues.getSpecValue(spec, "巡航", "");
 
-			// チップボーナス (km/h)
-			ret = ret + (0.36 * countChip("巡航"));
-			ret = ret + (0.54 * countChip("巡航II"));
-			
-		} catch(Exception e) {
+		// チップセットボーナス
+		ret = ret + (0.36 * countChip("巡航"));
+		ret = ret + (0.54 * countChip("巡航II"));
+
+		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
 
@@ -1408,23 +1380,21 @@ public class CustomData {
 	 * @return ダッシュ速度。
 	 */
 	public double calcDash(boolean is_start) {
-		double ret = 0.0;
-	
-		String spec = mRecentParts[LEGS_IDX].get("ダッシュ");
-		String value = SpecValues.DASH.get(spec);
-	
-		try {
-			ret = Double.valueOf(value);
-			
-			// チップセットボーナス (km/h)
-			ret = ret + (0.36 * countChip("ダッシュ"));
-			ret = ret + (0.54 * countChip("ダッシュII"));
+		double ret = 0;
 
-			// ホバー補正計算を行う。
-			ret = calcHover(ret, is_start);
+		BBData legs_parts = mRecentParts[LEGS_IDX];
+		String spec = legs_parts.get("ダッシュ");
+		ret = SpecValues.getSpecValue(spec, "ダッシュ", "");
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		// チップセットボーナス
+		ret = ret + (0.36 * countChip("ダッシュ"));
+		ret = ret + (0.54 * countChip("ダッシュII"));
+
+		// ホバー補正計算を行う。
+		ret = calcHover(ret, is_start);
+
+		if(ret == SpecValues.ERROR_VALUE) {
+			ret = 0;
 		}
 
 		return ret;
