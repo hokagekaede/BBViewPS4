@@ -550,10 +550,10 @@ public class SpecValues {
 	 */
 	private static void initAntiWeight() {
 		ANTIWEIGHT = new KeyValueStore();
-		ANTIWEIGHT.set("S",  "7000"); // 対象無し
-		ANTIWEIGHT.set("S-", "6800"); // 対象無し
-		ANTIWEIGHT.set("A+", "6550"); // 対象無し
-		ANTIWEIGHT.set("A",  "6600");
+		ANTIWEIGHT.set("S",  "7100"); // 対象無し
+		ANTIWEIGHT.set("S-", "7000"); // 対象無し
+		ANTIWEIGHT.set("A+", "6850"); // 対象無し
+		ANTIWEIGHT.set("A",  "6550");
 		ANTIWEIGHT.set("A-", "6450");
 		ANTIWEIGHT.set("B+", "6150");
 		ANTIWEIGHT.set("B",  "5950");
@@ -609,10 +609,13 @@ public class SpecValues {
 			else if(parts_name.equals("輝星・参式")) {
 				ret = 5100;
 			}
-			else if(parts_name.equals("ヘヴィガードIII")) {
+			else if(parts_name.equals("ヘヴィガードIII型")) {
 				ret = 6700;
 			}
-			else if(parts_name.equals("ヘヴィガードG")) {
+			else if(parts_name.equals("ヘヴィガードIV型")) {
+				ret = 6600;
+			}
+			else if(parts_name.equals("ヘヴィガードG型")) {
 				ret = 6750;
 			}
 			else if(parts_name.equals("ケーファーB2")) {
@@ -620,6 +623,15 @@ public class SpecValues {
 			}
 			else if(parts_name.equals("ケーファーB5")) {
 				ret = 6200;
+			}
+			else if(parts_name.equals("ロージーR＋")) {
+				ret = 6700;
+			}
+			else if(parts_name.equals("ロージーLM")) {
+				ret = 6600;
+			}
+			else if(parts_name.equals("ロージーEVE")) {
+				ret = 6700;
 			}
 			else if(parts_name.equals("シュライクW")) {
 				ret = 3900;

@@ -24,6 +24,10 @@
 ケーファーB4	760	B+	D-	D-	A-	D+
 ケーファーB5	790	B	C	D+	C+	B
 ケーファー・ヴァッヘ	810	A-	B-	E+	B	C-
+ロージーR	880	A+	E+	D+	C	D+
+ロージーR＋	910	A+	E	E	A-	C-
+ロージーLM	870	A+	D	D	C+	D+
+ロージーEVE	940	S	D	C	C-	C-
 シュライクI型	460	E	C	C	C	B-
 シュライクII型	480	E	C	B	D+	B
 シュライクV型	460	E	B+	C-	B+	C+
@@ -59,6 +63,10 @@
 ケーファーB4	1470	B	C+	C	D+	C
 ケーファーB5	1490	B	C	B-	D+	C+
 ケーファー・ヴァッヘ	1530	B+	A-	D	D+	C-
+ロージーR	1620	A+	C	C	D-	D
+ロージーR＋	1640	A+	D	A-	D-	D-
+ロージーLM	1610	A+	A+	E+	D	D
+ロージーEVE	1660	S	C	D	D-	C+
 シュライクI型	1010	E	C	D+	A+	D+
 シュライクII型	1060	E	B	E	A+	C
 シュライクV型	1100	D-	C-	C+	A+	D
@@ -94,6 +102,10 @@
 ケーファーB4	940	B	C-	D	C+	B+
 ケーファーB5	1010	B+	A-	E+	C-	A+
 ケーファー・ヴァッヘ	1030	A-	B-	D-	B-	A-
+ロージーR	1090	A+	B-	D+	E+	A-
+ロージーR＋	1110	A+	A-	D	E	A+
+ロージーLM	1060	A	C	C	D	B+
+ロージーEVE	1180	S	B	D-	E+	A+
 シュライクI型	680	D-	D	C+	C+	D-
 シュライクII型	630	E	E	B	B	D-
 シュライクV型	720	D-	C-	B	C	D+
@@ -129,6 +141,10 @@
 ケーファーB4	1240	B	B-	D+	D+	B
 ケーファーB5	1260	B+	E	D+	C-	B+
 ケーファー・ヴァッヘ	1330	A-	E	C-	C-	B+
+ロージーR	1380	A+	E	E+	D	A
+ロージーR＋	1400	A+	E+	E	D	A
+ロージーLM	1410	A	D-	E+	C-	A
+ロージーEVE	1430	S	D+	E-	C-	A
 シュライクI型	770	D-	B-	B+	B	E-
 シュライクII型	730	E	B	B+	B	E
 シュライクV型	780	D-	B	A	B	E
