@@ -20,16 +20,13 @@ import android.widget.TableRow;
 public class CmpPartsTableBuilder {
 
 	private Activity mActivity;
-	private boolean mIsKmPerHour;
 	
 	/**
 	 * 初期化を行う。
 	 * @param activity
-	 * @param is_km_per_hour
 	 */
-	public CmpPartsTableBuilder(Activity activity, boolean is_km_per_hour) {
+	public CmpPartsTableBuilder(Activity activity) {
 		this.mActivity = activity;
-		this.mIsKmPerHour = is_km_per_hour;
 	}
 	
 	/**
@@ -85,8 +82,8 @@ public class CmpPartsTableBuilder {
 				continue;
 			}
 
-			String from_str = SpecValues.getSpecUnit(from_data, target_key, mIsKmPerHour);
-			String to_str = SpecValues.getSpecUnit(to_data, target_key, mIsKmPerHour);
+			String from_str = SpecValues.getSpecUnit(from_data, target_key);
+			String to_str = SpecValues.getSpecUnit(to_data, target_key);
 			
 			if(target_key.equals("重量") || target_key.equals("チップ容量") || target_key.equals("積載猶予") || target_key.equals("DEF回復時間") || target_key.equals("実耐久値")) {
 				rows.add(ViewBuilder.createTableRow(mActivity, colors, target_key, from_str, to_str));

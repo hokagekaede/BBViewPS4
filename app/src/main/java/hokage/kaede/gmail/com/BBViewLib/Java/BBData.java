@@ -1,17 +1,11 @@
 package hokage.kaede.gmail.com.BBViewLib.Java;
 
-import hokage.kaede.gmail.com.StandardLib.Java.KVCStore;
 import hokage.kaede.gmail.com.StandardLib.Java.KeyValueStore;
 
 /**
  * １つのパーツや武器などの情報を保持するクラス。
  */
-public class BBData extends KVCStore {
-
-	public static final int ID_ITEM_NOTHING = -1;
-	
-	public static final String STR_VALUE_NOTHING = "情報なし";
-	public static final double NUM_VALUE_NOTHING = Double.MIN_NORMAL;
+public class BBData extends BBDataLvl {
 
 	// 属性を示す文字列
 	private static final String SHOT_ABS_BULLET    = "実弾";
@@ -1400,10 +1394,10 @@ public class BBData extends KVCStore {
 		String damage_str = "";
 		
 		if(is_dash) {
-			damage_str = super.get("特殊攻撃(威力)");
+			damage_str = super.get("特殊攻撃");
 		}
 		else {
-			damage_str = super.get("通常攻撃(威力)");
+			damage_str = super.get("通常攻撃");
 		}
 		
 		// 括弧内の文字列を取得する

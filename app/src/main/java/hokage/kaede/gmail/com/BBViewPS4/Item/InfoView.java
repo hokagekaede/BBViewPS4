@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import java.util.ArrayList;
 
 import hokage.kaede.gmail.com.BBViewLib.Android.CommonLib.ViewBuilder;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBData;
+import hokage.kaede.gmail.com.BBViewLib.Java.BBDataLvl;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataComparator;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBViewSetting;
 import hokage.kaede.gmail.com.BBViewLib.Java.SpecValues;
@@ -94,7 +96,7 @@ public class InfoView extends LinearLayout {
         layout_table.setColumnShrinkable(1, true);    // 右端は表を折り返す
 
         // 表のタイトルを記載する
-        layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), "項目", "説明"));
+        layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), "項目", "強化無し", "強化1", "強化2", "強化3"));
 
         ArrayList<String> keys = data.getKeys();
         int size = keys.size();
@@ -102,37 +104,98 @@ public class InfoView extends LinearLayout {
         // 一般情報を表示
         for(int i=0; i<size; i++) {
             String target_key = keys.get(i);
-            String point = data.get(target_key);
 
             if(target_key.equals("名称")) {
                 continue;
             }
-            else if(point == null) {
-                continue;
-            }
 
-            String data_str = SpecValues.getSpecUnit(data, target_key, BBViewSetting.IS_KM_PER_HOUR);
+            TableRow row = createItemInfoRow(data, target_key, SettingManager.getColorWhite());
 
-            if(BBDataComparator.isPointKey(target_key)) {
-                layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), target_key, point + " (" + data_str + ")"));
-            }
-            else {
-                layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), target_key, data_str));
+            if(row != null) {
+                layout_table.addView(row);
             }
         }
 
         // 追加情報の表示
         size = CALC_KEYS.length;
         for(int i=0; i<size ; i++) {
-            String key = CALC_KEYS[i];
-            double num = data.getCalcValue(key);
-            String value_str = SpecValues.getSpecUnit(num, key, BBViewSetting.IS_KM_PER_HOUR);
+            String target_key = CALC_KEYS[i];
+            TableRow row = createItemInfoRow(data, target_key, SettingManager.getColorCyan());
 
-            if(num > BBData.NUM_VALUE_NOTHING) {
-                layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorCyan(), key, value_str));
+            if(row != null) {
+                layout_table.addView(row);
             }
         }
 
         return layout_table;
+    }
+
+    /**
+     * アイテム詳細情報の行データを生成する。
+     * @param data アイテム情報
+     * @param target_key アイテムのキー
+     * @param color 表示する文字色
+     * @return アイテム詳細情報の行
+     */
+    private TableRow createItemInfoRow(BBData data, String target_key, int color) {
+        Context context = getContext();
+
+        String[] values = new String[BBDataLvl.MAX_LEVEL + 2];  // キーと強化無しを入れて、合計5
+        values[0] = target_key;
+
+        for(int j = 0; j<= BBDataLvl.MAX_LEVEL; j++) {
+            String buf = getSpecValue(data, target_key, j);
+
+            if(buf.equals(BBData.STR_VALUE_NOTHING)) {
+                return null;
+            }
+            else {
+                values[j + 1] = buf;
+            }
+        }
+        return ViewBuilder.createTableRow(context, color, values);
+    }
+
+    /**
+     * 一般情報の文字列を取得する。
+     * @param data データ
+     * @param target_key ターゲットのキー
+     * @param level 強化段階
+     * @return 一般情報の文字列
+     */
+    private String getSpecValue(BBData data, String target_key, int level) {
+        String ret = "";
+        String value = data.get(target_key, level);
+
+        if(value.equals(BBData.STR_VALUE_NOTHING)) {
+            return BBData.STR_VALUE_NOTHING;
+        }
+
+        if(BBDataComparator.isPointKey(target_key)) {
+            String point = SpecValues.getPoint(target_key, value, false);
+
+            // 評価値算出に失敗した場合は対象の文字が評価値そのもの
+            if(point.equals(SpecValues.NOTHING_STR)) {
+                String data_str = SpecValues.getSpecUnit(data, target_key);
+                ret = value + " (" + data_str + ")";
+            }
+            else {
+                double value_num = SpecValues.changeDouble(value);
+                String data_str = SpecValues.getSpecUnit(value_num, target_key);
+                ret = point + " (" + data_str + ")";
+            }
+        }
+        else {
+            double value_num = SpecValues.getSpecValue(value, target_key, "");
+
+            if(value_num != SpecValues.ERROR_VALUE) {
+                ret = SpecValues.getSpecUnit(value_num, target_key);
+            }
+            else {
+                ret = value;
+            }
+        }
+
+        return ret;
     }
 }

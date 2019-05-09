@@ -8,7 +8,6 @@ import java.util.Comparator;
 public class BBDataComparator implements Comparator<BBData> {
 	private String mTargetKey;
 	private boolean mIsAsc;
-	private boolean mIsKmPerHour;
 	private boolean mIsSortTypeB;
 	
 	private double mCmpLastValue;
@@ -33,14 +32,13 @@ public class BBDataComparator implements Comparator<BBData> {
 	private static final String[] SORT_POINT_TARGET = {
 		"装甲", 
 		"射撃補正",   "索敵",     "ロックオン", "DEF回復", 
-		"ブースター", "SP供給率", "エリア移動", "DEF耐久",
+		"ブースター", "SP供給", "エリア移動", "DEF耐久",
 		"反動吸収",   "リロード", "武器変更",   "予備弾数",
 		"歩行",       "ダッシュ", "重量耐性",   "巡航"
 	};
 	
 	private static final String[] SORT_REVERSE_TARGET = {
 		"重量",
-		"リロード",
 		"エリア移動",
 		"リロード時間",
 		"総重量",
@@ -55,35 +53,31 @@ public class BBDataComparator implements Comparator<BBData> {
 	 * 初期化処理を行う。
 	 * @param target_key 比較するキー。
 	 * @param is_asc 昇順の場合はtrueを設定し、降順の場合はfalseを設定する。
-	 * @param is_km_per_hour 速度比較時の単位。
 	 */
-	public BBDataComparator(String target_key, boolean is_asc, boolean is_km_per_hour) {
-		init(target_key, is_asc, is_km_per_hour, false);
+	public BBDataComparator(String target_key, boolean is_asc) {
+		init(target_key, is_asc, false);
 	}
 	
 	/**
 	 * 初期化処理を行う。
 	 * @param target_key 比較するキー。
 	 * @param is_asc 昇順の場合はtrueを設定し、降順の場合はfalseを設定する。
-	 * @param is_km_per_hour 速度比較時の単位。
 	 * @param is_sort_type_b タイプBの性能値でソートするかどうか。
 	 */
-	public BBDataComparator(String target_key, boolean is_asc, boolean is_km_per_hour, boolean is_sort_type_b) {
-		init(target_key, is_asc, is_km_per_hour, is_sort_type_b);
+	public BBDataComparator(String target_key, boolean is_asc, boolean is_sort_type_b) {
+		init(target_key, is_asc, is_sort_type_b);
 	}
 	
 	/**
 	 * 初期化処理を行う。
 	 * @param target_key 比較するキー。
 	 * @param is_asc 昇順の場合はtrueを設定し、降順の場合はfalseを設定する。
-	 * @param is_km_per_hour 速度比較時の単位。
 	 * @param is_sort_type_b タイプBの性能値でソートするかどうか。
 	 */
-	private void init(String target_key, boolean is_asc, boolean is_km_per_hour, boolean is_sort_type_b) {
+	private void init(String target_key, boolean is_asc, boolean is_sort_type_b) {
 		this.mTargetKey = target_key;
 		this.mIsAsc = is_asc;
 		this.mCmpLastValue = 0;
-		this.mIsKmPerHour = is_km_per_hour;
 		this.mIsCmpOk = false;
 		this.mIsSortTypeB = is_sort_type_b;
 		
@@ -158,8 +152,8 @@ public class BBDataComparator implements Comparator<BBData> {
 			return ret;
 		}
 		else if(mTargetKey.equals("重量耐性")) {
-			double value0 = SpecValues.getSpecValue(from_item, mTargetKey, mIsKmPerHour);
-			double value1 = SpecValues.getSpecValue(to_item, mTargetKey, mIsKmPerHour);
+			double value0 = SpecValues.getSpecValue(from_item, mTargetKey);
+			double value1 = SpecValues.getSpecValue(to_item, mTargetKey);
 			ret = compareValue(value0, value1);
 			mIsCmpOk = true;
 		}
@@ -195,8 +189,8 @@ public class BBDataComparator implements Comparator<BBData> {
 	public int compareString(String arg0, String arg1) {
 		mCmpLastValue = 0;
 		
-		double value0 = SpecValues.getSpecValue(arg0, mTargetKey, "", mIsKmPerHour);
-		double value1 = SpecValues.getSpecValue(arg1, mTargetKey, "", mIsKmPerHour);
+		double value0 = SpecValues.getSpecValue(arg0, mTargetKey, "");
+		double value1 = SpecValues.getSpecValue(arg1, mTargetKey, "");
 		
 		// 数値変換できなかった場合、ポイント自体の値(E-～A+)で比較する
 		if(value0 == SpecValues.ERROR_VALUE && value1 == SpecValues.ERROR_VALUE) {

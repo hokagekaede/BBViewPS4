@@ -4,12 +4,14 @@ import android.content.Context;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import java.util.ArrayList;
 
 import hokage.kaede.gmail.com.BBViewLib.Android.CommonLib.ViewBuilder;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBData;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataComparator;
+import hokage.kaede.gmail.com.BBViewLib.Java.BBDataLvl;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataManager;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBViewSetting;
 import hokage.kaede.gmail.com.BBViewLib.Java.SpecValues;
@@ -46,7 +48,9 @@ public class PartsSeriesView extends LinearLayout  {
         ArrayList<String> keylist = data.getKeys();
 
         // タイトルとアイテム詳細情報を表示する
+        Context context = getContext();
         this.removeAllViews();
+        this.addView(ViewBuilder.createTextView(context, "同シリーズ情報", BBViewSetting.FLAG_TEXTSIZE_LARGE));
         this.addView(createItemInfoTable(datalist, keylist));
     }
 
@@ -102,24 +106,15 @@ public class PartsSeriesView extends LinearLayout  {
         layout_table.setColumnShrinkable(1, true);    // 右端は表を折り返す
 
         int size = keylist.size();
-        int data_count = datalist.size();
 
         // 一般情報を表示
         for(int i=0; i<size; i++) {
             String target_key = keylist.get(i);
 
-            String[] values = new String[datalist.size() + 1];
-            values[0] = target_key;
+            TableRow row = createItemInfoRow(datalist, target_key);
 
-            for(int j=0; j<data_count; j++) {
-                values[j+1] = getSpecValue(datalist.get(j), target_key);
-            }
-
-            if(target_key.equals("名称")) {
-                layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), values));
-            }
-            else {
-                layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), values));
+            if(row != null) {
+                layout_table.addView(row);
             }
         }
 
@@ -129,7 +124,7 @@ public class PartsSeriesView extends LinearLayout  {
         for(int i=0; i<size ; i++) {
             String key = CALC_KEYS[i];
             double num = data.getCalcValue(key);
-            String value_str = SpecValues.getSpecUnit(num, key, BBViewSetting.IS_KM_PER_HOUR);
+            String value_str = SpecValues.getSpecUnit(num, key);
 
             if(num > BBData.NUM_VALUE_NOTHING) {
                 layout_table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorCyan(), key, value_str));
@@ -141,6 +136,37 @@ public class PartsSeriesView extends LinearLayout  {
     }
 
     /**
+     * アイテム詳細情報の行データを生成する。
+     * @param datalist アイテム情報のリスト
+     * @param target_key アイテムのキー
+     * @return アイテム詳細情報の行
+     */
+    private TableRow createItemInfoRow(ArrayList<BBData> datalist, String target_key) {
+        Context context = getContext();
+
+        String[] values = new String[datalist.size() + 1];
+        values[0] = target_key;
+
+        int data_count = datalist.size();
+        for(int j=0; j<data_count; j++) {
+            String buf = getSpecValue(datalist.get(j), target_key);
+
+            if(buf.equals(BBData.STR_VALUE_NOTHING)) {
+                return null;
+            }
+
+            values[j + 1] = buf;
+        }
+
+        int color = SettingManager.getColorWhite();
+        if(target_key.equals("名称")) {
+            color = SettingManager.getColorYellow();
+        }
+
+        return ViewBuilder.createTableRow(context, color, values);
+    }
+
+    /**
      * 一般情報の文字列を取得する。
      * @param data データ
      * @param target_key ターゲットのキー
@@ -149,7 +175,11 @@ public class PartsSeriesView extends LinearLayout  {
     private String getSpecValue(BBData data, String target_key) {
         String ret = "";
         String point = data.get(target_key);
-        String data_str = SpecValues.getSpecUnit(data, target_key, BBViewSetting.IS_KM_PER_HOUR);
+        String data_str = SpecValues.getSpecUnit(data, target_key);
+
+        if(point.equals(BBData.STR_VALUE_NOTHING)) {
+            return BBData.STR_VALUE_NOTHING;
+        }
 
         if(BBDataComparator.isPointKey(target_key)) {
             ret = point + " (" + data_str + ")";

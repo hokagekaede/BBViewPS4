@@ -51,7 +51,7 @@ public class SpecValues {
 	public static KeyValueStore BOOST;
 	
 	/**
-	 * SP供給率のデータ一覧
+	 * SP供給のデータ一覧
 	 */
 	public static KeyValueStore SP;
 	
@@ -308,23 +308,23 @@ public class SpecValues {
 	 */
 	private static void initAcceleration() {
 		ACCELERATION = new KeyValueStore();
-		ACCELERATION.set("S",  "90.00");  // 対象無し
-		ACCELERATION.set("S-", "87.84");  // 対象無し
-		ACCELERATION.set("A+", "85.68");  // 対象無し
-		ACCELERATION.set("A",  "83.52");  // 対象無し
-		ACCELERATION.set("A-", "81.36");  // 対象無し
-		ACCELERATION.set("B+", "79.20");
-		ACCELERATION.set("B",  "77.04");
-		ACCELERATION.set("B-", "74.88");  // 対象無し
-		ACCELERATION.set("C+", "72.72");
-		ACCELERATION.set("C",  "70.92");
-		ACCELERATION.set("C-", "69.12");
-		ACCELERATION.set("D+", "67.32");
-		ACCELERATION.set("D",  "65.52");
-		ACCELERATION.set("D-", "64.08");  // 対象無し
-		ACCELERATION.set("E+", "61.92");
-		ACCELERATION.set("E",  "60.12");
-		ACCELERATION.set("E-", "59.60");  // 対象無し
+		ACCELERATION.set("S",  "25.0");  // 対象無し
+		ACCELERATION.set("S-", "24.4");  // 対象無し
+		ACCELERATION.set("A+", "23.8");  // 対象無し
+		ACCELERATION.set("A",  "23.2");  // 対象無し
+		ACCELERATION.set("A-", "22.6");  // 対象無し
+		ACCELERATION.set("B+", "22.0");
+		ACCELERATION.set("B",  "21.4");
+		ACCELERATION.set("B-", "20.8");  // 対象無し
+		ACCELERATION.set("C+", "20.2");
+		ACCELERATION.set("C",  "19.7");
+		ACCELERATION.set("C-", "19.2");
+		ACCELERATION.set("D+", "18.7");
+		ACCELERATION.set("D",  "18.2");
+		ACCELERATION.set("D-", "17.8");  // 対象無し
+		ACCELERATION.set("E+", "17.2");
+		ACCELERATION.set("E",  "16.7");
+		ACCELERATION.set("E-", "16.2");  // 対象無し
 	}
 
 	/**
@@ -448,7 +448,7 @@ public class SpecValues {
 	}
 
 	/**
-	 * SP供給率のデータを初期化
+	 * SP供給のデータを初期化
 	 */
 	private static void initSP() {
 		SP = new KeyValueStore();
@@ -677,23 +677,23 @@ public class SpecValues {
 	 */
 	private static void initDush() {
 		DASH = new KeyValueStore();
-		DASH.set("S",  "102.60");  // 対象無し
-		DASH.set("S-", "99.90");   // 対象無し
-		DASH.set("A+", "97.20");   // 対象無し
-		DASH.set("A",  "93.60");
-		DASH.set("A-", "91.44");
-		DASH.set("B+", "89.28");
-		DASH.set("B",  "87.12");
-		DASH.set("B-", "84.96");
-		DASH.set("C+", "82.80");
-		DASH.set("C",  "80.64");
-		DASH.set("C-", "78.48");
-		DASH.set("D+", "76.32");
-		DASH.set("D",  "74.16");
-		DASH.set("D-", "72.00");
-		DASH.set("E+", "69.84");
-		DASH.set("E",  "67.68");
-		DASH.set("E-", "65.88");  // 対象無し
+		DASH.set("S",  "28.50");  // 対象無し
+		DASH.set("S-", "27.75");   // 対象無し
+		DASH.set("A+", "27.00");   // 対象無し
+		DASH.set("A",  "26.00");
+		DASH.set("A-", "25.40");
+		DASH.set("B+", "24.80");
+		DASH.set("B",  "24.20");
+		DASH.set("B-", "23.60");
+		DASH.set("C+", "23.00");
+		DASH.set("C",  "22.40");
+		DASH.set("C-", "21.80");
+		DASH.set("D+", "21.20");
+		DASH.set("D",  "20.60");
+		DASH.set("D-", "20.00");
+		DASH.set("E+", "19.40");
+		DASH.set("E",  "18.80");
+		DASH.set("E-", "18.30");  // 対象無し
 		
 		// ホバー脚の場合の値を初期化する
 		DASH_HOVER = new KeyValueStore();
@@ -713,23 +713,23 @@ public class SpecValues {
 	 */
 	private static void initWalk() {
 		WALK = new KeyValueStore();
-		WALK.set("S",  "36.450");  // 対象なし
-		WALK.set("S-", "35.316");  // 対象なし
-		WALK.set("A+", "34.020");  // 対象なし
-		WALK.set("A",  "33.12");
-		WALK.set("A-", "31.428");  // 対象なし
-		WALK.set("B+", "30.24");
-		WALK.set("B",  "28.80");
-		WALK.set("B-", "27.36");
-		WALK.set("C+", "25.92");
-		WALK.set("C",  "24.48");
-		WALK.set("C-", "23.04");
-		WALK.set("D+", "21.60");
-		WALK.set("D",  "20.16");
-		WALK.set("D-", "18.72");
-		WALK.set("E+", "17.28");
-		WALK.set("E",  "15.84");
-		WALK.set("E-", "14.904");  // 対象なし
+		WALK.set("S",  "10.125");  // 対象なし
+		WALK.set("S-", "9.810");   // 対象なし
+		WALK.set("A+", "9.450");   // 対象なし
+		WALK.set("A",  "9.200");
+		WALK.set("A-", "8.730");   // 対象なし
+		WALK.set("B+", "8.400");
+		WALK.set("B",  "8.000");
+		WALK.set("B-", "7.600");
+		WALK.set("C+", "7.200");
+		WALK.set("C",  "6.800");
+		WALK.set("C-", "6.400");
+		WALK.set("D+", "6.000");
+		WALK.set("D",  "5.600");
+		WALK.set("D-", "5.200");
+		WALK.set("E+", "4.800");
+		WALK.set("E",  "4.400");
+		WALK.set("E-", "4.140");   // 対象なし
 
 		// ホバー脚の場合の値を初期化する
 		WALK_HOVER = new KeyValueStore();
@@ -835,37 +835,34 @@ public class SpecValues {
 	 * 性能の値からポイント番号と値の組み合わせ文字列を取得する。
 	 * @param key 性能の種類
 	 * @param value 性能値
-	 * @param is_km_per_hour 速度の単位
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPointWithValue(String key, String value, boolean is_km_per_hour, boolean is_hover) {
-		return getPoint(key, value, is_km_per_hour, is_hover) + " (" + value + ")"; 
+	public static String getPointWithValue(String key, String value, boolean is_hover) {
+		return getPoint(key, value, is_hover) + " (" + value + ")";
 	}
 
 	/**
 	 * 性能の値からポイント番号と値の組み合わせ文字列を取得する。
 	 * @param key 性能の種類
 	 * @param value 性能値
-	 * @param is_km_per_hour 速度の単位
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPointWithValue(String key, double value, boolean is_km_per_hour, boolean is_hover) {
-		return getPoint(key, value, is_km_per_hour, is_hover) + " (" + value + ")"; 
+	public static String getPointWithValue(String key, double value, boolean is_hover) {
+		return getPoint(key, value, is_hover) + " (" + value + ")";
 	}
 
 	/**
 	 * 性能の値からポイント番号を取得する。
 	 * @param key 性能の種類
 	 * @param value 性能値
-	 * @param is_km_per_hour 速度の単位
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPoint(String key, String value, boolean is_km_per_hour, boolean is_hover) {
+	public static String getPoint(String key, String value, boolean is_hover) {
 		String ret = NOTHING_STR;
 
 		try {
 			double buf = Double.valueOf(value);
-			ret = getPoint(key, buf, is_km_per_hour, is_hover);
+			ret = getPoint(key, buf, is_hover);
 
 		} catch(Exception e) {
 			ret = NOTHING_STR;
@@ -880,10 +877,9 @@ public class SpecValues {
 	 * 
 	 * @param key 性能の種類
 	 * @param value 性能値
-	 * @param is_km_per_hour 速度の単位
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPoint(String key, double value, boolean is_km_per_hour, boolean is_hover) {
+	public static String getPoint(String key, double value, boolean is_hover) {
 		String point = "";
 		double tmp_value = value;
 		
@@ -892,7 +888,7 @@ public class SpecValues {
 			point = getPointAsc(SpecValues.ARMOR, tmp_value);
 		}
 		else if(key.equals("射撃補正")) {
-			tmp_value = Math.round(tmp_value * 100.0) / 100.0;
+			tmp_value = Math.round(tmp_value * 10.0) / 10.0;
 			point = getPointAsc(SpecValues.SHOTBONUS, tmp_value);
 		}
 		else if(key.equals("索敵")) {
@@ -907,8 +903,8 @@ public class SpecValues {
 			tmp_value = Math.round(tmp_value);
 			point = getPointAsc(SpecValues.BOOST, tmp_value);
 		}
-		else if(key.equals("SP供給率")) {
-			tmp_value = Math.round(tmp_value * 100.0) / 100.0;
+		else if(key.equals("SP供給")) {
+			tmp_value = Math.round(tmp_value * 10.0) / 10.0;
 			point = getPointAsc(SpecValues.SP, tmp_value);
 		}
 		else if(key.equals("エリア移動")) {
@@ -920,15 +916,15 @@ public class SpecValues {
 			point = getPointAsc(SpecValues.RECOIL, tmp_value);
 		}
 		else if(key.equals("リロード")) {
-			tmp_value = Math.round(tmp_value * 1000.0) / 1000.0;
-			point = getPointDsc(SpecValues.RELOAD, tmp_value);
+			tmp_value = Math.round(tmp_value * 10.0) / 10.0;
+			point = getPointAsc(SpecValues.RELOAD, tmp_value);
 		}
 		else if(key.equals("武器変更")) {
 			tmp_value = Math.round(tmp_value);
 			point = getPointAsc(SpecValues.CHANGEWEAPON, tmp_value);
 		}
 		else if(key.equals("歩行")) {
-			if(!is_km_per_hour) {
+			if(BBViewSetting.IS_KM_PER_HOUR) {
 				tmp_value = tmp_value * 3600 / 1000;
 			}
 
@@ -943,7 +939,7 @@ public class SpecValues {
 			}
 		}
 		else if(key.equals("ダッシュ")) {
-			if(!is_km_per_hour) {
+			if(BBViewSetting.IS_KM_PER_HOUR) {
 				tmp_value = tmp_value * 3600 / 1000;
 			}
 
@@ -975,7 +971,7 @@ public class SpecValues {
 			point = getPointAsc(SpecValues.SPARE_BULLET, tmp_value);
 		}
 		else if(key.equals("巡航")) {
-			if(!is_km_per_hour) {
+			if(BBViewSetting.IS_KM_PER_HOUR) {
 				tmp_value = tmp_value * 3600 / 1000;
 			}
 
@@ -1043,16 +1039,17 @@ public class SpecValues {
 		
 		return point;
 	}
+
 	/**
 	 * 指定のデータの指定キーの具体値を取得する
 	 * @param item 指定データ
 	 * @param key 指定キー
 	 * @return 具体値の数値データ。ポイントタイプ以外の値を数値に変換して返す。
 	 */
-	public static double getSpecValue(BBData item, String key, boolean is_km_per_hour) {
+	public static double getSpecValue(BBData item, String key) {
 		String point = item.get(key);
 		String name = item.get("名称");
-		return getSpecValue(point, key, name, is_km_per_hour);
+		return getSpecValue(point, key, name);
 	}
 
 	/**
@@ -1060,13 +1057,10 @@ public class SpecValues {
 	 * @param point 指定のポイント値
 	 * @param key 指定キー
 	 * @param parts_name パーツ名
-	 * @param is_km_per_hour 速度の単位をkm/hにするかどうか
 	 * @return 具体値の数値データ。ポイントタイプ以外の値を数値に変換して返す。
 	 */
-	public static double getSpecValue(String point, String key, String parts_name, boolean is_km_per_hour) {
+	public static double getSpecValue(String point, String key, String parts_name) {
 		String value_str = null;
-		double value = 0;
-		boolean is_speed = false;
 		
 		if(key.equals("装甲")) {
 			value_str = SpecValues.ARMOR.get(point);
@@ -1083,7 +1077,7 @@ public class SpecValues {
 		else if(key.equals("ブースター")) {
 			value_str = SpecValues.BOOST.get(point);
 		}
-		else if(key.equals("SP供給率")) {
+		else if(key.equals("SP供給")) {
 			value_str = SpecValues.SP.get(point);
 		}
 		else if(key.equals("エリア移動")) {
@@ -1100,11 +1094,9 @@ public class SpecValues {
 		}
 		else if(key.equals("歩行")) {
 			value_str = SpecValues.WALK.get(point);
-			is_speed = true;
 		}
 		else if(key.equals("ダッシュ")) {
 			value_str = SpecValues.DASH.get(point);
-			is_speed = true;
 		}
 		else if(key.equals("重量耐性")) {
 			return getAntiWeight(point, parts_name);
@@ -1121,24 +1113,30 @@ public class SpecValues {
 		}
 		else if(key.equals("巡航")) {
 			value_str = SpecValues.ACCELERATION.get(point);
-			is_speed = true;
 		}
 		else {
 			value_str = point;
 		}
-		
+
+		return changeDouble(value_str);
+	}
+
+	/**
+	 * 実スペック値の文字列を数値に変換する。
+	 * @param value_str 実スペック値の文字列
+	 * @return 実スペックの数値。
+	 */
+	public static double changeDouble(String value_str) {
+		double value = 0;
+
 		try {
 			value = Double.valueOf(value_str);
-			
-			if(is_speed && !is_km_per_hour) {
-				value = value * 1000 / 3600;
-			}
 
 		} catch(Exception e) {
 			value = ERROR_VALUE;
 			// e.printStackTrace();
 		}
-		
+
 		return value;
 	}
 
@@ -1148,15 +1146,15 @@ public class SpecValues {
 	 * @param key キー
 	 * @return スペック値の文字列。スペック値を数値変換できなかった場合はvalueの文字列をそのまま返す。
 	 */
-	public static String getSpecUnit(BBData item, String key, boolean is_km_per_hour) {
+	public static String getSpecUnit(BBData item, String key) {
 		String value = item.get(key);
 		String name = item.get("名称");
 
-		double value_num = getSpecValue(value, key, name, is_km_per_hour);
+		double value_num = getSpecValue(value, key, name);
 		String ret = value;
 
 		if(value_num != ERROR_VALUE) {
-			ret = getSpecUnit(value_num, key, is_km_per_hour);
+			ret = getSpecUnit(value_num, key);
 		}
 
 		return ret;
@@ -1168,9 +1166,8 @@ public class SpecValues {
 	 * @param key キー
 	 * @return スペック値の文字列
 	 */
-	public static String getSpecUnit(double value, String key, boolean is_km_per_hour) {
+	public static String getSpecUnit(double value, String key) {
 		String ret = "";
-		boolean is_speed = false;
 		
 		// パーツ合計性能系
 		if(key.equals("チップ容量")) {
@@ -1180,12 +1177,10 @@ public class SpecValues {
 			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("初速")) {
-			ret = String.format("%.3f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		else if(key.equals("歩速")) {
-			ret = String.format("%.2f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		else if(key.equals("低下率")) {
 			ret = String.format("%.1f(%%)", value);
@@ -1219,7 +1214,7 @@ public class SpecValues {
 		else if(key.equals("ブースター")) {
 			ret = String.format("%.0f", value);
 		}
-		else if(key.equals("SP供給率")) {
+		else if(key.equals("SP供給")) {
 			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("エリア移動")) {
@@ -1238,12 +1233,10 @@ public class SpecValues {
 			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("ダッシュ")) {
-			ret = String.format("%.2f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		else if(key.equals("歩行")) {
-			ret = String.format("%.2f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		// 4.5対応
 		else if(key.equals("DEF回復時間")) {
@@ -1259,8 +1252,7 @@ public class SpecValues {
 			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("巡航")) {
-			ret = String.format("%.2f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		// 武器データ系
 		else if(key.equals("威力")) {
@@ -1324,7 +1316,7 @@ public class SpecValues {
 			ret = String.format("%.1f(倍)", value);
 		}
 		else if(key.equals("弾道制御")) {
-			ret = String.format("%.1f(倍)", value);
+			ret = String.format("%.1f(秒)", value);
 		}
 		else if(key.equals("索敵間隔")) {
 			ret = String.format("%.1f(秒)", value);
@@ -1352,12 +1344,10 @@ public class SpecValues {
 			ret = String.format("%.0f(m^2)", value);
 		}
 		else if(key.equals("AC速度")) {
-			ret = String.format("%.3f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		else if(key.equals("AC戦術速度")) {
-			ret = String.format("%.3f", value);
-			is_speed = true;
+			ret = getSpecSpeedUnit(value);
 		}
 		else if(key.equals("最大ステップ数")) {
 			ret = String.format("%.0f(回)", value);
@@ -1365,18 +1355,22 @@ public class SpecValues {
 		else {
 			ret = String.format("%.0f", value);
 		}
-		
-		// 速度の場合の単位を設定する
-		if(is_speed) {
-			if(is_km_per_hour) {
-				ret = ret + "(km/h)";
-			}
-			else {
-				ret = ret + "(m/s)";
-			}
-		}
-		
+
 		return ret;
+	}
+
+	/**
+	 * 速度を示すスペックについて値を単位つきの文字列で取得する。
+	 * @param value スペック値
+	 * @return スペック値の文字列
+	 */
+	private static String getSpecSpeedUnit(double value) {
+		if(BBViewSetting.IS_KM_PER_HOUR) {
+			return String.format("%.3f", value * 3600 / 1000) + "(km/h)";
+		}
+		else {
+			return String.format("%.3f", value) + "(m/s)";
+		}
 	}
 	
 	/**
@@ -1385,7 +1379,7 @@ public class SpecValues {
 	 * @param key キー
 	 * @return スペック値の文字列
 	 */
-	public static String getSpecUnitCmpArmor(double value, String key, boolean is_km_per_hour) {
+	public static String getSpecUnitCmpArmor(double value, String key) {
 		String ret = "";
 		
 		if(key.contains("装甲")) {
@@ -1399,7 +1393,7 @@ public class SpecValues {
 			}
 		}
 		else {
-			ret = getSpecUnit(value, key, is_km_per_hour);
+			ret = getSpecUnit(value, key);
 		}
 		
 		return ret;
@@ -1420,11 +1414,10 @@ public class SpecValues {
 	 * 一部の値を画面表示用に文字列を変換する
 	 * @param data
 	 * @param key
-	 * @param is_km_per_hour
 	 * @return
 	 */
-	public static String getShowValue(BBData data, String key, boolean is_km_per_hour) {
-		String ret = SpecValues.getSpecUnit(data, key, is_km_per_hour);
+	public static String getShowValue(BBData data, String key) {
+		String ret = SpecValues.getSpecUnit(data, key);
 
 		// 拡散武器の場合、計算結果を合わせて表示する
 		if(key.equals("威力")) {

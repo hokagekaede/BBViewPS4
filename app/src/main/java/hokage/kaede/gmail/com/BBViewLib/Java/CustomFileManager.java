@@ -79,12 +79,6 @@ public class CustomFileManager extends FileManager {
      * @return 現在編集中のアセンデータ。
      */
     public CustomData getCacheData() {
-        boolean speed_unit = BBViewSetting.IS_KM_PER_HOUR;
-        boolean data_speed_unit = mCacheData.getSpeedUnit();
-
-        if(speed_unit != data_speed_unit) {
-            mCacheData.setSpeedUnit(speed_unit);
-        }
         return mCacheData;
     }
 

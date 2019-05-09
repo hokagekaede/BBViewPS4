@@ -89,6 +89,7 @@ public class InfoActivity extends BaseActivity {
 
         if(BBDataManager.isParts(mTargetData)) {
             PartsSeriesView series_view = new PartsSeriesView(this, mTargetData);
+			series_view.setPadding(0, 20, 0, 0);
             layout_all.addView(series_view);
         }
 

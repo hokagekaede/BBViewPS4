@@ -56,15 +56,11 @@ public class CustomData {
 	private static final int BODY_IDX = 1;
 	private static final int ARMS_IDX = 2;
 	private static final int LEGS_IDX = 3;
-	
-	// 速度の単位。km/h単位で処理する場合はtrueを設定し、m/s単位で処理する場合はfalseを設定する。
-	private boolean mIsKmPerHour;
-	
+
 	/**
 	 * 初期化を行う。
 	 */
 	public CustomData() {
-		mIsKmPerHour = false;
 		mMode = MODE_NORMAL;
 		
 		mRecentParts   = new BBData[BBDataManager.BLUST_PARTS_LIST.length];
@@ -103,15 +99,7 @@ public class CustomData {
 	//----------------------------------------------------------
 	// データ設定系の関数
 	//----------------------------------------------------------
-	
-	/**
-	 * 速度の単位を設定する。
-	 * @param is_km_per_hour 速度の単位がkm/hの場合はtrueを設定し、m/sの場合はfalseを設定する。
-	 */
-	public void setSpeedUnit(boolean is_km_per_hour) {
-		this.mIsKmPerHour = is_km_per_hour;
-	}
-	
+
 	/**
 	 * パーツデータまたは武器データを設定する。
 	 * 種類は自動的に判定し、適切な場所に設定する。
@@ -369,14 +357,6 @@ public class CustomData {
 	//----------------------------------------------------------
 	// パーツ、武器、チップデータ取得系
 	//----------------------------------------------------------
-
-	/**
-	 * 速度の単位の設定値を取得する。
-	 * @return 速度の単位の設定値。速度の単位がkm/hの場合はtrueを返し、m/sの場合はfalseを返す。
-	 */
-	public boolean getSpeedUnit() {
-		return this.mIsKmPerHour;
-	}
 
 	/**
 	 * パーツの種類の配列格納番号を取得する。
@@ -786,22 +766,22 @@ public class CustomData {
 	}
 	
 	/**
-	 * SP供給率の値を取得する。
-	 * @return SP供給率の値。
+	 * SP供給の値を取得する。
+	 * @return SP供給の値。
 	 */
 	public double getSP() {
 		double ret = 0;
 
 		BBData body_parts = mRecentParts[BODY_IDX];
-		String point = body_parts.get("SP供給率");
+		String point = body_parts.get("SP供給");
 		String value = SpecValues.SP.get(point);
 		
 		try {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			ret = ret + (3.0 * countChip("SP供給率"));
-			ret = ret + (4.5 * countChip("SP供給率II"));
+			ret = ret + (3.0 * countChip("SP供給"));
+			ret = ret + (4.5 * countChip("SP供給II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -901,8 +881,8 @@ public class CustomData {
 			ret = Double.valueOf(SpecValues.RELOAD.get(spec));
 
 			// チップセットボーナス
-			ret = ret - (1.0 * countChip("リロード"));
-			ret = ret - (1.5 * countChip("リロードII"));
+			ret = ret + (1.0 * countChip("リロード"));
+			ret = ret + (1.5 * countChip("リロードII"));
 
 		} catch (Exception e) {
 			ret = 0;
@@ -995,10 +975,6 @@ public class CustomData {
 			// e.printStackTrace();
 		}
 
-		if(!mIsKmPerHour) {
-			ret = ret * 1000 / 3600;
-		}
-
 		return ret;
 	}
 	
@@ -1020,11 +996,7 @@ public class CustomData {
 
 		// 巡航補正計算を行う。
 		ret = calcNormalDush(ret, is_start);
-		
-		// 単位を合わせる
-		if(!mIsKmPerHour) {
-			ret = ret * 1000 / 3600;
-		}
+
 		return ret;
 	}
 	
@@ -1065,11 +1037,6 @@ public class CustomData {
 			
 		} catch(Exception e) {
 			ret = 0;
-		}
-
-		// 単位を合わせる
-		if(!mIsKmPerHour) {
-			ret = ret * 1000 / 3600;
 		}
 
 		return ret;
@@ -1268,9 +1235,9 @@ public class CustomData {
 	}
 	
 	/**
-	 * SP供給率の値を取得する。
+	 * SP供給の値を取得する。
 	 * @param blust_type 兵装の種類
-	 * @return SP供給率の値。
+	 * @return SP供給の値。
 	 */
 	public double getSP(String blust_type) {
 		double ret = getSP();
@@ -1422,11 +1389,6 @@ public class CustomData {
 		
 		// 水中移動の速度低下を反映する
 		ret = applySpeedDown(ret);
-		
-		// 単位を合わせる
-		if(!mIsKmPerHour) {
-			ret = ret * 1000 / 3600;
-		}
 
 		return ret;
 	}
@@ -2327,7 +2289,7 @@ public class CustomData {
 	/**
 	 * 特別装備のチャージ時間を算出する。(非SP枯渇時)
 	 * @param data 対象の特別装備の武器。
-	 * @return SP供給率を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
+	 * @return SP供給を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
 	 */
 	public double getSpChargeTime(BBData data) {
 		return getSpChargeTime(data, false);
@@ -2337,10 +2299,10 @@ public class CustomData {
 	 * 特別装備のチャージ時間を算出する。
 	 * @param data 対象の特別装備の武器。
 	 * @param is_overheat SPが枯渇しているかどうか。枯渇している場合は時間が1.2倍となる。
-	 * @return SP供給率を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
+	 * @return SP供給を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
 	 */
 	public double getSpChargeTime(BBData data, boolean is_overheat) {
-		double ret = data.getSpChargeTime() / (1 + getSP() / 100);
+		double ret = data.getSpChargeTime() / (1.00 + (getSP() / 100.0));
 		
 		if(is_overheat) {
 			ret = ret * 1.2;
@@ -2353,7 +2315,7 @@ public class CustomData {
 	 * 特別装備のチャージ時間を算出する。(非SP枯渇時)
 	 * @param blust_type 兵装名
 	 * @param data 対象の特別装備の武器。
-	 * @return SP供給率を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
+	 * @return SP供給を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
 	 */
 	public double getSpChargeTime(String blust_type, BBData data) {
 		return getSpChargeTime(blust_type, data, false);
@@ -2364,10 +2326,10 @@ public class CustomData {
 	 * @param blust_type 兵装名
 	 * @param data 対象の特別装備の武器。
 	 * @param is_overheat SPが枯渇しているかどうか。枯渇している場合は時間が1.2倍となる。
-	 * @return SP供給率を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
+	 * @return SP供給を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
 	 */
 	public double getSpChargeTime(String blust_type, BBData data, boolean is_overheat) {
-		double ret = data.getSpChargeTime() / getSP(blust_type);
+		double ret = data.getSpChargeTime() / (1.00 + (getSP(blust_type) / 100.0));
 		
 		if(is_overheat) {
 			ret = ret * 1.2;
@@ -2386,15 +2348,7 @@ public class CustomData {
 		
 		try {
 			double ac_power = Double.valueOf(data.get("出力"));
-			ret = ac_power * getDashBlust("強襲兵装", false);
-			
-			if(!mIsKmPerHour) {
-				ret = ret + 16.2;
-			}
-			else {
-				ret = ret + (16.2 * 3600.0 / 1000.0);
-			}
-
+			ret = (ac_power * getDashBlust("強襲兵装", false)) + 16.2;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -2426,8 +2380,8 @@ public class CustomData {
 	
 	/**
 	 * バリア装備の秒間耐久回復量を算出する。
-	 * 重火力兵装限定で支援兵装強化チップのSP供給率の上昇を考慮しなくてよいため、兵装名は不要。
-	 * 基本的なチップの効果を受けるSP供給率で除算するため、BBDataクラスの関数は参照できない。
+	 * 重火力兵装限定で支援兵装強化チップのSP供給の上昇を考慮しなくてよいため、兵装名は不要。
+	 * 基本的なチップの効果を受けるSP供給で除算するため、BBDataクラスの関数は参照できない。
 	 * @param data 対象のバリア装備
 	 * @return 秒間耐久回復量
 	 */
@@ -2934,7 +2888,7 @@ public class CustomData {
 		else if(key.equals("ブースター回復時間")) {
 			ret = getBoostChargeTime(blust_type);
 		}
-		else if(key.equals("SP供給率")) {
+		else if(key.equals("SP供給")) {
 			ret = getSP(blust_type);
 		}
 		else if(key.equals("エリア移動")) {
@@ -3006,7 +2960,7 @@ public class CustomData {
 		else if(key.equals("ブースター回復時間")) {
 			ret = getBoostChargeTime();
 		}
-		else if(key.equals("SP供給率")) {
+		else if(key.equals("SP供給")) {
 			ret = getSP();
 		}
 		else if(key.equals("エリア移動")) {

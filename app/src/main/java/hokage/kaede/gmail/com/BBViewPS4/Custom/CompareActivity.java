@@ -113,7 +113,6 @@ public class CompareActivity extends BaseActivity {
 		String file_dir = getFilesDir().toString();
 		CustomFileManager custom_mng = CustomFileManager.getInstance(file_dir);
 		CustomData custom_data = custom_mng.read(select_file_name);
-		custom_data.setSpeedUnit(BBViewSetting.IS_KM_PER_HOUR);
 		
 		return custom_data;
 	}
@@ -458,7 +457,7 @@ public class CompareActivity extends BaseActivity {
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "DEF回復")));
 			
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "ブースター")));
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "SP供給率")));
+			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "SP供給")));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "エリア移動")));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "DEF耐久")));
 			

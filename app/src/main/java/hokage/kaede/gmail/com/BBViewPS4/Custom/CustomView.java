@@ -248,7 +248,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 			summary = String.format("装：%s / ブ：%s / SP：%s / エ：%s / 耐：%s", 
 					data.get("装甲"),
 					data.get("ブースター"),
-					data.get("SP供給率"),
+					data.get("SP供給"),
 					data.get("エリア移動"),
 					data.get("DEF耐久"));
 		}

@@ -134,7 +134,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 	//----------------------------------------------------------
 	// データ取得関連の関数
 	//----------------------------------------------------------
-	
+
 	/**
 	 * パーツデータを取得する
 	 * @param name パーツ名
@@ -307,7 +307,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 			}
 		}
 		
-		Collections.sort(ret_list, new BBDataComparator(super.getSortKey(), super.getASC(), true, is_sort_type_b));
+		Collections.sort(ret_list, new BBDataComparator(super.getSortKey(), super.getASC(), is_sort_type_b));
 		super.updateSortKeyList();
 
 		return ret_list;
@@ -422,7 +422,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 	};
 	
 	private static final String[] CMP_BODY = {
-		"重量", "装甲", "ブースター", "SP供給率", "エリア移動", "DEF耐久", 
+		"重量", "装甲", "ブースター", "SP供給", "エリア移動", "DEF耐久", 
 		BBData.STEP_MAX_COUNT_KEY,
 		BBData.BOOST_CHARGE_TIME_KEY,
 		"実耐久値"

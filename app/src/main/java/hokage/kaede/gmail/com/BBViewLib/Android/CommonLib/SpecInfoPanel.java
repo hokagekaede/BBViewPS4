@@ -156,7 +156,7 @@ public class SpecInfoPanel extends LinearLayout {
             String color_etag = "";
             String cmp_str = "";
             if(from_item != null) {
-                BBDataComparator cmp_data = new BBDataComparator(shown_key, true, BBViewSetting.IS_KM_PER_HOUR);
+                BBDataComparator cmp_data = new BBDataComparator(shown_key, true);
                 cmp_data.compare(to_item, from_item);
                 double cmp = cmp_data.getCmpValue();
 
@@ -164,12 +164,12 @@ public class SpecInfoPanel extends LinearLayout {
                     if(cmp > 0) {
                         color_stag = SettingManager.getCodeCyan();
                         color_etag = COLOR_TAG_END;
-                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key, BBViewSetting.IS_KM_PER_HOUR) + "↑)";
+                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key) + "↑)";
                     }
                     else if(cmp < 0) {
                         color_stag = SettingManager.getCodeMagenta();
                         color_etag = COLOR_TAG_END;
-                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key, BBViewSetting.IS_KM_PER_HOUR) + "↓)";
+                        cmp_str = " (" + SpecValues.getSpecUnitCmpArmor(Math.abs(cmp), shown_key) + "↓)";
                     }
                 }
             }
@@ -178,7 +178,7 @@ public class SpecInfoPanel extends LinearLayout {
             String value_str = "";
             if(BBDataComparator.isPointKey(shown_key)) {
                 String value = to_item.get(shown_key);
-                value_str = value + " (" + SpecValues.getSpecUnit(to_item, shown_key, BBViewSetting.IS_KM_PER_HOUR) + ")";
+                value_str = value + " (" + SpecValues.getSpecUnit(to_item, shown_key) + ")";
 
             }
             else if(shown_key.equals(BBData.ARMOR_BREAK_KEY)) {
@@ -191,10 +191,10 @@ public class SpecInfoPanel extends LinearLayout {
                 value_str = createArmorBreakString(BBData.ARMOR_KB_KEY, to_item);
             }
             else if(shown_key.equals(BBData.BULLET_SUM_KEY)) {
-                value_str = to_item.get("総弾数") + "=" + SpecValues.getShowValue(to_item, shown_key, BBViewSetting.IS_KM_PER_HOUR);
+                value_str = to_item.get("総弾数") + "=" + SpecValues.getShowValue(to_item, shown_key);
             }
             else {
-                value_str = SpecValues.getShowValue(to_item, shown_key, BBViewSetting.IS_KM_PER_HOUR);
+                value_str = SpecValues.getShowValue(to_item, shown_key);
             }
 
             // 文字を結合する
@@ -226,7 +226,7 @@ public class SpecInfoPanel extends LinearLayout {
             min_value = Double.valueOf(SpecValues.ARMOR.get("E-"));
 
             if(value >= min_value) {
-                point = SpecValues.getPoint("装甲", value, true, false);
+                point = SpecValues.getPoint("装甲", value, false);
             }
             else {
                 point = SpecValues.NOTHING_STR;
@@ -241,7 +241,7 @@ public class SpecInfoPanel extends LinearLayout {
             ret = "BS:対象無し";
         }
         else {
-            ret = String.format("BS:%s(%s)以下", point, SpecValues.getSpecUnit(value, "装甲", true));
+            ret = String.format("BS:%s(%s)以下", point, SpecValues.getSpecUnit(value, "装甲"));
         }
 
         // CS時の情報を追加
@@ -262,7 +262,7 @@ public class SpecInfoPanel extends LinearLayout {
 
             double cs_value = target_data.getCalcValue(cs_key);
             if(cs_value >= min_value) {
-                point = SpecValues.getPoint("装甲", cs_value, true, false);
+                point = SpecValues.getPoint("装甲", cs_value, false);
             }
             else {
                 point = SpecValues.NOTHING_STR;
@@ -274,8 +274,8 @@ public class SpecInfoPanel extends LinearLayout {
             else {
                 ret = String.format("%s - CS:%s(%s)以下",
                         ret,
-                        SpecValues.getPoint("装甲", cs_value, true, false),
-                        SpecValues.getSpecUnit(cs_value, "装甲", true));
+                        SpecValues.getPoint("装甲", cs_value, false),
+                        SpecValues.getSpecUnit(cs_value, "装甲"));
             }
         }
 

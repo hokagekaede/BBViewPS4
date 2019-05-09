@@ -24,7 +24,6 @@ import android.widget.TextView;
 public class CmpWeaponTableBuilder {
 	private Activity mActivity;
 	private Dialog mDialog;
-	private boolean mIsKmPerHour;
 	
 	private BBData mFromData;
 	private BBData mToData;
@@ -40,11 +39,9 @@ public class CmpWeaponTableBuilder {
 	/**
 	 * 初期化を行う。
 	 * @param activity ダイアログのオーナーアクティビティ
-	 * @param is_km_per_hour 速度の単位。
 	 */
-	public CmpWeaponTableBuilder(Activity activity, boolean is_km_per_hour) {
+	public CmpWeaponTableBuilder(Activity activity) {
 		this.mActivity = activity;
-		this.mIsKmPerHour = is_km_per_hour;
 	}
 
 	/**
@@ -155,8 +152,8 @@ public class CmpWeaponTableBuilder {
 		
 		for(int i=0; i<size; i++) {
 			String target_key = cmp_target[i];
-			String from_str = SpecValues.getShowValue(from_data, target_key, mIsKmPerHour);
-			String to_str = SpecValues.getShowValue(to_data, target_key, mIsKmPerHour);
+			String from_str = SpecValues.getShowValue(from_data, target_key);
+			String to_str = SpecValues.getShowValue(to_data, target_key);
 			
 			if(!from_str.equals(BBData.STR_VALUE_NOTHING) && !to_str.equals(BBData.STR_VALUE_NOTHING)) {
 				int[] colors = getColors(from_data, to_data, target_key);
