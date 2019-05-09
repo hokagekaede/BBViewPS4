@@ -5,7 +5,6 @@ import hokage.kaede.gmail.com.BBViewLib.Android.CommonLib.BBDataAdapterItemPrope
 import hokage.kaede.gmail.com.BBViewLib.Java.BBData;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataFilter;
 import hokage.kaede.gmail.com.BBViewLib.Java.BBDataManager;
-import hokage.kaede.gmail.com.BBViewLib.Java.BBNetDatabase;
 import hokage.kaede.gmail.com.BBViewLib.Android.CommonLib.BaseActivity;
 import hokage.kaede.gmail.com.BBViewLib.Android.CommonLib.IntentManager;
 

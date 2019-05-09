@@ -173,22 +173,22 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		grid_view.setOnItemClickListener(this);
 		grid_view.setOnItemLongClickListener(new OnWeaponLongClickListener());
 		
-		String assult_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String assult_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_ASSALT, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_ASSALT), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_ASSALT));
 
-		String heavy_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String heavy_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_HEAVY, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_HEAVY), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_HEAVY));
 
-		String sniper_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String sniper_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_SNIPER, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_SNIPER), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_SNIPER));
 
-		String support_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String support_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_SUPPORT, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_SUPPORT), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_SUPPORT));

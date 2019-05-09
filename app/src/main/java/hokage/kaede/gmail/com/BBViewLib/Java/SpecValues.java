@@ -204,12 +204,34 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("ツェーブラ");
+		SERIES_NAME_LIST.add("輝星");
 		SERIES_NAME_LIST.add("エンフォーサー");
 		SERIES_NAME_LIST.add("ケーファー");
 		SERIES_NAME_LIST.add("E.D.G.");
 		SERIES_NAME_LIST.add("ヤクシャ");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ディスカス");
+		SERIES_NAME_LIST.add("ロージー");
+	}
+
+	/**
+	 * パーツ名からシリーズ名を取得する。
+	 * @param data データ
+	 * @return シリーズ名
+	 */
+	public static String getSeries(BBData data) {
+		String name = data.get("名称");
+		int count = SERIES_NAME_LIST.size();
+
+		for(int i=0; i<count; i++) {
+			String series_name = SERIES_NAME_LIST.get(i);
+
+			if(name.contains(series_name)) {
+				return series_name;
+			}
+		}
+
+		return "";
 	}
 
 	/**
@@ -334,23 +356,23 @@ public class SpecValues {
 	 */
 	private static void initShotBonus() {
 		SHOTBONUS = new KeyValueStore();
-		SHOTBONUS.set("S",  "1.37");  // 対象無し
-		SHOTBONUS.set("S-", "1.34");  // 対象無し
-		SHOTBONUS.set("A+", "1.30");  // 対象無し
-		SHOTBONUS.set("A",  "1.25");  // 対象無し
-		SHOTBONUS.set("A-", "1.20");
-		SHOTBONUS.set("B+", "1.16");
-		SHOTBONUS.set("B",  "1.12");
-		SHOTBONUS.set("B-", "1.08");
-		SHOTBONUS.set("C+", "1.04");
-		SHOTBONUS.set("C",  "1.00");
-		SHOTBONUS.set("C-", "0.96");
-		SHOTBONUS.set("D+", "0.92");
-		SHOTBONUS.set("D",  "0.88");
-		SHOTBONUS.set("D-", "0.84");
-		SHOTBONUS.set("E+", "0.80");
-		SHOTBONUS.set("E",  "0.76");
-		SHOTBONUS.set("E-", "0.72");  // 対象無し
+		SHOTBONUS.set("S",  "37");  // 対象無し
+		SHOTBONUS.set("S-", "34");  // 対象無し
+		SHOTBONUS.set("A+", "30");  // 対象無し
+		SHOTBONUS.set("A",  "25");  // 対象無し
+		SHOTBONUS.set("A-", "20");
+		SHOTBONUS.set("B+", "16");
+		SHOTBONUS.set("B",  "12");
+		SHOTBONUS.set("B-", "8");
+		SHOTBONUS.set("C+", "4");
+		SHOTBONUS.set("C",  "0");
+		SHOTBONUS.set("C-", "-4");
+		SHOTBONUS.set("D+", "-8");
+		SHOTBONUS.set("D",  "-12");
+		SHOTBONUS.set("D-", "-16");
+		SHOTBONUS.set("E+", "-20");
+		SHOTBONUS.set("E",  "-24");
+		SHOTBONUS.set("E-", "-28");  // 対象無し
 	}
 	
 	/**
@@ -430,23 +452,23 @@ public class SpecValues {
 	 */
 	private static void initSP() {
 		SP = new KeyValueStore();
-		SP.set("S",  "2.20");  // 対象無し
-		SP.set("S-", "2.10");  // 対象無し
-		SP.set("A+", "2.00");  // 対象無し
-		SP.set("A",  "1.85");  // 対象無し
-		SP.set("A-", "1.70");
-		SP.set("B+", "1.60");  // 対象無し
-		SP.set("B",  "1.50");  // 対象無し
-		SP.set("B-", "1.40");
-		SP.set("C+", "1.35");
-		SP.set("C",  "1.20");
-		SP.set("C-", "1.10");
-		SP.set("D+", "1.00");
-		SP.set("D",  "0.90");
-		SP.set("D-", "0.80");
-		SP.set("E+", "0.65");
-		SP.set("E",  "0.50");
-		SP.set("E-", "0.45");  // 対象無し
+		SP.set("S",  "120");  // 対象無し
+		SP.set("S-", "110");  // 対象無し
+		SP.set("A+", "100");  // 対象無し
+		SP.set("A",  "85");  // 対象無し
+		SP.set("A-", "70");
+		SP.set("B+", "60");  // 対象無し
+		SP.set("B",  "50");  // 対象無し
+		SP.set("B-", "40");
+		SP.set("C+", "35");
+		SP.set("C",  "20");
+		SP.set("C-", "10");
+		SP.set("D+", "0");
+		SP.set("D",  "-10");
+		SP.set("D-", "-20");
+		SP.set("E+", "-35");
+		SP.set("E",  "-50");
+		SP.set("E-", "-55");  // 対象無し
 	}
 
 	/**
@@ -478,23 +500,23 @@ public class SpecValues {
 	 */
 	private static void initRecoil() {
 		RECOIL = new KeyValueStore();
-		RECOIL.set("S",  "150");  // 対象無し
-		RECOIL.set("S-", "145");  // 対象無し
-		RECOIL.set("A+", "140");
-		RECOIL.set("A",  "135");  // 対象無し
-		RECOIL.set("A-", "130");
-		RECOIL.set("B+", "125");
-		RECOIL.set("B",  "120");
-		RECOIL.set("B-", "115");
-		RECOIL.set("C+", "110");
-		RECOIL.set("C",  "105");  // 対象無し
-		RECOIL.set("C-", "100");
-		RECOIL.set("D+", "95");
-		RECOIL.set("D",  "90");
-		RECOIL.set("D-", "85");
-		RECOIL.set("E+", "80");   // 対象無し
-		RECOIL.set("E",  "75");
-		RECOIL.set("E-", "70");   // 対象無し
+		RECOIL.set("S",  "50");  // 対象無し
+		RECOIL.set("S-", "45");  // 対象無し
+		RECOIL.set("A+", "40");
+		RECOIL.set("A",  "35");  // 対象無し
+		RECOIL.set("A-", "30");
+		RECOIL.set("B+", "25");
+		RECOIL.set("B",  "20");
+		RECOIL.set("B-", "15");
+		RECOIL.set("C+", "10");
+		RECOIL.set("C",  "5");  // 対象無し
+		RECOIL.set("C-", "0");
+		RECOIL.set("D+", "-5");
+		RECOIL.set("D",  "-10");
+		RECOIL.set("D-", "-15");
+		RECOIL.set("E+", "-20");   // 対象無し
+		RECOIL.set("E",  "-25");
+		RECOIL.set("E-", "-30");   // 対象無し
 	}
 	
 	/**
@@ -502,23 +524,23 @@ public class SpecValues {
 	 */
 	private static void initReload() {
 		RELOAD = new KeyValueStore();
-		RELOAD.set("S",  "0.550");  // 対象無し
-		RELOAD.set("S-", "0.595");  // 対象無し
-		RELOAD.set("A+", "0.640");  // 対象無し
-		RELOAD.set("A",  "0.685");
-		RELOAD.set("A-", "0.730");  // 対象無し
-		RELOAD.set("B+", "0.775");
-		RELOAD.set("B",  "0.820");
-		RELOAD.set("B-", "0.865");
-		RELOAD.set("C+", "0.910");
-		RELOAD.set("C",  "0.955");
-		RELOAD.set("C-", "1.000");
-		RELOAD.set("D+", "1.045");
-		RELOAD.set("D",  "1.090");
-		RELOAD.set("D-", "1.135");
-		RELOAD.set("E+", "1.180");
-		RELOAD.set("E",  "1.225");
-		RELOAD.set("E-", "1.400");  // 対象無し
+		RELOAD.set("S",  "45.0");  // 対象無し
+		RELOAD.set("S-", "40.5");  // 対象無し
+		RELOAD.set("A+", "36.0");  // 対象無し
+		RELOAD.set("A",  "31.5");
+		RELOAD.set("A-", "27.0");  // 対象無し
+		RELOAD.set("B+", "22.5");
+		RELOAD.set("B",  "18.0");
+		RELOAD.set("B-", "13.5");
+		RELOAD.set("C+", "9.0");
+		RELOAD.set("C",  "4.5");
+		RELOAD.set("C-", "-4.5");
+		RELOAD.set("D+", "-9.0");
+		RELOAD.set("D",  "-13.5");
+		RELOAD.set("D-", "-18.0");
+		RELOAD.set("E+", "-22.5");
+		RELOAD.set("E",  "-40.0");
+		RELOAD.set("E-", "-50.0");  // 対象無し
 	}
 
 	/**
@@ -1155,7 +1177,7 @@ public class SpecValues {
 			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("猶予")) {
-			ret = String.format("%.0f", value);
+			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("初速")) {
 			ret = String.format("%.3f", value);
@@ -1183,10 +1205,10 @@ public class SpecValues {
 			ret = String.format("%.1f", value);
 		}
 		else if(key.contains("重量")) {
-			ret = String.format("%.0f", value);
+			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("射撃補正")) {
-			ret = String.format("%.2f", value);
+			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("索敵")) {
 			ret = String.format("%.0f(m)", value);
@@ -1198,7 +1220,7 @@ public class SpecValues {
 			ret = String.format("%.0f", value);
 		}
 		else if(key.equals("SP供給率")) {
-			ret = String.format("x%.2f", value);
+			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("エリア移動")) {
 			ret = String.format("%.2f(秒)", value);
@@ -1207,13 +1229,13 @@ public class SpecValues {
 			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("リロード")) {
-			ret = String.format("x%.3f", value);
+			ret = String.format("%.1f(%%)", value);
 		}
 		else if(key.equals("武器変更")) {
 			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("重量耐性")) {
-			ret = String.format("%.0f", value);
+			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("ダッシュ")) {
 			ret = String.format("%.2f", value);

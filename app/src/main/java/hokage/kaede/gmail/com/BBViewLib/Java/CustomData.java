@@ -467,25 +467,25 @@ public class CustomData {
 	 * パーツの総重量を取得する。サテライトバンカー/要請兵器が有効な場合はここで重量を加算する。
 	 * @return 総重量
 	 */
-	public int getPartsWeight() {
-		int ret = 0;
+	public double getPartsWeight() {
+		double ret = 0;
 		int parts_len = mRecentParts.length;
-		int reqarm_weight = 0;
+		double reqarm_weight = 0;
 
 		try {
 			for(int i=0; i<parts_len; i++) {
 				String str_buf = mRecentParts[i].get("重量");
-				int buf = Integer.parseInt(str_buf);
+				double buf = Double.parseDouble(str_buf);
 				ret = ret + buf;
 			}
 
-			reqarm_weight = Integer.parseInt(mReqArm.get("重量"));
+			reqarm_weight = Double.parseDouble(mReqArm.get("重量"));
 		} catch(Exception e) {
 			// Do Nothing
 		}
 		
 		// サテライトバンカー/要請兵器の重量を加算する
-		int carried_weight = 0;
+		double carried_weight = 0;
 		if(mMode == MODE_SB) {
 			carried_weight = SpecValues.SB_WEIGHT;
 		}
@@ -508,6 +508,7 @@ public class CustomData {
 			ret = ret + carried_weight;
 		}
 		*/
+		ret = ret + carried_weight;
 
 		return ret;
 	}
@@ -516,7 +517,7 @@ public class CustomData {
 	 * パーツの総重量に対する積載猶予を取得する
 	 * @return 積載猶予
 	 */
-	public int getSpacePartsWeight() {
+	public double getSpacePartsWeight() {
 		return getAntiWeight() - getPartsWeight();
 	}
 
@@ -658,8 +659,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			ret = ret + (0.010 * countChip("射撃補正"));
-			ret = ret + (0.015 * countChip("射撃補正II"));
+			ret = ret + (1.0 * countChip("射撃補正"));
+			ret = ret + (1.5 * countChip("射撃補正II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -799,8 +800,8 @@ public class CustomData {
 			ret = Double.valueOf(value);
 
 			// チップセットボーナス
-			ret = ret + (0.030 * countChip("SP供給率"));
-			ret = ret + (0.045 * countChip("SP供給率II"));
+			ret = ret + (3.0 * countChip("SP供給率"));
+			ret = ret + (4.5 * countChip("SP供給率II"));
 
 		} catch(Exception e) {
 			ret = 0;
@@ -900,8 +901,8 @@ public class CustomData {
 			ret = Double.valueOf(SpecValues.RELOAD.get(spec));
 
 			// チップセットボーナス
-			ret = ret - (0.010 * countChip("リロード"));
-			ret = ret - (0.015 * countChip("リロードII"));
+			ret = ret - (1.0 * countChip("リロード"));
+			ret = ret - (1.5 * countChip("リロードII"));
 
 		} catch (Exception e) {
 			ret = 0;
@@ -1083,7 +1084,7 @@ public class CustomData {
 	 * @param blust_type 総重量を取得する兵装
 	 * @return 総重量
 	 */
-	public int getWeight(String blust_type) {
+	public double getWeight(String blust_type) {
 		return getPartsWeight() + getWeaponsWeight(blust_type);
 	}
 	
@@ -1092,7 +1093,7 @@ public class CustomData {
 	 * @param blust_type 積載猶予を取得する兵装
 	 * @return 積載猶予
 	 */
-	public int getSpaceWeight(String blust_type) {
+	public double getSpaceWeight(String blust_type) {
 		return getAntiWeight(blust_type) - getWeight(blust_type);
 	}
 
@@ -1536,7 +1537,7 @@ public class CustomData {
 	 */
 	public double getSpeedDownRate() {
 		double ret = 0;
-		int space = getSpacePartsWeight();
+		double space = getSpacePartsWeight();
 		
 		if(space >= 0) {
 			ret = 0;
@@ -1557,7 +1558,7 @@ public class CustomData {
 	 */
 	public double getSpeedDownRate(String blust_type) {
 		double ret = 0;
-		int space = getSpaceWeight(blust_type);
+		double space = getSpaceWeight(blust_type);
 		
 		if(space >= 0) {
 			ret = 0;
@@ -1995,7 +1996,7 @@ public class CustomData {
 		reload_spec_value = getReload();
 
 		// リロード時間の計算
-		ret = reload_time_value * reload_spec_value;
+		ret = reload_time_value * (1.0 - reload_spec_value / 100.0);
 
 		/*
 		// チップの補正値を取得
@@ -2339,7 +2340,7 @@ public class CustomData {
 	 * @return SP供給率を反映したチャージ時間。チャージ時間の値が無い場合は0を返す。
 	 */
 	public double getSpChargeTime(BBData data, boolean is_overheat) {
-		double ret = data.getSpChargeTime() / getSP();
+		double ret = data.getSpChargeTime() / (1 + getSP() / 100);
 		
 		if(is_overheat) {
 			ret = ret * 1.2;

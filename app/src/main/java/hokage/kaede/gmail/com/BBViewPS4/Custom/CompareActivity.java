@@ -471,7 +471,7 @@ public class CompareActivity extends BaseActivity {
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpStartDushSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpSpeedDonRateSpecArray(from_data, to_data, blust_type)));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "重量耐性")));
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "加速")));
+			table.addView(ViewBuilder.createTableRow(context, SpecArray.getCmpPartsSpecArray(from_data, to_data, blust_type, "巡航")));
 
 			int color = SettingManager.getColorWhite();
 			int bg_color = SettingManager.getColorBlue();

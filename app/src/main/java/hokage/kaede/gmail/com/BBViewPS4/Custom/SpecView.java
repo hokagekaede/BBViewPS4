@@ -538,7 +538,7 @@ public class SpecView extends FrameLayout {
 
 				String[] cols = {
 						blust_name.substring(0, 2),
-						String.format("%d", data.getWeight(blust_name)) + "(" + String.format("%d", data.getSpaceWeight(blust_name)) + ")",
+						String.format("%.1f", data.getWeight(blust_name)) + "(" + String.format("%.1f", data.getSpaceWeight(blust_name)) + ")",
 						SpecValues.getSpecUnit(data.getStartDush(blust_name), "初速", BBViewSetting.IS_KM_PER_HOUR),
 						SpecValues.getSpecUnit(data.getWalk(blust_name), "歩速", BBViewSetting.IS_KM_PER_HOUR),
 						SpecValues.getSpecUnit(rate, "低下率", BBViewSetting.IS_KM_PER_HOUR),
@@ -603,7 +603,7 @@ public class SpecView extends FrameLayout {
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "装甲平均値(地爆時)", armor_str));
 			
 			// 総重量(猶予)
-			String weight_str = String.format("%d (%d)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight());
+			String weight_str = String.format("%.1f (%.1f)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight());
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "総重量(猶予)", weight_str));
 			
 			int color = SettingManager.getColorWhite();
@@ -640,7 +640,7 @@ public class SpecView extends FrameLayout {
 			table.setLayoutParams(new TableLayout.LayoutParams(FP, WC));
 
 			// 総重量(猶予)
-			String weight_str = String.format("%d (%d)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight());
+			String weight_str = String.format("%.1f (%.1f)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight());
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorWhite(), "総重量(猶予)", weight_str));
 			
 			// 装甲平均値
@@ -792,7 +792,7 @@ public class SpecView extends FrameLayout {
 			
 			String[] base_value_col_str = {
 				getSpecString(custom_data, "装甲", custom_data.getArmorAve(blust_type)),
-				String.format("%d (%d)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight()),
+				String.format("%.1f (%.1f)", custom_data.getPartsWeight(), custom_data.getSpacePartsWeight()),
 				SpecValues.getSpecUnit(custom_data.getSpeedDownRate(blust_type), "低下率", BBViewSetting.IS_KM_PER_HOUR),
 			};
 			

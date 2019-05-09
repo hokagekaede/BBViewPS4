@@ -291,7 +291,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 	 * @return リスト
 	 */
 	public ArrayList<BBData> getList(BBDataFilter filter, boolean is_sort_type_b) {
-		ArrayList<BBData> ret_list = super.getList();
+		ArrayList<BBData> ret_list = new ArrayList<BBData>();
 		ret_list.clear();
 		
 		int datalist_len = super.size();
@@ -580,6 +580,27 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 			}
 		}
 		
+		return ret;
+	}
+
+	/**
+	 * 指定のデータ同士が同じ種類のパーツかどうか判別する。
+	 * @param data1 判別するデータ1
+	 * @param data2 判別するデータ2
+	 * @return 一致している場合はtrueを返し、異なる場合はfalseを返す。
+	 */
+	public static boolean cmpPartsType(BBData data1, BBData data2) {
+		boolean ret = false;
+		int parts_len = BLUST_PARTS_LIST.length;
+
+		for(int i=0; i<parts_len; i++) {
+			String parts_type = BLUST_PARTS_LIST[i];
+			if(data1.existCategory(parts_type) && data2.existCategory(parts_type)) {
+				ret = true;
+				break;
+			}
+		}
+
 		return ret;
 	}
 	
