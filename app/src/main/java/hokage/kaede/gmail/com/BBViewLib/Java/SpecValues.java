@@ -202,22 +202,22 @@ public class SpecValues {
 	 */
 	private static void initDefRecover() {
 		DEF_RECOVER = new KeyValueStore();
-		DEF_RECOVER.set("S",  "137.5"); // 3.5該当パーツなし (2015/10/22)
-		DEF_RECOVER.set("S-", "125.0"); // 3.5該当パーツなし (2015/10/31)
-		DEF_RECOVER.set("A+", "112.5"); // 3.5該当パーツなし (2015/10/22)
-		DEF_RECOVER.set("A",  "100.0");
-		DEF_RECOVER.set("A-", "87.5");
-		DEF_RECOVER.set("B+", "75.0");
+		DEF_RECOVER.set("S",  "137.5"); // 対象無し
+		DEF_RECOVER.set("S-", "125.0"); // 対象無し
+		DEF_RECOVER.set("A+", "112.5"); // 対象無し
+		DEF_RECOVER.set("A",  "100.0"); // 対象無し
+		DEF_RECOVER.set("A-", "87.5");  // 対象無し
+		DEF_RECOVER.set("B+", "75.0");  // 対象無し
 		DEF_RECOVER.set("B",  "62.5");
 		DEF_RECOVER.set("B-", "50.0");
 		DEF_RECOVER.set("C+", "37.5");
 		DEF_RECOVER.set("C",  "25.0");
 		DEF_RECOVER.set("C-", "12.5");
 		DEF_RECOVER.set("D+", "0.0");
-		DEF_RECOVER.set("D",  "-12.5");
+		DEF_RECOVER.set("D",  "-12.5"); // 対象無し
 		DEF_RECOVER.set("D-", "-25.0");
-		DEF_RECOVER.set("E+", "-37.5");  // 3.5該当パーツなし (2015/10/22)
-		DEF_RECOVER.set("E",  "-50.0");  // 3.5該当パーツなし (2015/10/22)
+		DEF_RECOVER.set("E+", "-37.5"); // 対象無し
+		DEF_RECOVER.set("E",  "-50.0"); // 対象無し
 	}
 
 	/**
@@ -225,13 +225,13 @@ public class SpecValues {
 	 */
 	private static void initDefGuard() {
 		DEF_GUARD = new KeyValueStore();
-		DEF_GUARD.set("S",  "5000");  // ヤマ・羅          (2016/12/13)
-		DEF_GUARD.set("S-", "4750");
-		DEF_GUARD.set("A+", "4500");  // 3.5該当パーツなし (2015/10/22)
-		DEF_GUARD.set("A",  "4250");  // 3.5該当パーツなし (2015/10/22)
-		DEF_GUARD.set("A-", "4000");  // 3.5該当パーツなし (2015/10/22)
+		DEF_GUARD.set("S",  "5000"); // 対象無し
+		DEF_GUARD.set("S-", "4750"); // 対象無し
+		DEF_GUARD.set("A+", "4500"); // 対象無し
+		DEF_GUARD.set("A",  "4250"); // 対象無し
+		DEF_GUARD.set("A-", "4000"); // 対象無し
 		DEF_GUARD.set("B+", "3750");
-		DEF_GUARD.set("B",  "3500");
+		DEF_GUARD.set("B",  "3500"); // 対象無し
 		DEF_GUARD.set("B-", "3250");
 		DEF_GUARD.set("C+", "3000");
 		DEF_GUARD.set("C",  "2750");
@@ -240,7 +240,7 @@ public class SpecValues {
 		DEF_GUARD.set("D",  "2000");
 		DEF_GUARD.set("D-", "1750");
 		DEF_GUARD.set("E+", "1500");
-		DEF_GUARD.set("E",  "1250");  // 3.5該当パーツなし (2015/10/22)
+		DEF_GUARD.set("E",  "1250"); // 対象無し
 	}
 
 	/**
@@ -248,48 +248,48 @@ public class SpecValues {
 	 */
 	private static void initSpareBullet() {
 		SPARE_BULLET = new KeyValueStore();
-		SPARE_BULLET.set("S",  "68");  // 3.5該当パーツなし (2015/10/22)
-		SPARE_BULLET.set("S-", "63");  // ヤマ・羅          (2016/12/13)
-		SPARE_BULLET.set("A+", "59");
-		SPARE_BULLET.set("A",  "54");
-		SPARE_BULLET.set("A-", "50");
-		SPARE_BULLET.set("B+", "45");
-		SPARE_BULLET.set("B",  "41");
-		SPARE_BULLET.set("B-", "36");
-		SPARE_BULLET.set("C+", "32");
-		SPARE_BULLET.set("C",  "27");
-		SPARE_BULLET.set("C-", "23");
-		SPARE_BULLET.set("D+", "18");
-		SPARE_BULLET.set("D",  "14");
-		SPARE_BULLET.set("D-",  "9");
-		SPARE_BULLET.set("E+",  "5");
-		SPARE_BULLET.set("E",   "0");
+		SPARE_BULLET.set("S",  "68"); // 対象無し
+		SPARE_BULLET.set("S-", "63"); // 対象無し
+		SPARE_BULLET.set("A+", "55");
+		SPARE_BULLET.set("A",  "54"); // 対象無し
+		SPARE_BULLET.set("A-", "45");
+		SPARE_BULLET.set("B+", "40");
+		SPARE_BULLET.set("B",  "35");
+		SPARE_BULLET.set("B-", "30");
+		SPARE_BULLET.set("C+", "25");
+		SPARE_BULLET.set("C",  "20");
+		SPARE_BULLET.set("C-", "15");
+		SPARE_BULLET.set("D+", "10");
+		SPARE_BULLET.set("D",  "14"); // 対象無し
+		SPARE_BULLET.set("D-",  "0");
+		SPARE_BULLET.set("E+",  "5"); // 対象無し
+		SPARE_BULLET.set("E",   "0"); // 対象無し
 	}
 
 	/**
-	 * 加速のデータの初期化
+	 * 巡航のデータの初期化
 	 */
 	private static void initAcceleration() {
 		ACCELERATION = new KeyValueStore();
-		ACCELERATION.set("S",  "0.84");   // PLUS：S－sd (2017/10/24)
-		ACCELERATION.set("S-", "1.11");   // 5.0該当パーツなし (2016/8/27)
-		ACCELERATION.set("A+", "1.38");   // ヤマ・羅          (2016/12/13)
-		ACCELERATION.set("A",  "1.65");   // ツェーブラ38
-		ACCELERATION.set("A-", "1.92");   // ヘヴィガードIII型
-		ACCELERATION.set("B+", "2.19");   // クーガーII型
-		ACCELERATION.set("B",  "2.46");   // シュライクV型
-		ACCELERATION.set("B-", "2.73");   // ヘヴィガードI型
-		ACCELERATION.set("C+", "3.00");   // ヘヴィガードIV型
-		ACCELERATION.set("C",  "3.27");   // クーガーI型
-		ACCELERATION.set("C-", "3.54");   // アスラ・弐
-		ACCELERATION.set("D+", "3.81");   // ヘヴィガードG型
-		ACCELERATION.set("D",  "4.08");   // ランドバルクIV型 
-		ACCELERATION.set("D-", "4.35");   // セイバーZX
-		ACCELERATION.set("E+", "4.62");   // エンフォーサーX型
-		ACCELERATION.set("E",  "4.89");   // ヤーデVMT
-		ACCELERATION.set("E-", "5.16");   // ヤクシャ・零
+		ACCELERATION.set("S",  "0.84");  // 対象無し
+		ACCELERATION.set("S-", "1.11");  // 対象無し
+		ACCELERATION.set("A+", "79.20");  // 対象無し
+		ACCELERATION.set("A",  "77.04");  // 対象無し
+		ACCELERATION.set("A-", "72.72");  // 対象無し
+		ACCELERATION.set("B+", "79.20");
+		ACCELERATION.set("B",  "77.04");
+		ACCELERATION.set("B-", "2.73");  // 対象無し
+		ACCELERATION.set("C+", "72.72");
+		ACCELERATION.set("C",  "70.92");
+		ACCELERATION.set("C-", "69.12");
+		ACCELERATION.set("D+", "67.32");
+		ACCELERATION.set("D",  "65.52");
+		ACCELERATION.set("D-", "4.35");  // 対象無し
+		ACCELERATION.set("E+", "61.92");
+		ACCELERATION.set("E",  "60.12");
+		ACCELERATION.set("E-", "5.16");  // 対象無し
 	}
-	
+
 	/**
 	 * セットボーナスの説明文を初期化する
 	 */
@@ -333,8 +333,8 @@ public class SpecValues {
 	 */
 	private static void initArmor() {
 		ARMOR = new KeyValueStore();
-		ARMOR.set("S",   "37");
-		ARMOR.set("S-",  "32");
+		ARMOR.set("S",   "37");  // 対象無し
+		ARMOR.set("S-",  "32");  // 対象無し
 		ARMOR.set("A+",  "29");
 		ARMOR.set("A",   "22");
 		ARMOR.set("A-",  "18");
@@ -343,13 +343,13 @@ public class SpecValues {
 		ARMOR.set("B-",   "5");
 		ARMOR.set("C+",   "0");
 		ARMOR.set("C",   "-5");
-		ARMOR.set("C-", "-10");
+		ARMOR.set("C-", "-10");  // 対象無し
 		ARMOR.set("D+", "-13");
 		ARMOR.set("D",  "-19");
 		ARMOR.set("D-", "-25");
 		ARMOR.set("E+", "-28");
 		ARMOR.set("E",  "-32");
-		ARMOR.set("E-", "-36");
+		ARMOR.set("E-", "-36");  // 対象無し
 	}
 	
 	/**
@@ -357,10 +357,10 @@ public class SpecValues {
 	 */
 	private static void initShotBonus() {
 		SHOTBONUS = new KeyValueStore();
-		SHOTBONUS.set("S",  "1.37");
-		SHOTBONUS.set("S-", "1.34");
-		SHOTBONUS.set("A+", "1.30");
-		SHOTBONUS.set("A",  "1.25");
+		SHOTBONUS.set("S",  "1.37");  // 対象無し
+		SHOTBONUS.set("S-", "1.34");  // 対象無し
+		SHOTBONUS.set("A+", "1.30");  // 対象無し
+		SHOTBONUS.set("A",  "1.25");  // 対象無し
 		SHOTBONUS.set("A-", "1.20");
 		SHOTBONUS.set("B+", "1.16");
 		SHOTBONUS.set("B",  "1.12");
@@ -369,11 +369,11 @@ public class SpecValues {
 		SHOTBONUS.set("C",  "1.00");
 		SHOTBONUS.set("C-", "0.96");
 		SHOTBONUS.set("D+", "0.92");
-		SHOTBONUS.set("D",  "0.88");  // 3.5該当パーツなし (2012/10/31)
+		SHOTBONUS.set("D",  "0.88");
 		SHOTBONUS.set("D-", "0.84");
-		SHOTBONUS.set("E+", "0.80");  // 3.5該当パーツなし (2015/10/31)
+		SHOTBONUS.set("E+", "0.80");
 		SHOTBONUS.set("E",  "0.76");
-		SHOTBONUS.set("E-", "0.72");  // 3.5該当パーツなし (2015/10/31)
+		SHOTBONUS.set("E-", "0.72");  // 対象無し
 	}
 	
 	/**
@@ -381,12 +381,12 @@ public class SpecValues {
 	 */
 	private static void initSearch() {
 		SEARCH = new KeyValueStore();
-		SEARCH.set("S",  "330");  // 3.5該当パーツなし (2015/10/22)
-		SEARCH.set("S-", "315");  // 3.5該当パーツなし (2015/10/31)
+		SEARCH.set("S",  "330");  // 対象無し
+		SEARCH.set("S-", "315");  // 対象無し
 		SEARCH.set("A+", "300");
 		SEARCH.set("A",  "285");
-		SEARCH.set("A-", "270");
-		SEARCH.set("B+", "255");
+		SEARCH.set("A-", "270");  // 対象無し
+		SEARCH.set("B+", "255");  // 対象無し
 		SEARCH.set("B",  "240");
 		SEARCH.set("B-", "225");
 		SEARCH.set("C+", "210");
@@ -396,8 +396,8 @@ public class SpecValues {
 		SEARCH.set("D",  "150");
 		SEARCH.set("D-", "135");
 		SEARCH.set("E+", "120");
-		SEARCH.set("E",  "105");
-		SEARCH.set("E-", "90");  // 3.5該当パーツなし (2015/10/31)
+		SEARCH.set("E",  "105"); // 対象無し
+		SEARCH.set("E-", "90");  // 対象無し
 	}
 	
 	/**
@@ -405,10 +405,10 @@ public class SpecValues {
 	 */
 	private static void initRockOn() {
 		ROCKON = new KeyValueStore();
-		ROCKON.set("S",  "130");   // 3.5該当パーツなし (2015/10/22)
-		ROCKON.set("S-", "125");   // 3.5該当パーツなし (2015/10/31)
-		ROCKON.set("A+", "120");
-		ROCKON.set("A",  "115");  // 2.7該当パーツなし (2012/03/27)
+		ROCKON.set("S",  "130");  // 対象無し
+		ROCKON.set("S-", "125");  // 対象無し
+		ROCKON.set("A+", "120");  // 対象無し
+		ROCKON.set("A",  "115");  // 対象無し
 		ROCKON.set("A-", "110");
 		ROCKON.set("B+", "100");
 		ROCKON.set("B",  "90");
@@ -418,10 +418,10 @@ public class SpecValues {
 		ROCKON.set("C-", "65");
 		ROCKON.set("D+", "60");
 		ROCKON.set("D",  "50");
-		ROCKON.set("D-", "45");  // 2.7該当パーツなし (2012/03/27)
+		ROCKON.set("D-", "45");  // 対象無し
 		ROCKON.set("E+", "40");
-		ROCKON.set("E",  "30");
-		ROCKON.set("E-", "25");  // 3.5該当パーツなし (2015/10/31)
+		ROCKON.set("E",  "30");  // 対象無し
+		ROCKON.set("E-", "25");  // 対象無し
 	}
 
 	/**
@@ -429,8 +429,8 @@ public class SpecValues {
 	 */
 	private static void initBoost() {
 		BOOST = new KeyValueStore();
-		BOOST.set("S",  "140"); // 3.5該当パーツなし (2015/10/31)
-		BOOST.set("S-", "135");
+		BOOST.set("S",  "140");  // 対象無し
+		BOOST.set("S-", "135");  // 対象無し
 		BOOST.set("A+", "130");
 		BOOST.set("A",  "125");
 		BOOST.set("A-", "120");
@@ -440,12 +440,12 @@ public class SpecValues {
 		BOOST.set("C+", "100");
 		BOOST.set("C",  "95");
 		BOOST.set("C-", "90");
-		BOOST.set("D+", "85");
-		BOOST.set("D",  "80");
-		BOOST.set("D-", "75");  // 3.5該当パーツなし (2015/10/24)
+		BOOST.set("D+", "85");  // 対象無し
+		BOOST.set("D",  "80");  // 対象無し
+		BOOST.set("D-", "75");  // 対象無し
 		BOOST.set("E+", "70");
-		BOOST.set("E",  "60");
-		BOOST.set("E-", "50");  // 3.5該当パーツなし (2015/10/31)
+		BOOST.set("E",  "60");  // 対象無し
+		BOOST.set("E-", "50");  // 対象無し
 	}
 
 	/**
@@ -453,13 +453,13 @@ public class SpecValues {
 	 */
 	private static void initSP() {
 		SP = new KeyValueStore();
-		SP.set("S",  "2.20");  // 3.5該当パーツなし (2015/10/31)
-		SP.set("S-", "2.10");  // 3.5該当パーツなし (2015/10/31)
-		SP.set("A+", "2.00");
-		SP.set("A",  "1.85");  // ザオレン・リアン胴、暫定 (2015/07/04)
+		SP.set("S",  "2.20");  // 対象無し
+		SP.set("S-", "2.10");  // 対象無し
+		SP.set("A+", "2.00");  // 対象無し
+		SP.set("A",  "1.85");  // 対象無し
 		SP.set("A-", "1.70");
-		SP.set("B+", "1.60");
-		SP.set("B",  "1.50");
+		SP.set("B+", "1.60");  // 対象無し
+		SP.set("B",  "1.50");  // 対象無し
 		SP.set("B-", "1.40");
 		SP.set("C+", "1.35");
 		SP.set("C",  "1.20");
@@ -469,7 +469,7 @@ public class SpecValues {
 		SP.set("D-", "0.80");
 		SP.set("E+", "0.65");
 		SP.set("E",  "0.50");
-		SP.set("E-", "0.45");  // 3.5該当パーツなし (2015/10/31)
+		SP.set("E-", "0.45");  // 対象無し
 	}
 
 	/**
@@ -477,23 +477,23 @@ public class SpecValues {
 	 */
 	private static void initMoveArea() {
 		AREAMOVE = new KeyValueStore();
-		AREAMOVE.set("S",  "2.5");
-		AREAMOVE.set("S-", "2.75");  // 2.7該当パーツなし (2015/10/31)
+		AREAMOVE.set("S",  "2.5");   // 対象無し
+		AREAMOVE.set("S-", "2.75");  // 対象無し
 		AREAMOVE.set("A+", "3.0");
-		AREAMOVE.set("A",  "3.25");  // 2.7該当パーツなし (2012/03/27)
+		AREAMOVE.set("A",  "3.25");
 		AREAMOVE.set("A-", "3.5");
-		AREAMOVE.set("B+", "4.0");
-		AREAMOVE.set("B",  "4.25");  // 2.7該当パーツなし (2012/03/27)
+		AREAMOVE.set("B+", "4.0");   // 対象無し
+		AREAMOVE.set("B",  "4.25");  // 対象無し
 		AREAMOVE.set("B-", "4.5");
 		AREAMOVE.set("C+", "5.0");
-		AREAMOVE.set("C",  "5.25");  // 2.7該当パーツなし (2012/03/27)
-		AREAMOVE.set("C-", "5.5");
-		AREAMOVE.set("D+", "5.75");  // 2.7該当パーツなし (2012/03/27)
-		AREAMOVE.set("D",  "6.0");
-		AREAMOVE.set("D-", "6.25");  // 2.7該当パーツなし (2012/03/27)
-		AREAMOVE.set("E+", "6.5");  // 2.7該当パーツなし (2012/03/27)
-		AREAMOVE.set("E",  "7.0");
-		AREAMOVE.set("E-", "7.5");  // 3.5該当パーツなし (2015/10/31)
+		AREAMOVE.set("C",  "5.25");
+		AREAMOVE.set("C-", "5.5");   // 対象無し
+		AREAMOVE.set("D+", "5.75");
+		AREAMOVE.set("D",  "6.0");   // 対象無し
+		AREAMOVE.set("D-", "6.5");
+		AREAMOVE.set("E+", "6.75");
+		AREAMOVE.set("E",  "7.0");  // 対象無し
+		AREAMOVE.set("E-", "7.5");  // 対象無し
 	}
 	
 	/**
@@ -501,23 +501,23 @@ public class SpecValues {
 	 */
 	private static void initRecoil() {
 		RECOIL = new KeyValueStore();
-		RECOIL.set("S",  "150");  // 3.5該当パーツなし (2015/10/31)
-		RECOIL.set("S-", "145");  // 3.5該当パーツなし (2015/10/31)
+		RECOIL.set("S",  "150");  // 対象無し
+		RECOIL.set("S-", "145");  // 対象無し
 		RECOIL.set("A+", "140");
-		RECOIL.set("A",  "135");
+		RECOIL.set("A",  "135");  // 対象無し
 		RECOIL.set("A-", "130");
 		RECOIL.set("B+", "125");
 		RECOIL.set("B",  "120");
 		RECOIL.set("B-", "115");
 		RECOIL.set("C+", "110");
-		RECOIL.set("C",  "105");
+		RECOIL.set("C",  "105");  // 対象無し
 		RECOIL.set("C-", "100");
 		RECOIL.set("D+", "95");
 		RECOIL.set("D",  "90");
 		RECOIL.set("D-", "85");
-		RECOIL.set("E+", "80");
+		RECOIL.set("E+", "80");   // 対象無し
 		RECOIL.set("E",  "75");
-		RECOIL.set("E-", "70");   // 3.5該当パーツなし (2015/10/31)
+		RECOIL.set("E-", "70");   // 対象無し
 	}
 	
 	/**
@@ -525,13 +525,13 @@ public class SpecValues {
 	 */
 	private static void initReload() {
 		RELOAD = new KeyValueStore();
-		RELOAD.set("S",  "0.550");   // 5.0該当パーツなし (2016/6/1)
-		RELOAD.set("S-", "0.595");   // 5.0暫定 (2016/6/1)
-		RELOAD.set("A+", "0.640");   // 5.0暫定 (2016/6/1)
-		RELOAD.set("A",  "0.685");   // 5.0暫定 (2016/6/1)
-		RELOAD.set("A-", "0.730");   // 5.0暫定 (2016/6/1)
-		RELOAD.set("B+", "0.775");   // 5.0暫定 (2016/6/1)
-		RELOAD.set("B",  "0.820");   // 5.0暫定 (2016/6/1)
+		RELOAD.set("S",  "0.550");  // 対象無し
+		RELOAD.set("S-", "0.595");  // 対象無し
+		RELOAD.set("A+", "0.640");  // 対象無し
+		RELOAD.set("A",  "0.685");
+		RELOAD.set("A-", "0.730");  // 対象無し
+		RELOAD.set("B+", "0.775");
+		RELOAD.set("B",  "0.820");
 		RELOAD.set("B-", "0.865");
 		RELOAD.set("C+", "0.910");
 		RELOAD.set("C",  "0.955");
@@ -541,7 +541,7 @@ public class SpecValues {
 		RELOAD.set("D-", "1.135");
 		RELOAD.set("E+", "1.180");
 		RELOAD.set("E",  "1.225");
-		RELOAD.set("E-", "1.400");   // 3.5該当パーツなし (2015/10/31)
+		RELOAD.set("E-", "1.400");  // 対象無し
 	}
 
 	/**
@@ -549,11 +549,11 @@ public class SpecValues {
 	 */
 	private static void initChangeWeapon() {
 		CHANGEWEAPON = new KeyValueStore();
-		CHANGEWEAPON.set("S",   "60");
-		CHANGEWEAPON.set("S-",  "55");
+		CHANGEWEAPON.set("S",   "60");  // 対象無し
+		CHANGEWEAPON.set("S-",  "55");  // 対象無し
 		CHANGEWEAPON.set("A+",  "50");
 		CHANGEWEAPON.set("A",   "40");
-		CHANGEWEAPON.set("A-",  "35");
+		CHANGEWEAPON.set("A-",  "35");  // 対象無し
 		CHANGEWEAPON.set("B+",  "30");
 		CHANGEWEAPON.set("B",   "25");
 		CHANGEWEAPON.set("B-",  "20");
@@ -565,7 +565,7 @@ public class SpecValues {
 		CHANGEWEAPON.set("D-", "-20");
 		CHANGEWEAPON.set("E+", "-24");
 		CHANGEWEAPON.set("E",  "-30");
-		CHANGEWEAPON.set("E-", "-35");  // 3.5該当パーツなし (2015/10/31)
+		CHANGEWEAPON.set("E-", "-35");  // 対象無し
 	}
 	
 	/**
@@ -573,23 +573,23 @@ public class SpecValues {
 	 */
 	private static void initAntiWeight() {
 		ANTIWEIGHT = new KeyValueStore();
-		ANTIWEIGHT.set("S",  "7000"); // 3.5該当パーツなし (2015/10/24)
-		ANTIWEIGHT.set("S-", "6800");
-		ANTIWEIGHT.set("A+", "6550");
-		ANTIWEIGHT.set("A",  "6350");
-		ANTIWEIGHT.set("A-", "6150");
-		ANTIWEIGHT.set("B+", "5900");
-		ANTIWEIGHT.set("B",  "5800");
-		ANTIWEIGHT.set("B-", "5600");
-		ANTIWEIGHT.set("C+", "5250");
-		ANTIWEIGHT.set("C",  "5150");
+		ANTIWEIGHT.set("S",  "7000"); // 対象無し
+		ANTIWEIGHT.set("S-", "6800"); // 対象無し
+		ANTIWEIGHT.set("A+", "6550"); // 対象無し
+		ANTIWEIGHT.set("A",  "6600");
+		ANTIWEIGHT.set("A-", "6450");
+		ANTIWEIGHT.set("B+", "6150");
+		ANTIWEIGHT.set("B",  "5950");
+		ANTIWEIGHT.set("B-", "5600"); // 対象無し
+		ANTIWEIGHT.set("C+", "5250"); // 対象無し
+		ANTIWEIGHT.set("C",  "5350");
 		ANTIWEIGHT.set("C-", "5000");
-		ANTIWEIGHT.set("D+", "4750");
-		ANTIWEIGHT.set("D",  "4550");
-		ANTIWEIGHT.set("D-", "4250");
-		ANTIWEIGHT.set("E+", "4000");
-		ANTIWEIGHT.set("E",  "3800");
-		ANTIWEIGHT.set("E-", "3600");  // 3.5該当パーツなし (2015/10/31)
+		ANTIWEIGHT.set("D+", "4850");
+		ANTIWEIGHT.set("D",  "4500");
+		ANTIWEIGHT.set("D-", "4250"); // 対象無し
+		ANTIWEIGHT.set("E+", "3800");
+		ANTIWEIGHT.set("E",  "3700");
+		ANTIWEIGHT.set("E-", "3600"); // 対象無し
 	}
 	
 	/**
@@ -597,23 +597,23 @@ public class SpecValues {
 	 */
 	private static void initDush() {
 		DASH = new KeyValueStore();
-		DASH.set("S",  "102.60");
-		DASH.set("S-", "99.90");
-		DASH.set("A+", "97.20");
-		DASH.set("A",  "93.96");
-		DASH.set("A-", "91.80");
-		DASH.set("B+", "89.64");
-		DASH.set("B",  "87.48");
-		DASH.set("B-", "85.32");
-		DASH.set("C+", "83.16");
-		DASH.set("C",  "81.00");
-		DASH.set("C-", "78.84");
-		DASH.set("D+", "76.68");
-		DASH.set("D",  "74.52");
-		DASH.set("D-", "72.36");
-		DASH.set("E+", "70.20");
-		DASH.set("E",  "68.04");
-		DASH.set("E-", "65.88");  // 5.0の他データからの予想数値 (2016/06/23)
+		DASH.set("S",  "102.60");  // 対象無し
+		DASH.set("S-", "99.90");   // 対象無し
+		DASH.set("A+", "97.20");   // 対象無し
+		DASH.set("A",  "93.60");
+		DASH.set("A-", "91.44");
+		DASH.set("B+", "89.28");
+		DASH.set("B",  "87.12");
+		DASH.set("B-", "84.96");
+		DASH.set("C+", "82.80");
+		DASH.set("C",  "80.64");
+		DASH.set("C-", "78.48");
+		DASH.set("D+", "76.32");
+		DASH.set("D",  "74.16");
+		DASH.set("D-", "72.00");
+		DASH.set("E+", "69.84");
+		DASH.set("E",  "67.68");
+		DASH.set("E-", "65.88");  // 対象無し
 		
 		// ホバー脚の場合の値を初期化する
 		DASH_HOVER = new KeyValueStore();
@@ -633,23 +633,23 @@ public class SpecValues {
 	 */
 	private static void initWalk() {
 		WALK = new KeyValueStore();
-		WALK.set("S",  "36.450");
-		WALK.set("S-", "35.316");  // 3.5該当パーツなし (2015/10/31)
-		WALK.set("A+", "34.020");
-		WALK.set("A",  "32.724");  // 2.7該当パーツなし (2012/03/27)
-		WALK.set("A-", "31.428");
-		WALK.set("B+", "30.456");  // 2.7該当パーツなし (2012/03/27)
-		WALK.set("B",  "29.160");
-		WALK.set("B-", "27.540");
-		WALK.set("C+", "25.920");
-		WALK.set("C",  "25.110");
-		WALK.set("C-", "24.300");
-		WALK.set("D+", "22.680");
-		WALK.set("D",  "21.060");
-		WALK.set("D-", "20.088");
-		WALK.set("E+", "18.792");
-		WALK.set("E",  "16.848");
-		WALK.set("E-", "14.904");  // 3.5該当パーツなし (2015/10/31)
+		WALK.set("S",  "36.450");  // 対象なし
+		WALK.set("S-", "35.316");  // 対象なし
+		WALK.set("A+", "34.020");  // 対象なし
+		WALK.set("A",  "33.12");
+		WALK.set("A-", "31.428");  // 対象なし
+		WALK.set("B+", "30.24");
+		WALK.set("B",  "28.80");
+		WALK.set("B-", "27.36");
+		WALK.set("C+", "25.92");
+		WALK.set("C",  "24.48");
+		WALK.set("C-", "23.04");
+		WALK.set("D+", "21.60");
+		WALK.set("D",  "20.16");
+		WALK.set("D-", "18.72");
+		WALK.set("E+", "17.28");
+		WALK.set("E",  "15.84");
+		WALK.set("E-", "14.904");  // 対象なし
 
 		// ホバー脚の場合の値を初期化する
 		WALK_HOVER = new KeyValueStore();
@@ -894,7 +894,7 @@ public class SpecValues {
 			tmp_value = Math.round(tmp_value);
 			point = getPointAsc(SpecValues.SPARE_BULLET, tmp_value);
 		}
-		else if(key.equals("加速")) {
+		else if(key.equals("巡航")) {
 			tmp_value = Math.round(tmp_value * 100.0) / 100.0;
 			point = getPointDsc(SpecValues.ACCELERATION, tmp_value);
 		}
@@ -1033,7 +1033,7 @@ public class SpecValues {
 		else if(key.equals("予備弾数")) {
 			value_str = SpecValues.SPARE_BULLET.get(point);
 		}
-		else if(key.equals("加速")) {
+		else if(key.equals("巡航")) {
 			value_str = SpecValues.ACCELERATION.get(point);
 		}
 		else {

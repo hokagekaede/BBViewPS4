@@ -279,12 +279,12 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		}
 		else if(type.equals(BBDataManager.BLUST_PARTS_LEGS)) {
 			title = title + " (脚部)";
-			summary = String.format("装：%s / 歩：%s / ダ：%s / 重：%s / 加：%s", 
+			summary = String.format("装：%s / 歩：%s / ダ：%s / 重：%s / 巡：%s",
 					data.get("装甲"),
 					data.get("歩行"),
 					data.get("ダッシュ"),
 					data.get("重量耐性"),
-					data.get("加速"));
+					data.get("巡航"));
 		}
 		
 		return new CustomAdapterItemParts(context, data, summary, type);

@@ -762,7 +762,7 @@ public class SpecView extends FrameLayout {
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getPartsSpecArray(custom_data, blust_type, "歩行")));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getPartsSpecArray(custom_data, blust_type, "ダッシュ")));
 			table.addView(ViewBuilder.createTableRow(context, SpecArray.getPartsSpecArray(custom_data, blust_type, "重量耐性")));
-			table.addView(ViewBuilder.createTableRow(context, SpecArray.getPartsSpecArray(custom_data, blust_type, "加速")));
+			table.addView(ViewBuilder.createTableRow(context, SpecArray.getPartsSpecArray(custom_data, blust_type, "巡航")));
 
 			int color = SettingManager.getColorWhite();
 			int bg_color = SettingManager.getColorBlue();
@@ -788,7 +788,7 @@ public class SpecView extends FrameLayout {
 		private static final String[] HEAD_COL_STR = { "射撃補正", "索敵", "ロックオン", "DEF回復" };
 		private static final String[] BODY_COL_STR = { "ブースター", "SP供給率", "エリア移動", "DEF耐久" };
 		private static final String[] ARMS_COL_STR = { "反動吸収", "リロード", "武器変更", "予備弾倉" };
-		private static final String[] LEGS_COL_STR = { "歩行", "ダッシュ", "重量耐性", "加速" };
+		private static final String[] LEGS_COL_STR = { "歩行", "ダッシュ", "重量耐性", "巡航" };
 		
 		/**
 		 * パーツスペックテーブルを生成する。
@@ -848,7 +848,7 @@ public class SpecView extends FrameLayout {
 				getSpecString(custom_data, "歩行", custom_data.getWalk(blust_type)),
 				getSpecString(custom_data, "ダッシュ", custom_data.getStartDush(blust_type)),
 				getSpecString(custom_data, "重量耐性", custom_data.getAntiWeight(blust_type)),
-				getSpecString(custom_data, "加速", custom_data.getAcceleration(blust_type))
+				getSpecString(custom_data, "巡航", custom_data.getAcceleration(blust_type))
 			};
 
 			table.addView(ViewBuilder.createTableRow(context, SettingManager.getColorYellow(), LEGS_COL_STR));

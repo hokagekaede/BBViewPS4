@@ -410,7 +410,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 	};
 	
 	private static final String[] CMP_LEGS = {
-		"重量", "装甲", "歩行", "ダッシュ", "重量耐性", "加速", BBData.CARRY_KEY, "実耐久値"
+		"重量", "装甲", "歩行", "ダッシュ", "巡航", "重量耐性", BBData.CARRY_KEY, "実耐久値"
 	};
 	
 	private static final String[] CMP_MAIN_WEAPON = {
