@@ -280,27 +280,10 @@ public class CustomData {
 	 * @return 中量機体の場合はtrueを返し、中量機体でない場合はfalseを返す。
 	 */
 	public boolean isNormalWeightParts(int parts_idx) {
-		String parts_name = mRecentParts[parts_idx].get("名称");
+		String parts_name = mRecentParts[parts_idx].get("タイプ");
 
-		if(parts_name.startsWith("クーガー")) {
+		if(parts_name.equals("中量型")) {
 			return true;
-		}
-		else if(parts_name.startsWith("エンフォーサー")) {
-			return true;
-		}
-		else if(parts_name.startsWith("ツェーブラ")) {
-			return true;
-		}
-		else if(parts_name.startsWith("輝星")) {
-			return true;
-		}
-		else if(parts_name.startsWith("ディスカス")) {
-			if(parts_name.equals("ディスカス・ノヴァ")) {
-				return false;
-			}
-			else {
-				return true;
-			}
 		}
 
 		return false;
@@ -312,21 +295,25 @@ public class CustomData {
 	 * @return 重量機体の場合はtrueを返し、重量機体でない場合はfalseを返す。
 	 */
 	public boolean isHeavyWeightParts(int parts_idx) {
-		String parts_name = mRecentParts[parts_idx].get("名称");
+		String parts_name = mRecentParts[parts_idx].get("タイプ");
 
-		if(parts_name.startsWith("ヘヴィガード")) {
+		if(parts_name.equals("重量型")) {
 			return true;
 		}
-		else if(parts_name.startsWith("ケーファー")) {
+
+		return false;
+	}
+
+	/**
+	 * 軽量機体かどうかを判別する。
+	 * @param parts_idx パーツの部位
+	 * @return 軽量機体の場合はtrueを返し、軽量機体でない場合はfalseを返す。
+	 */
+	public boolean isLightWeightParts(int parts_idx) {
+		String parts_name = mRecentParts[parts_idx].get("タイプ");
+
+		if(parts_name.equals("軽量型")) {
 			return true;
-		}
-		else if(parts_name.startsWith("ディスカス")) {
-			if(parts_name.equals("ディスカス・ノヴァ")) {
-				return true;
-			}
-			else {
-				return false;
-			}
 		}
 
 		return false;
@@ -636,6 +623,9 @@ public class CustomData {
 		else if(isHeavyWeightParts(idx)) {
 			ret = ret + (1 * countChip("重量機体強化"));
 		}
+		else if(isLightWeightParts(idx)) {
+			ret = ret + (1 * countChip("軽量機体強化"));
+		}
 
 		return ret;
 	}
@@ -654,6 +644,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (1.0 * countChip("射撃補正"));
 		ret = ret + (1.5 * countChip("射撃補正II"));
+		ret = ret + (0.5 * countChip("頭部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -676,6 +667,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (15 * countChip("索敵"));
 		ret = ret + (24 * countChip("索敵II"));
+		ret = ret + (9 * countChip("頭部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -698,6 +690,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (3 * countChip("ロックオン"));
 		ret = ret + (5 * countChip("ロックオンII"));
+		ret = ret + (2 * countChip("頭部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -720,6 +713,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (3.0 * countChip("DEF回復"));
 		ret = ret + (5.0 * countChip("DEF回復II"));
+		ret = ret + (1.5 * countChip("頭部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -747,6 +741,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (2 * countChip("ブースター"));
 		ret = ret + (3 * countChip("ブースターII"));
+		ret = ret + (1 * countChip("胴部パーツ強化"));
 			
 		return ret;
 	}
@@ -783,6 +778,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (3.0 * countChip("SP供給"));
 		ret = ret + (4.5 * countChip("SP供給II"));
+		ret = ret + (1.5 * countChip("胴部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -804,6 +800,8 @@ public class CustomData {
 
 		// チップセットボーナス
 		ret = ret - (0.20 * countChip("エリア移動"));
+		ret = ret - (0.30 * countChip("エリア移動II"));
+		ret = ret - (0.10 * countChip("胴部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -831,6 +829,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (80 * countChip("DEF耐久"));
 		ret = ret + (120 * countChip("DEF耐久II"));
+		ret = ret + (40 * countChip("胴部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -853,6 +852,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (3.0 * countChip("反動吸収"));
 		ret = ret + (4.5 * countChip("反動吸収II"));
+		ret = ret + (1.5 * countChip("腕部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -875,6 +875,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (1.0 * countChip("リロード"));
 		ret = ret + (1.5 * countChip("リロードII"));
+		ret = ret + (0.5 * countChip("腕部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -897,6 +898,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (2 * countChip("武器変更"));
 		ret = ret + (3 * countChip("武器変更II"));
+		ret = ret + (0.5 * countChip("腕部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -919,6 +921,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (2 * countChip("予備弾数"));
 		ret = ret + (3 * countChip("予備弾数II"));
+		ret = ret + (1 * countChip("腕部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -938,9 +941,10 @@ public class CustomData {
 		String spec = legs_parts.get("歩行");
 		ret = SpecValues.getSpecValue(spec, "歩行", "");
 
-		// チップセットボーナス(km/h)
-		ret = ret + (1.08 * countChip("歩行"));
-		ret = ret + (1.62 * countChip("歩行II"));
+		// チップセットボーナス(m/s)
+		ret = ret + (0.30 * countChip("歩行"));
+		ret = ret + (0.45 * countChip("歩行II"));
+		ret = ret + (0.20 * countChip("脚部パーツ強化"));
 
 		// ホバー脚部の場合の補正値を計算する
 		boolean is_hover = isHoverLegs();
@@ -1000,6 +1004,7 @@ public class CustomData {
 		// チップセットボーナス
 		ret = ret + (40 * countChip("重量耐性"));
 		ret = ret + (60 * countChip("重量耐性II"));
+		ret = ret + (20 * countChip("脚部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -1019,9 +1024,10 @@ public class CustomData {
 		String spec = legs_parts.get("巡航");
 		ret = SpecValues.getSpecValue(spec, "巡航", "");
 
-		// チップセットボーナス
-		ret = ret + (0.36 * countChip("巡航"));
-		ret = ret + (0.54 * countChip("巡航II"));
+		// チップセットボーナス(m/s)
+		ret = ret + (0.10 * countChip("巡航"));
+		ret = ret + (0.15 * countChip("巡航II"));
+		ret = ret + (0.05 * countChip("脚部パーツ強化"));
 
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
@@ -1403,8 +1409,9 @@ public class CustomData {
 		ret = SpecValues.getSpecValue(spec, "ダッシュ", "");
 
 		// チップセットボーナス
-		ret = ret + (0.36 * countChip("ダッシュ"));
-		ret = ret + (0.54 * countChip("ダッシュII"));
+		ret = ret + (0.10 * countChip("ダッシュ"));
+		ret = ret + (0.15 * countChip("ダッシュII"));
+		ret = ret + (0.05 * countChip("脚部パーツ強化"));
 
 		// ホバー補正計算を行う。
 		ret = calcHover(ret, is_start);
