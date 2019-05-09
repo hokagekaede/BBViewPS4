@@ -216,6 +216,7 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ヤクシャ");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ソリトン");
+		SERIES_NAME_LIST.add("E.D.G.");
 	}
 
 	/**
@@ -623,6 +624,9 @@ public class SpecValues {
 			else if(parts_name.equals("エンフォーサーIII型")) {
 				ret = 5150;
 			}
+			else if(parts_name.equals("E.D.G.－β")) {
+				ret = 4600;
+			}
 			else if(parts_name.equals("ツェーブラA1")) {
 				ret = 4900;
 			}
@@ -657,7 +661,7 @@ public class SpecValues {
 				ret = 6200;
 			}
 			else if(parts_name.equals("ランドバルクAT")) {
-				ret = 6300;
+				ret = 6150;
 			}
 			else if(parts_name.equals("ロージーR＋")) {
 				ret = 6700;
