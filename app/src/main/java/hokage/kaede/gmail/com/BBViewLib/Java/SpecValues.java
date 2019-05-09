@@ -206,14 +206,16 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("ツェーブラ");
+		SERIES_NAME_LIST.add("ディスカス");
 		SERIES_NAME_LIST.add("輝星");
 		SERIES_NAME_LIST.add("エンフォーサー");
 		SERIES_NAME_LIST.add("ケーファー");
+		SERIES_NAME_LIST.add("ランドバルク");
+		SERIES_NAME_LIST.add("ロージー");
 		SERIES_NAME_LIST.add("E.D.G.");
 		SERIES_NAME_LIST.add("ヤクシャ");
 		SERIES_NAME_LIST.add("セイバー");
-		SERIES_NAME_LIST.add("ディスカス");
-		SERIES_NAME_LIST.add("ロージー");
+		SERIES_NAME_LIST.add("ソリトン");
 	}
 
 	/**
@@ -576,7 +578,7 @@ public class SpecValues {
 		ANTIWEIGHT = new KeyValueStore();
 		ANTIWEIGHT.set("S",  "7100"); // 対象無し
 		ANTIWEIGHT.set("S-", "7000"); // 対象無し
-		ANTIWEIGHT.set("A+", "6850"); // 対象無し
+		ANTIWEIGHT.set("A+", "6800");
 		ANTIWEIGHT.set("A",  "6550");
 		ANTIWEIGHT.set("A-", "6450");
 		ANTIWEIGHT.set("B+", "6150");
@@ -587,7 +589,7 @@ public class SpecValues {
 		ANTIWEIGHT.set("C-", "5000");
 		ANTIWEIGHT.set("D+", "4850");
 		ANTIWEIGHT.set("D",  "4500");
-		ANTIWEIGHT.set("D-", "4250"); // 対象無し
+		ANTIWEIGHT.set("D-", "4250");
 		ANTIWEIGHT.set("E+", "4000"); // 対象無し
 		ANTIWEIGHT.set("E",  "3800");
 		ANTIWEIGHT.set("E-", "3700");
@@ -654,6 +656,9 @@ public class SpecValues {
 			else if(parts_name.equals("ケーファーB5")) {
 				ret = 6200;
 			}
+			else if(parts_name.equals("ランドバルクAT")) {
+				ret = 6300;
+			}
 			else if(parts_name.equals("ロージーR＋")) {
 				ret = 6700;
 			}
@@ -672,6 +677,15 @@ public class SpecValues {
             else if(parts_name.equals("セイバーZX")) {
                 ret = 4350;
             }
+			else if(parts_name.equals("ソリトン")) {
+				ret = 4400;
+			}
+			else if(parts_name.equals("ソリトン・ノイズ")) {
+				ret = 4350;
+			}
+			else if(parts_name.equals("ソリトン・リニア")) {
+				ret = 4300;
+			}
 
 		} catch(Exception e) {
 			ret = 0;
