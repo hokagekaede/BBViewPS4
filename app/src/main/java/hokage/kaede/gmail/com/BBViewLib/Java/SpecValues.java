@@ -203,20 +203,21 @@ public class SpecValues {
 	private static void initSeries() {
 		SERIES_NAME_LIST = new ArrayList<String>();
 		SERIES_NAME_LIST.add("クーガー");
-		SERIES_NAME_LIST.add("ヘヴィガード");
-		SERIES_NAME_LIST.add("シュライク");
-		SERIES_NAME_LIST.add("ツェーブラ");
-		SERIES_NAME_LIST.add("ディスカス");
-		SERIES_NAME_LIST.add("輝星");
 		SERIES_NAME_LIST.add("エンフォーサー");
+		SERIES_NAME_LIST.add("ツェーブラ");
+		SERIES_NAME_LIST.add("E.D.G.");
+		SERIES_NAME_LIST.add("ディスカス");
+		SERIES_NAME_LIST.add("迅牙");
+		SERIES_NAME_LIST.add("輝星");
+		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("ケーファー");
 		SERIES_NAME_LIST.add("ランドバルク");
+		SERIES_NAME_LIST.add("ジーシェン");
 		SERIES_NAME_LIST.add("ロージー");
-		SERIES_NAME_LIST.add("E.D.G.");
-		SERIES_NAME_LIST.add("ヤクシャ");
+		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ソリトン");
-		SERIES_NAME_LIST.add("E.D.G.");
+		SERIES_NAME_LIST.add("ヴェクター");
 	}
 
 	/**
@@ -663,6 +664,15 @@ public class SpecValues {
 			else if(parts_name.equals("ランドバルクAT")) {
 				ret = 6150;
 			}
+			else if(parts_name.equals("ジーシェン・フー")) {
+				ret = 6400;
+			}
+			else if(parts_name.equals("ジーシェン・シー")) {
+				ret = 6200;
+			}
+			else if(parts_name.equals("ジーシェン・パイロン")) {
+				ret = 6500;
+			}
 			else if(parts_name.equals("ロージーR＋")) {
 				ret = 6700;
 			}
@@ -689,6 +699,12 @@ public class SpecValues {
 			}
 			else if(parts_name.equals("ソリトン・リニア")) {
 				ret = 4300;
+			}
+			else if(parts_name.equals("ヴェクターN")) {
+				ret = 4100;
+			}
+			else if(parts_name.equals("ヴェクターNb")) {
+				ret = 4150;
 			}
 
 		} catch(Exception e) {
