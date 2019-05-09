@@ -73,7 +73,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		list_view.setAdapter(adapter);
 		list_view.setOnItemClickListener(this);
 
-		String base_spec_str = String.format("機体 (装甲：%.1f)", custom_data.getArmorAve());
+		String base_spec_str = String.format("機体 (装甲：%.1f (%%))", custom_data.getArmorAve());
 		
 		adapter.addItem(new CustomAdapterItemCategory(context, base_spec_str));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD));
@@ -81,7 +81,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_ARMS));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_LEGS));
 		
-		String assult_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String assult_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_ASSALT, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_ASSALT), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_ASSALT));
@@ -92,7 +92,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_ASSALT, BBDataManager.WEAPON_TYPE_SUPPORT));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_ASSALT, BBDataManager.WEAPON_TYPE_SPECIAL));
 
-		String heavy_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String heavy_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_HEAVY, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_HEAVY), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_HEAVY));
@@ -103,7 +103,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_HEAVY, BBDataManager.WEAPON_TYPE_SUPPORT));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_HEAVY, BBDataManager.WEAPON_TYPE_SPECIAL));
 	
-		String sniper_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String sniper_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_SNIPER, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_SNIPER), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_SNIPER));
@@ -114,7 +114,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_SNIPER, BBDataManager.WEAPON_TYPE_SUPPORT));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_TYPE_SNIPER, BBDataManager.WEAPON_TYPE_SPECIAL));
 
-		String support_spec_str = String.format("%s (積載：%d / 初速：%.2f)", 
+		String support_spec_str = String.format("%s (積載：%.1f / 初速：%.2f)",
 				BBDataManager.BLUST_TYPE_SUPPORT, 
 				custom_data.getSpaceWeight(BBDataManager.BLUST_TYPE_SUPPORT), 
 				custom_data.getStartDush(BBDataManager.BLUST_TYPE_SUPPORT));
@@ -152,7 +152,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		list_view.setAdapter(adapter);
 		list_view.setOnItemClickListener(this);
 
-		String base_spec_str = String.format("機体 (装甲：%.1f)", custom_data.getArmorAve());
+		String base_spec_str = String.format("機体 (装甲：%.1f (%%))", custom_data.getArmorAve());
 		
 		adapter.addItem(new CustomAdapterItemCategory(context, base_spec_str));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD));
@@ -236,42 +236,49 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 	
 		if(type.equals(BBDataManager.BLUST_PARTS_HEAD)) {
 			title = title + " (頭部)";
-			summary = String.format("装：%s / 射：%s / 索：%s / ロ：%s / 回：%s", 
-					data.get("装甲"),
-					data.get("射撃補正"),
-					data.get("索敵"),
-					data.get("ロックオン"),
-					data.get("DEF回復"));
+			summary = String.format("装：%s / 射：%s / 索：%s / ロ：%s / 回：%s",
+					getPoint(data, "装甲"),
+					getPoint(data, "射撃補正"),
+					getPoint(data, "索敵"),
+					getPoint(data, "ロックオン"),
+					getPoint(data, "DEF回復"));
 		}
 		else if(type.equals(BBDataManager.BLUST_PARTS_BODY)) {
 			title = title + " (胴部)";
-			summary = String.format("装：%s / ブ：%s / SP：%s / エ：%s / 耐：%s", 
-					data.get("装甲"),
-					data.get("ブースター"),
-					data.get("SP供給"),
-					data.get("エリア移動"),
-					data.get("DEF耐久"));
+			summary = String.format("装：%s / ブ：%s / SP：%s / エ：%s / 耐：%s",
+					getPoint(data, "装甲"),
+					getPoint(data, "ブースター"),
+					getPoint(data, "SP供給"),
+					getPoint(data, "エリア移動"),
+					getPoint(data, "DEF耐久"));
 		}
 		else if(type.equals(BBDataManager.BLUST_PARTS_ARMS)) {
 			title = title + " (腕部)";
-			summary = String.format("装：%s / 反：%s / リ：%s / 武：%s / 弾：%s", 
-					data.get("装甲"),
-					data.get("反動吸収"),
-					data.get("リロード"),
-					data.get("武器変更"),
-					data.get("予備弾数"));
+			summary = String.format("装：%s / 反：%s / リ：%s / 武：%s / 弾：%s",
+					getPoint(data, "装甲"),
+					getPoint(data, "反動吸収"),
+					getPoint(data, "リロード"),
+					getPoint(data, "武器変更"),
+					getPoint(data, "予備弾数"));
 		}
 		else if(type.equals(BBDataManager.BLUST_PARTS_LEGS)) {
 			title = title + " (脚部)";
 			summary = String.format("装：%s / 歩：%s / ダ：%s / 重：%s / 巡：%s",
-					data.get("装甲"),
-					data.get("歩行"),
-					data.get("ダッシュ"),
-					data.get("重量耐性"),
-					data.get("巡航"));
+					getPoint(data, "装甲"),
+					getPoint(data, "歩行"),
+					getPoint(data, "ダッシュ"),
+					getPoint(data, "重量耐性"),
+					getPoint(data, "巡航"));
 		}
 		
 		return new CustomAdapterItemParts(context, data, summary, type);
+	}
+
+	private static String getPoint(BBData data, String key) {
+		String name = data.get("名称");
+		String spec = data.get(key);
+		double value = SpecValues.getSpecValue(spec, key, name);
+		return SpecValues.getPoint(key, value, false);
 	}
 
 	private static CustomAdapterBaseItem createItem(Context context, CustomData custom_data, String blust_type, String weapon_type) {
