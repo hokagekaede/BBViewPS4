@@ -1041,8 +1041,8 @@ public class CustomData {
 	 * @param blust_type 総重量を取得する兵装
 	 * @return 総重量
 	 */
-	private int getWeaponsWeight(String blust_type) {
-		int ret = 0;
+	private double getWeaponsWeight(String blust_type) {
+		double ret = 0;
 		
 		BBData[] blust_data = getWeaponList(blust_type);
 		int blust_len = blust_data.length;
@@ -1050,7 +1050,7 @@ public class CustomData {
 		try {
 			for(int i=0; i<blust_len; i++) {
 				String str_buf = blust_data[i].get("重量");
-				int buf = Integer.parseInt(str_buf);
+				double buf = Double.parseDouble(str_buf);
 				ret = ret + buf;
 			}
 		} catch(Exception e) {

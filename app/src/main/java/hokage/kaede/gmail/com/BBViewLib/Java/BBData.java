@@ -306,26 +306,20 @@ public class BBData extends BBDataLvl {
 	 * 積載猶予を取得する。
 	 * @return 積載猶予
 	 */
-	public int getCarry() {
-		int ret = 0;
+	public double getCarry() {
+		double ret = 0;
 		String weight_str = super.get("重量");
 		String anti_weight_str = super.get("重量耐性");
 		String name = super.get("名称");
-		
-		if(weight_str.equals(BBData.EMPTY_VALUE) || anti_weight_str.equals(BBData.EMPTY_VALUE)) {
-			return 0;
-		}
-		
+
 		try {
-			int weight = Integer.valueOf(weight_str);
-			int anti_weight = SpecValues.getAntiWeight(anti_weight_str, name);
+			double weight = Double.valueOf(weight_str);
+			double anti_weight = SpecValues.getSpecValue(anti_weight_str, "重量耐性", name);
 			ret = anti_weight - weight;
 			
-		} catch(NumberFormatException e) {
+		} catch(Exception e) {
 			ret = 0;
 			
-		} catch(IndexOutOfBoundsException e) {
-			ret = 0;
 		}
 		
 		return ret;

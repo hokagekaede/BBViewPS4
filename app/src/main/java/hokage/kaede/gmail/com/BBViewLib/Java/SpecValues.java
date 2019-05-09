@@ -599,7 +599,7 @@ public class SpecValues {
 	 * @param parts_name パーツ名
 	 * @return 重量耐性の値
 	 */
-	public static int getAntiWeight(String point, String parts_name) {
+	private static int getAntiWeight(String point, String parts_name) {
 		int ret = 0;
 		String value = SpecValues.ANTIWEIGHT.get(point);
 
@@ -1244,7 +1244,7 @@ public class SpecValues {
 		if(key.equals("チップ容量")) {
 			ret = String.format("%.1f", value);
 		}
-		else if(key.equals("猶予")) {
+		else if(key.contains("猶予")) {
 			ret = String.format("%.1f", value);
 		}
 		else if(key.equals("初速")) {
