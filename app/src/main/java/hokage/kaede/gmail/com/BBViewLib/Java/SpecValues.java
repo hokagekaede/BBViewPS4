@@ -323,7 +323,7 @@ public class SpecValues {
 		ACCELERATION.set("C-", "19.2");
 		ACCELERATION.set("D+", "18.7");
 		ACCELERATION.set("D",  "18.2");
-		ACCELERATION.set("D-", "17.8");  // 対象無し
+		ACCELERATION.set("D-", "17.7");  // 対象無し
 		ACCELERATION.set("E+", "17.2");
 		ACCELERATION.set("E",  "16.7");
 		ACCELERATION.set("E-", "16.2");  // 対象無し
@@ -625,6 +625,12 @@ public class SpecValues {
 				ret = 4900;
 			}
 			else if(parts_name.equals("ツェーブラA4")) {
+				ret = 5100;
+			}
+			else if(parts_name.equals("ディスカス・プロト")) {
+				ret = 5750;
+			}
+			else if(parts_name.equals("ディスカス・ダート")) {
 				ret = 5100;
 			}
 			else if(parts_name.equals("輝星・弐式")) {
@@ -1295,7 +1301,7 @@ public class SpecValues {
 			ret = String.format("%.0f(%%)", value);
 		}
 		else if(key.equals("リロード")) {
-			ret = String.format("%.1f(%%)", value);
+			ret = String.format("%.2f(%%)", value);
 		}
 		else if(key.equals("武器変更")) {
 			ret = String.format("%.0f(%%)", value);
@@ -1331,6 +1337,9 @@ public class SpecValues {
 		}
 		else if(key.equals("連射速度")) {
 			ret = String.format("%.0f", value) + "/min";
+		}
+		else if(key.contains("リロード時間")) {
+			ret = String.format("%.2f(秒)", value);
 		}
 		else if(key.equals("出力")) {
 			ret = String.format("%.2f(倍)", value);
@@ -1376,6 +1385,9 @@ public class SpecValues {
 		}
 		else if(key.equals("索敵範囲")) {
 			ret = String.format("%.0f(m)", value);
+		}
+		else if(key.equals("索敵継続")) {
+			ret = String.format("%.1f(秒)", value);
 		}
 		else if(key.equals("索敵角度")) {
 			ret = String.format("%.0f(度)", value);

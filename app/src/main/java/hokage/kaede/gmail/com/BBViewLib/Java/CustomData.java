@@ -294,6 +294,14 @@ public class CustomData {
 		else if(parts_name.startsWith("輝星")) {
 			return true;
 		}
+		else if(parts_name.startsWith("ディスカス")) {
+			if(parts_name.equals("ディスカス・ノヴァ")) {
+				return false;
+			}
+			else {
+				return true;
+			}
+		}
 
 		return false;
 	}
@@ -311,6 +319,14 @@ public class CustomData {
 		}
 		else if(parts_name.startsWith("ケーファー")) {
 			return true;
+		}
+		else if(parts_name.startsWith("ディスカス")) {
+			if(parts_name.equals("ディスカス・ノヴァ")) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		return false;
