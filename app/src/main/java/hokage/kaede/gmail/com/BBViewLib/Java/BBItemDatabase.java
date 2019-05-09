@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import hokage.kaede.gmail.com.StandardLib.Java.FileKeyValueStore;
 
+/**
+ * パーツおよび武器の所持情報と強化情報を管理するクラス
+ */
 public class BBItemDatabase {
 
     private static final String HEADPARTS_FILENAME = "bbps4_head_parts.dat";
@@ -36,14 +39,25 @@ public class BBItemDatabase {
     private FileKeyValueStore mWeaponStore;
     private FileKeyValueStore mChipStore;
 
+    /**
+     * 初期化する。インスタンスは1つで保持。
+     */
     private BBItemDatabase() {
         // Do Nothing
     }
 
+    /**
+     * インスタンスを取り出す。
+     * @return
+     */
     public static BBItemDatabase getInstance() {
         return mInstance;
     }
 
+    /**
+     * 初期化する。
+     * @param dir_path ファイルを保存するパス
+     */
     public void init(String dir_path) {
         mHeadPartsStore = new FileKeyValueStore(dir_path, HEADPARTS_FILENAME);
         mBodyPartsStore = new FileKeyValueStore(dir_path, BODYPARTS_FILENAME);
@@ -60,6 +74,10 @@ public class BBItemDatabase {
         mChipStore.load();
     }
 
+    /**
+     * 強化情報を読み込み、各データに設定する。
+     * @param list 対象のデータのリスト
+     */
     public void load(ArrayList<BBData> list) {
         int size = list.size();
 
@@ -81,6 +99,11 @@ public class BBItemDatabase {
         }
     }
 
+    /**
+     * パーツデータに強化段階を設定する。
+     * @param data パーツデータ
+     * @param level 強化段階
+     */
     public void setPartsLevel(BBData data, int level) {
 
         if(data.existCategory(BBDataManager.BLUST_PARTS_HEAD)) {
@@ -97,10 +120,21 @@ public class BBItemDatabase {
         }
     }
 
+    /**
+     * 武器データに強化段階を設定する。
+     * @param data 武器データ
+     * @param level 強化段階
+     */
     public void setWeaponLevel(BBData data, int level) {
         setData(mWeaponStore, data, level);
     }
 
+    /**
+     * データに強化段階を設定する。
+     * @param store 強化情報が格納されているストア
+     * @param data データ
+     * @param level 強化段階
+     */
     private void setData(FileKeyValueStore store, BBData data, int level) {
         String name = data.get("名称");
 
@@ -128,10 +162,15 @@ public class BBItemDatabase {
         store.save();
     }
 
-    public void setChipInfo(BBData data, int level) {
+    /**
+     * チップデータに保持情報を設定する。
+     * @param data チップデータ
+     * @param having_data 保持情報
+     */
+    public void setChipInfo(BBData data, int having_data) {
         String name = data.get("名称");
 
-        if(level == ITEM_HAVING) {
+        if(having_data == ITEM_HAVING) {
             mChipStore.set(name, STR_HAVING);
             data.setLevel(1);
         }
@@ -141,8 +180,11 @@ public class BBItemDatabase {
         }
     }
 
-
-
+    /**
+     * パーツデータから強化情報を取り出す。
+     * @param data パーツデータ
+     * @return 強化情報
+     */
     public int getPartsLevel(BBData data) {
         int ret = ITEM_NOT_HAVING;
         String name = data.get("名称");
@@ -163,11 +205,22 @@ public class BBItemDatabase {
         return ret;
     }
 
+    /**
+     * 武器データから強化情報を取り出す。
+     * @param data 武器データ
+     * @return 強化情報
+     */
     public int getWeaponLevel(BBData data) {
         String name = data.get("名称");
         return getData(mWeaponStore, name);
     }
 
+    /**
+     * データから強化情報を取り出す。
+     * @param store 強化情報が格納されたストア
+     * @param name データ名
+     * @return 強化情報
+     */
     private int getData(FileKeyValueStore store, String name) {
         String level = store.get(name);
 
@@ -188,11 +241,16 @@ public class BBItemDatabase {
         }
     }
 
+    /**
+     * チップデータの保持情報を取得する。
+     * @param data チップデータ
+     * @return 保持情報
+     */
     public int getChipInfo(BBData data) {
         String name = data.get("名称");
-        String level = mChipStore.get(name);
+        String having_data = mChipStore.get(name);
 
-        if(level.equals(STR_HAVING)) {
+        if(having_data.equals(STR_HAVING)) {
             return ITEM_HAVING;
         }
         else {
@@ -200,8 +258,11 @@ public class BBItemDatabase {
         }
     }
 
-
-
+    /**
+     * パーツデータの強化段階を示すテキストを取得する。
+     * @param data パーツデータ
+     * @return テキスト
+     */
     public String getPartsLevelText(BBData data) {
         String name = data.get("名称");
         String level_text = BBItemDatabase.STR_NOT_HAVING;
@@ -226,6 +287,11 @@ public class BBItemDatabase {
         return level_text;
     }
 
+    /**
+     * 武器データの強化段階を示すテキストを取得する。
+     * @param data 武器データ
+     * @return テキスト
+     */
     public String getWeaponLevelText(BBData data) {
         String name = data.get("名称");
         String level_text = mWeaponStore.get(name);
@@ -237,6 +303,11 @@ public class BBItemDatabase {
         return level_text;
     }
 
+    /**
+     * チップデータの強化段階を示すテキストを取得する。
+     * @param data チップデータ
+     * @return テキスト
+     */
     public String getChipInfoText(BBData data) {
         String name = data.get("名称");
         String level_text = mChipStore.get(name);
@@ -247,5 +318,71 @@ public class BBItemDatabase {
 
         return level_text;
     }
+
+    /**
+     * パーツを保持しているかどうか判定する。
+     * @param data パーツデータ
+     * @return 保持している時はtureを返し、保持していない場合はfalseを返す。
+     */
+    public boolean existParts(BBData data) {
+        int ret = ITEM_NOT_HAVING;
+        String name = data.get("名称");
+
+        if(data.existCategory(BBDataManager.BLUST_PARTS_HEAD)) {
+            ret = getData(mHeadPartsStore, name);
+        }
+        else if(data.existCategory(BBDataManager.BLUST_PARTS_BODY)) {
+            ret = getData(mBodyPartsStore, name);
+        }
+        else if(data.existCategory(BBDataManager.BLUST_PARTS_ARMS)) {
+            ret = getData(mArmsPartsStore, name);
+        }
+        else if(data.existCategory(BBDataManager.BLUST_PARTS_LEGS)) {
+            ret = getData(mLegsPartsStore, name);
+        }
+
+        if(ret == ITEM_NOT_HAVING) {
+           return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * 武器を保持しているかどうか判定する。
+     * @param data 武器データ
+     * @return 保持している時はtureを返し、保持していない場合はfalseを返す。
+     */
+    public boolean existWeapon(BBData data) {
+        String name = data.get("名称");
+        int ret = getData(mWeaponStore, name);
+
+        if(ret == ITEM_NOT_HAVING) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * チップを保持しているかどうか判定する。
+     * @param data チップデータ
+     * @return 保持している時はtureを返し、保持していない場合はfalseを返す。
+     */
+    public boolean existChip(BBData data) {
+        String name = data.get("名称");
+        String having_data = mChipStore.get(name);
+
+        if(having_data.equals(STR_HAVING)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
 
 }

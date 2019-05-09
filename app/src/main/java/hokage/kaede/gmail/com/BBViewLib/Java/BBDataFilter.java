@@ -194,9 +194,9 @@ public class BBDataFilter {
 		
 		// 所持状況によるフィルタを行う
 		if(!is_show_having || !is_show_not_having) {
-			BBNetDatabase database = BBNetDatabase.getInstance();
+			BBItemDatabase database = BBItemDatabase.getInstance();
 			boolean is_having;
-			if(database.existParts(target) || database.existWeapon(target.get("名称")) || database.existChip(target.get("名称"))) {
+			if(database.existParts(target) || database.existWeapon(target) || database.existChip(target)) {
 				is_having = true;
 			}
 			else {
