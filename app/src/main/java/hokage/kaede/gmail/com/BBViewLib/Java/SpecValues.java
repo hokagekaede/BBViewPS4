@@ -1357,7 +1357,7 @@ public class SpecValues {
 			ret = String.format("%.1f(秒)", value);
 		}
 		else if(key.equals("連続使用")) {
-			ret = String.format("%.1f(秒)", value);
+			ret = String.format("%.2f(秒)", value);
 		}
 		else if(key.equals("OH耐性")) {
 			ret = String.format("%.2f(秒)", value);
@@ -1421,7 +1421,7 @@ public class SpecValues {
 			ret = String.format("%.0f(m)", value);
 		}
 		else if(key.contains("時間")) {
-			ret = String.format("%.1f(秒)", value);
+			ret = String.format("%.2f(秒)", value);
 		}
 		else if(key.contains("面積")) {
 			ret = String.format("%.0f(m^2)", value);
