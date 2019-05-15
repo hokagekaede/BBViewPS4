@@ -640,6 +640,12 @@ public class SpecValues {
 			else if(parts_name.equals("ディスカス・ダート")) {
 				ret = 5100;
 			}
+			else if(parts_name.equals("迅牙")) {
+				ret = 5050;
+			}
+			else if(parts_name.equals("迅牙・飛天")) {
+				ret = 5750;
+			}
 			else if(parts_name.equals("輝星・弐式")) {
 				ret = 5150;
 			}
