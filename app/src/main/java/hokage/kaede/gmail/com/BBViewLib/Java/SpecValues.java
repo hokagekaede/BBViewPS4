@@ -208,6 +208,7 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("E.D.G.");
 		SERIES_NAME_LIST.add("ディスカス");
 		SERIES_NAME_LIST.add("迅牙");
+		SERIES_NAME_LIST.add("雷花");
 		SERIES_NAME_LIST.add("輝星");
 		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("ケーファー");
@@ -645,6 +646,15 @@ public class SpecValues {
 			}
 			else if(parts_name.equals("迅牙・飛天")) {
 				ret = 5750;
+			}
+			else if(parts_name.equals("雷花")) {
+				ret = 4650;
+			}
+			else if(parts_name.equals("雷花・麗")) {
+				ret = 5150;
+			}
+			else if(parts_name.equals("雷花・燐")) {
+				ret = 4900;
 			}
 			else if(parts_name.equals("輝星・弐式")) {
 				ret = 5150;
