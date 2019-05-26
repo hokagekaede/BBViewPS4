@@ -189,7 +189,7 @@ public class BBDataManager extends KeyValueStoreManager<BBData> {
 			}
 		}
 		
-		return new BBData();
+		return getUnselectedChipData();
 	}
 	
 	/**

@@ -49,22 +49,27 @@ public class ChipView extends FrameLayout implements android.widget.AdapterView.
 		adapter.addItem(new CustomAdapterItemCategory(context, "頭部チップ"));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD, 0));
 		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD, 1));
+		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_HEAD, 2));
 
 		adapter.addItem(new CustomAdapterItemCategory(context, "胴部チップ"));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_BODY, 0));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_BODY, 1));
+		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_BODY, 2));
 
 		adapter.addItem(new CustomAdapterItemCategory(context, "腕部チップ"));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_ARMS, 0));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_ARMS, 1));
+		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_ARMS, 2));
 
 		adapter.addItem(new CustomAdapterItemCategory(context, "脚部チップ"));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_LEGS, 0));
         adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_LEGS, 1));
+		adapter.addItem(createItem(context, custom_data, BBDataManager.BLUST_PARTS_LEGS, 2));
 
 		adapter.addItem(new CustomAdapterItemCategory(context, "サポートチップ"));
         adapter.addItem(createItem(context, custom_data, "サポートチップ", 0));
         adapter.addItem(createItem(context, custom_data, "サポートチップ", 1));
+		adapter.addItem(createItem(context, custom_data, "サポートチップ", 2));
 
 		if(sLastPosition >= 0) {
 			list_view.setSelectionFromTop(sLastPosition, sLastListTop);

@@ -23,3 +23,6 @@
 .project
 .classpath
 bin/release/app-release.apk
+.hg/store/undo
+.hg/undo.desc
+.hg/undo.dirstate

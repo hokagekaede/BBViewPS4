@@ -19,7 +19,7 @@ public class CustomData {
 	private BBData[] mRecentArmsChips;
 	private BBData[] mRecentLegsChips;
 	private BBData[] mRecentSupportChips;
-	private static final int CHIP_MAX_COUNT = 2;
+	public static final int CHIP_MAX_COUNT = 3;
 	
 	// 各種状態のモード設定
 	private int mMode;
@@ -230,16 +230,13 @@ public class CustomData {
 	public ArrayList<BBData> getChipList() {
 		ArrayList<BBData> list = new ArrayList<BBData>(10);
 
-		list.add(mRecentHeadChips[0]);
-		list.add(mRecentHeadChips[1]);
-		list.add(mRecentBodyChips[0]);
-		list.add(mRecentBodyChips[1]);
-		list.add(mRecentArmsChips[0]);
-		list.add(mRecentArmsChips[1]);
-		list.add(mRecentLegsChips[0]);
-		list.add(mRecentLegsChips[1]);
-		list.add(mRecentSupportChips[0]);
-		list.add(mRecentSupportChips[1]);
+		for(int i=0; i<CHIP_MAX_COUNT; i++) {
+			list.add(mRecentHeadChips[i]);
+			list.add(mRecentBodyChips[i]);
+			list.add(mRecentArmsChips[i]);
+			list.add(mRecentLegsChips[i]);
+			list.add(mRecentSupportChips[i]);
+		}
 
 		return list;
 	}

@@ -1,7 +1,6 @@
 package hokage.kaede.gmail.com.BBViewLib.Java;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import hokage.kaede.gmail.com.StandardLib.Java.FileIO;
 import hokage.kaede.gmail.com.StandardLib.Java.FileKeyValueStore;
@@ -208,16 +207,13 @@ public class CustomFileManager extends FileManager {
         }
 
         // チップのデータを設定する。
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_HEAD, 0);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_HEAD, 1);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_BODY, 0);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_BODY, 1);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_ARMS, 0);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_ARMS, 1);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_LEGS, 0);
-        writeChip(data, file_data, BBDataManager.BLUST_PARTS_LEGS, 1);
-        writeChip(data, file_data, "", 0);  // サポートチップ
-        writeChip(data, file_data, "", 1);  // サポートチップ
+        for(int i=0; i<CustomData.CHIP_MAX_COUNT; i++) {
+            writeChip(data, file_data, BBDataManager.BLUST_PARTS_HEAD, i);
+            writeChip(data, file_data, BBDataManager.BLUST_PARTS_BODY, i);
+            writeChip(data, file_data, BBDataManager.BLUST_PARTS_ARMS, i);
+            writeChip(data, file_data, BBDataManager.BLUST_PARTS_LEGS, i);
+            writeChip(data, file_data, "", i);  // サポートチップ
+        }
 
         // 要請兵器のデータを設定する。
         file_data.set(BBDataManager.REQARM_STR, data.getReqArm().get("名称"));
@@ -291,16 +287,13 @@ public class CustomFileManager extends FileManager {
         }
 
         // チップデータを読み込む
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_HEAD, 0);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_HEAD, 1);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_BODY, 0);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_BODY, 1);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_ARMS, 0);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_ARMS, 1);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_LEGS, 0);
-        readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_LEGS, 1);
-        readChip(custom_data, file_data, "", 0);  // サポートチップ
-        readChip(custom_data, file_data, "", 1);  // サポートチップ
+        for(int i=0; i<CustomData.CHIP_MAX_COUNT; i++) {
+            readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_HEAD, i);
+            readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_BODY, i);
+            readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_ARMS, i);
+            readChip(custom_data, file_data, BBDataManager.BLUST_PARTS_LEGS, i);
+            readChip(custom_data, file_data, "", i);  // サポートチップ
+        }
 
         // 要請兵器のデータを読み込む
         String reqarm_name = file_data.get(BBDataManager.REQARM_STR);
