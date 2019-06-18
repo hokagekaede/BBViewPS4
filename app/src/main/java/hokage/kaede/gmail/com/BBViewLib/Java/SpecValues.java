@@ -615,7 +615,7 @@ public class SpecValues {
 				ret = 4650;
 			}
 			else if(parts_name.equals("クーガーII型")) {
-				ret = 4600;
+				ret = 4650;
 			}
 			else if(parts_name.equals("クーガーS型")) {
 				ret = 5100;
