@@ -218,6 +218,7 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ソリトン");
+		SERIES_NAME_LIST.add("フォーミュラ");
 		SERIES_NAME_LIST.add("ヴェクター");
 	}
 
@@ -714,6 +715,15 @@ public class SpecValues {
 				ret = 4350;
 			}
 			else if(parts_name.equals("ソリトン・リニア")) {
+				ret = 4300;
+			}
+			else if(parts_name.equals("フォーミュラII型")) {
+				ret = 4100;
+			}
+			else if(parts_name.equals("フォーミュラII型C")) {
+				ret = 4350;
+			}
+			else if(parts_name.equals("フォーミュラF型")) {
 				ret = 4300;
 			}
 			else if(parts_name.equals("ヴェクターN")) {
