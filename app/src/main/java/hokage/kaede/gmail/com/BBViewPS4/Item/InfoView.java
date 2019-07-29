@@ -59,6 +59,9 @@ public class InfoView extends LinearLayout {
             }
         }
 
+        String abs_data = data.get("属性");
+        category_str = category_str + "属性：" + abs_data + "\n";
+
         // タイトルとアイテム詳細情報を表示する
         Context context = getContext();
         this.removeAllViews();
@@ -105,7 +108,7 @@ public class InfoView extends LinearLayout {
         for(int i=0; i<size; i++) {
             String target_key = keys.get(i);
 
-            if(target_key.equals("名称")) {
+            if(target_key.equals("名称") || target_key.equals("属性")) {
                 continue;
             }
 
