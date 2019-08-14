@@ -1865,7 +1865,7 @@ public class CustomData {
 	public double get1SecPower(BBData data) {
 		double ret = 0;
 
-		if(data.get("名称").equals("ライトニングスマック")) {
+		if(data.existCategory("スケルツ系統")) {
 			ret = get1SecPowerLightning(data);
 		}
 		else {
@@ -1906,12 +1906,12 @@ public class CustomData {
 	}
 
 	/**
-	 * ライトニングスマックの秒間火力を取得する。
+	 * スケルツ系統の秒間火力を取得する。
 	 * ポンプアクション込みの計算を行う。
 	 * 連射速度から1射に要する時間を求め、それにポンプアクションの時間(0.8s)を加算し、
 	 * 1秒から算出結果を除算することで実連射速度を求める。
 	 * 
-	 * @param data ライトニングスマック
+	 * @param data 武器データ
 	 * @return 秒間火力
 	 */
 	private double get1SecPowerLightning(BBData data) {

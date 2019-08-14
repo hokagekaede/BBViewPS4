@@ -1050,7 +1050,7 @@ public class BBData extends BBDataLvl {
 	public double get1SecPower() {
 		double ret = 0;
 
-		if(super.get("名称").equals("ライトニングスマック")) {
+		if(super.existCategory("スケルツ系統")) {
 			ret = get1SecPowerLightning();
 		}
 		else {
@@ -1089,7 +1089,7 @@ public class BBData extends BBDataLvl {
 	}
 
 	/**
-	 * ライトニングスマックの秒間火力を取得する。
+	 * スケルツ系統の秒間火力を取得する。
 	 * ポンプアクション込みの計算を行う。
 	 * 連射速度から1射に要する時間を求め、それにポンプアクションの時間(0.8s)を加算し、
 	 * 1秒から算出結果を除算することで実連射速度を求める。

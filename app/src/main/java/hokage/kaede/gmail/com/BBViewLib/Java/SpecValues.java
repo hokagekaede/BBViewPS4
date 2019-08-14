@@ -209,12 +209,14 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ディスカス");
 		SERIES_NAME_LIST.add("迅牙");
 		SERIES_NAME_LIST.add("雷花");
+		SERIES_NAME_LIST.add("ザオレン");
 		SERIES_NAME_LIST.add("輝星");
 		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("ケーファー");
 		SERIES_NAME_LIST.add("ランドバルク");
 		SERIES_NAME_LIST.add("ジーシェン");
 		SERIES_NAME_LIST.add("ロージー");
+		SERIES_NAME_LIST.add("ライノス");
 		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ソリトン");

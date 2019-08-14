@@ -152,6 +152,7 @@ public class SettingActivity extends PreferenceActivity implements OnClickListen
 		screen.addPreference(show_type_label);
 
 		// 性能画面
+		/*
 		PreferenceCategory spec_category = new PreferenceCategory(this);
 		spec_category.setTitle("性能画面");
 		screen.addPreference(spec_category);
@@ -162,6 +163,7 @@ public class SettingActivity extends PreferenceActivity implements OnClickListen
 		hover_view_type.setKey(BBViewSetting.SETTING_HOVER_TO_LEGS);
 		hover_view_type.setChecked(BBViewSetting.IS_HOVER_TO_LEGS);
 		screen.addPreference(hover_view_type);
+		*/
 
 		// パーツ/武器選択画面
 		PreferenceCategory select_category = new PreferenceCategory(this);
