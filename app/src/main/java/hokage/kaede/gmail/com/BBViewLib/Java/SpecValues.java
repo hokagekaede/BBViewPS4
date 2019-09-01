@@ -659,6 +659,18 @@ public class SpecValues {
 			else if(parts_name.equals("雷花・燐")) {
 				ret = 4900;
 			}
+			else if(parts_name.equals("ザオレン")) {
+				ret = 5200;
+			}
+			else if(parts_name.equals("ザオレン・ガイ")) {
+				ret = 5100;
+			}
+			else if(parts_name.equals("ザオレン・リアン")) {
+				ret = 5250;
+			}
+			else if(parts_name.equals("ザオレン・ダジアン")) {
+				ret = 5150;
+			}
 			else if(parts_name.equals("輝星・弐式")) {
 				ret = 5150;
 			}
