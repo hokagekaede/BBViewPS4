@@ -716,6 +716,12 @@ public class SpecValues {
 			else if(parts_name.equals("シュライクW")) {
 				ret = 3900;
 			}
+			else if(parts_name.equals("ヤクシャ・弐")) {
+				ret = 4400;
+			}
+			else if(parts_name.equals("ヤクシャ・弐")) {
+				ret = 4350;
+			}
             else if(parts_name.equals("セイバーI型R")) {
                 ret = 4650;
             }
