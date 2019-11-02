@@ -226,7 +226,7 @@ public class SpecInfoPanel extends LinearLayout {
         }
         else {
             if(value >= min_value) {
-                point = SpecValues.getPoint("装甲", value, false);
+                point = SpecValues.getPoint("装甲", value);
             }
             else {
                 point = SpecValues.NOTHING_STR;
@@ -258,7 +258,7 @@ public class SpecInfoPanel extends LinearLayout {
 
             double cs_value = target_data.getCalcValue(cs_key);
             if(cs_value >= min_value) {
-                point = SpecValues.getPoint("装甲", cs_value, false);
+                point = SpecValues.getPoint("装甲", cs_value);
             }
             else {
                 point = SpecValues.NOTHING_STR;
@@ -270,7 +270,7 @@ public class SpecInfoPanel extends LinearLayout {
             else {
                 ret = String.format("%s - CS:%s(%s)以下",
                         ret,
-                        SpecValues.getPoint("装甲", cs_value, false),
+                        SpecValues.getPoint("装甲", cs_value),
                         SpecValues.getSpecUnit(cs_value, "装甲"));
             }
         }

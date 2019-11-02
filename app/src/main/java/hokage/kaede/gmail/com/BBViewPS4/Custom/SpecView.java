@@ -572,7 +572,7 @@ public class SpecView extends FrameLayout {
 			// 装甲平均値
 			double armor_value = custom_data.getArmorAve();
 			double life_value = custom_data.getLife(false);
-			String armor_point = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			String armor_point = SpecValues.getPoint("装甲", armor_value);
 			String armor_str   = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			String life_str    = SpecValues.getSpecUnit(life_value, "耐久");
 
@@ -583,7 +583,7 @@ public class SpecView extends FrameLayout {
 			// 装甲平均値(空爆時)
 			armor_value = custom_data.getArmorAveHead();
 			life_value = custom_data.getLifeHead(false);
-			armor_point = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			armor_point = SpecValues.getPoint("装甲", armor_value);
 			armor_str   = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			life_str    = SpecValues.getSpecUnit(life_value, "耐久");
 
@@ -594,7 +594,7 @@ public class SpecView extends FrameLayout {
 			// 装甲平均値(地爆時)
 			armor_value = custom_data.getArmorAveLegs();
 			life_value = custom_data.getLifeLegs(false);
-			armor_point = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			armor_point = SpecValues.getPoint("装甲", armor_value);
 			armor_str   = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			life_str    = SpecValues.getSpecUnit(life_value, "耐久");
 
@@ -657,7 +657,7 @@ public class SpecView extends FrameLayout {
 			double armor_value = custom_data.getArmorAve();
 			double life_value = custom_data.getLife(false);
 			double life_ndef_value = custom_data.getLife(true);
-			String armor_point   = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			String armor_point   = SpecValues.getPoint("装甲", armor_value);
 			String armor_str     = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			String life_str      = SpecValues.getSpecUnit(life_value, "耐久");
 			String life_ndef_str = SpecValues.getSpecUnit(life_ndef_value, "耐久");
@@ -670,7 +670,7 @@ public class SpecView extends FrameLayout {
 			armor_value = custom_data.getArmorAveHead();
 			life_value = custom_data.getLifeHead(false);
 			life_ndef_value = custom_data.getLifeHead(true);
-			armor_point   = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			armor_point   = SpecValues.getPoint("装甲", armor_value);
 			armor_str     = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			life_str      = SpecValues.getSpecUnit(life_value, "耐久");
 			life_ndef_str = SpecValues.getSpecUnit(life_ndef_value, "耐久");
@@ -683,7 +683,7 @@ public class SpecView extends FrameLayout {
 			armor_value = custom_data.getArmorAveLegs();
 			life_value = custom_data.getLifeLegs(false);
 			life_ndef_value = custom_data.getLifeLegs(true);
-			armor_point   = SpecValues.getPoint("装甲", armor_value, custom_data.isHoverLegs());
+			armor_point   = SpecValues.getPoint("装甲", armor_value);
 			armor_str     = SpecValues.getSpecUnit(armor_value, "装甲平均値");
 			life_str      = SpecValues.getSpecUnit(life_value, "耐久");
 			life_ndef_str = SpecValues.getSpecUnit(life_ndef_value, "耐久");
@@ -854,7 +854,7 @@ public class SpecView extends FrameLayout {
 		}
 
 		private static String getSpecString(CustomData data, String target_key, double value) {
-			String blust_point = SpecValues.getPoint(target_key, value, data.isHoverLegs());
+			String blust_point = SpecValues.getPoint(target_key, value);
 			String blust_str = SpecValues.getSpecUnit(value, target_key);
 			return blust_point + " (" + blust_str + ")";
 		}

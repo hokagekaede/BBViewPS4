@@ -246,32 +246,6 @@ public class CustomData {
 	//----------------------------------------------------------
 
 	/**
-	 * ホバー脚部かどうかを判別する。
-	 * @return ホバー脚部の場合はtrueを返し、ホバー脚部でない場合はfalseを返す。
-	 */
-	public boolean isHoverLegs() {
-		String parts_name = mRecentParts[LEGS_IDX].get("名称");
-		
-		if(parts_name.startsWith("B.U.Z.")) {
-			return true;
-		}
-		else if(parts_name.startsWith("ロージー")) {
-			return true;
-		}
-		else if(parts_name.startsWith("ネレイド")) {
-			return true;
-		}
-		else if(parts_name.startsWith("フォーミュラ")) {
-			return true;	
-		}
-		else if(parts_name.startsWith("スペクター")) {
-			return true;	
-		}
-		
-		return false;
-	}
-
-	/**
 	 * 中量機体かどうかを判別する。
 	 * @param parts_idx パーツの部位
 	 * @return 中量機体の場合はtrueを返し、中量機体でない場合はfalseを返す。
@@ -442,6 +416,56 @@ public class CustomData {
 	//----------------------------------------------------------
 	// 性能値取得系(機体)
 	//----------------------------------------------------------
+
+	/**
+	 * 指定したパーツの重量を取得する。各ブランド適性チップの効果はここで反映する。
+	 * @param parts_data 指定のパーツデータ
+	 * @return 重量
+	 */
+	public double getPartsWeightOnly(BBData parts_data) {
+		double ret = 0;
+
+		try {
+			String str_buf = parts_data.get("重量");
+			ret = Double.parseDouble(str_buf);
+
+		} catch(Exception e) {
+			ret = 0;
+		}
+
+		// ブランド適性チップの効果を反映する。
+		String series_name = SpecValues.getSeries(parts_data);
+
+		if(series_name.equals("クーガー")) {
+			ret = ret - (25 * countChip("クーガー適性"));
+		}
+		else if(series_name.equals("エンフォーサー")) {
+			ret = ret - (25 * countChip("エンフォーサー適性"));
+		}
+		else if(series_name.equals("ツェーブラ")) {
+			ret = ret - (25 * countChip("ツェーブラ適性"));
+		}
+		else if(series_name.equals("ディスカス")) {
+			ret = ret - (25 * countChip("ディスカス適性"));
+		}
+		else if(series_name.equals("ヘヴィガード")) {
+			ret = ret - (25 * countChip("ヘヴィガード適性"));
+		}
+		else if(series_name.equals("ケーファー")) {
+			ret = ret - (25 * countChip("ケーファー適性"));
+		}
+		else if(series_name.equals("ロージー")) {
+			ret = ret - (25 * countChip("ロージー適性"));
+		}
+		else if(series_name.equals("シュライク")) {
+			ret = ret - (25 * countChip("シュライク適性"));
+		}
+		else if(series_name.equals("セイバー")) {
+			ret = ret - (25 * countChip("セイバー適性"));
+		}
+
+		return ret;
+	}
 	
 	/**
 	 * パーツの総重量を取得する。サテライトバンカー/要請兵器が有効な場合はここで重量を加算する。
@@ -450,18 +474,9 @@ public class CustomData {
 	public double getPartsWeight() {
 		double ret = 0;
 		int parts_len = mRecentParts.length;
-		double reqarm_weight = 0;
 
-		try {
-			for(int i=0; i<parts_len; i++) {
-				String str_buf = mRecentParts[i].get("重量");
-				double buf = Double.parseDouble(str_buf);
-				ret = ret + buf;
-			}
-
-			reqarm_weight = Double.parseDouble(mReqArm.get("重量"));
-		} catch(Exception e) {
-			// Do Nothing
+		for(int i=0; i<parts_len; i++) {
+			ret = ret + getPartsWeightOnly(mRecentParts[i]);
 		}
 		
 		// サテライトバンカー/要請兵器の重量を加算する
@@ -473,7 +488,7 @@ public class CustomData {
 			carried_weight = SpecValues.SBR_WEIGHT;
 		}
 		else if(mMode == MODE_REQARM) {
-			carried_weight = reqarm_weight;
+			carried_weight = Double.parseDouble(mReqArm.get("重量"));
 		}
 
 		/*
@@ -943,17 +958,8 @@ public class CustomData {
 		ret = ret + (0.45 * countChip("歩行II"));
 		ret = ret + (0.20 * countChip("脚部パーツ強化"));
 
-		// ホバー脚部の場合の補正値を計算する
-		boolean is_hover = isHoverLegs();
-		if(is_hover) {
-			ret = ret * 4 / 3;
-		}
-
-		// 上限値によるガードを行う (ホバー：14.70[m/s], 二脚：11.02[m/s])
-		if(is_hover && ret > 14.70) {
-			ret = 14.70;
-		}
-		else if(!is_hover && ret > 11.02) {
+		// 上限値によるガードを行う (二脚：11.02[m/s])
+		if(ret > 11.02) {
 			ret = 11.02;
 		}
 
@@ -1099,15 +1105,11 @@ public class CustomData {
 	public double getArmor(String blust_type, int idx) {
 		double ret = getArmor(idx);
 
-		/*
-		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
-			ret = ret + 1;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("重火力兵装")) {
+			ret = ret + (0.5 * countChip("重火力兵装強化"));
 		}
-		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {
-			ret = ret + 2;
-		}
-		*/
-		
+
 		return ret;
 	}
 	
@@ -1119,15 +1121,11 @@ public class CustomData {
 	public double getArmorAve(String blust_type) {
 		double ret = getArmorAve();
 
-		/*
-		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
-			ret = ret + 1;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("重火力兵装")) {
+			ret = ret + (0.5 * countChip("重火力兵装強化"));
 		}
-		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {  // 暫定対応。値は不明。
-			ret = ret + 2;
-		}
-		*/
-		
+
 		return ret;
 	}
 
@@ -1139,15 +1137,11 @@ public class CustomData {
 	public double getShotBonus(String blust_type) {
 		double ret = getShotBonus();
 
-		/*
-		if(existChip("遊撃兵装強化") && blust_type.equals("遊撃兵装")) {
-			ret = ret + 0.03;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("遊撃兵装")) {
+			ret = ret + (2 * countChip("遊撃兵装強化"));
 		}
-		else if(existChip("遊撃兵装強化II") && blust_type.equals("遊撃兵装")) {  // 暫定対応。値は不明。
-			ret = ret + 0.06;
-		}
-		*/
-		
+
 		return ret;
 	}
 
@@ -1186,15 +1180,11 @@ public class CustomData {
 	public double getBoost(String blust_type) {
 		double ret = getBoost();
 
-		/*
-		if(existChip("強襲兵装強化") && blust_type.equals("強襲兵装")) {
-			ret = ret + 3;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("強襲兵装")) {
+			ret = ret + (2 * countChip("強襲兵装強化"));
 		}
-		else if(existChip("強襲兵装強化II") && blust_type.equals("強襲兵装")) {  // 暫定対応。値は不明。
-			ret = ret + 6;
-		}
-		*/
-		
+
 		return ret;
 	}
 
@@ -1233,15 +1223,11 @@ public class CustomData {
 	public double getSP(String blust_type) {
 		double ret = getSP();
 
-		/*
-		if(existChip("支援兵装強化") && blust_type.equals("支援兵装")) {
-			ret = ret + 0.04;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("支援兵装")) {
+			ret = ret + (3 * countChip("支援兵装強化"));
 		}
-		else if(existChip("支援兵装強化II") && blust_type.equals("支援兵装")) {  // 暫定対応。値は不明。
-			ret = ret + 0.08;
-		}
-		*/
-		
+
 		return ret;
 	}
 
@@ -1253,14 +1239,10 @@ public class CustomData {
 	public double getAreaMove(String blust_type) {
 		double ret = getAreaMove();
 
-		/*
-		if(existChip("支援兵装強化") && blust_type.equals("支援兵装")) {
-			ret = ret - 0.50;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("支援兵装")) {
+			ret = ret - (0.25 * countChip("支援兵装強化"));
 		}
-		else if(existChip("支援兵装強化II") && blust_type.equals("支援兵装")) {  // 暫定対応。値は不明。
-			ret = ret - 1.00;
-		}
-		*/
 
 		// エリア移動の上限設定
 		if(ret < 2.0) {
@@ -1296,15 +1278,11 @@ public class CustomData {
 	public double getReload(String blust_type) {
 		double ret = getReload();
 
-		/*
-		if(existChip("遊撃兵装強化") && blust_type.equals("遊撃兵装")) {
-			ret = ret - 0.02;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("遊撃兵装")) {
+			ret = ret + (1 * countChip("遊撃兵装強化"));
 		}
-		else if(existChip("遊撃兵装強化II") && blust_type.equals("遊撃兵装")) {  // 暫定対応。値は不明。
-			ret = ret - 0.04;
-		}
-		*/
-		
+
 		return ret;
 	}
 
@@ -1354,7 +1332,7 @@ public class CustomData {
 	}
 
 	/**
-	 * 走行速度(初速or巡航)を取得する (km/h)
+	 * 走行速度(初速or巡航)を取得する (m/s)
 	 * @param blust_type 兵装の種類
 	 * @param is_start 初速かどうか。初速の場合はtrueを設定し、巡航の場合はfalseを設定する。
 	 * @return 歩行速度を返す。
@@ -1362,15 +1340,10 @@ public class CustomData {
 	private double getDashBlust(String blust_type, boolean is_start) {
 		double ret = calcDash(is_start);
 
-		/*
 		// 兵装強化チップの効果を反映する
-		if(existChip("強襲兵装強化") && blust_type.equals("強襲兵装")) {
-			ret = ret + calcHover(1.08, is_start);
+		if(blust_type.equals("強襲兵装")) {
+			ret = ret + (0.06 * countChip("強襲兵装強化"));
 		}
-		else if(existChip("強襲兵装強化II") && blust_type.equals("強襲兵装")) {  // 暫定対応。値は不明。
-			ret = ret + calcHover(2.16, is_start);
-		}
-		*/
 
 		// 超過を考慮した速度計算を行う
 		ret = calcSpeed(blust_type, ret, SpecValues.MIN_DASH);
@@ -1410,34 +1383,10 @@ public class CustomData {
 		ret = ret + (0.15 * countChip("ダッシュII"));
 		ret = ret + (0.05 * countChip("脚部パーツ強化"));
 
-		// ホバー補正計算を行う。
-		ret = calcHover(ret, is_start);
-
 		if(ret == SpecValues.ERROR_VALUE) {
 			ret = 0;
 		}
 
-		return ret;
-	}
-	
-	/**
-	 * ホバー時の速度変換を行う。
-	 * @param speed 対象の速度
-	 * @param is_start 初速かどうか
-	 * @return 変換後の速度
-	 */
-	private double calcHover(double speed, boolean is_start) {
-		double ret = speed;
-
-		if(isHoverLegs()) {
-			if(is_start) {
-				ret = ret * 0.8;
-			}
-			else {
-				ret = ret * 7.0 / 6.0;
-			}
-		}
-		
 		return ret;
 	}
 
@@ -1588,15 +1537,11 @@ public class CustomData {
 	public int getAntiWeight(String blust_type) {
 		int ret = getAntiWeight();
 
-		/*
-		if(existChip("重火力兵装強化") && blust_type.equals("重火力兵装")) {
-			ret = ret + 100;
+		// 兵装強化チップの効果を反映する
+		if(blust_type.equals("重火力兵装")) {
+			ret = ret + (40 * countChip("重火力兵装強化"));
 		}
-		else if(existChip("重火力兵装強化II") && blust_type.equals("重火力兵装")) {  // 暫定対応。値は不明。
-			ret = ret + 200;
-		}
-		*/
-		
+
 		return ret;
 	}
 	
@@ -2762,23 +2707,14 @@ public class CustomData {
 			resist_chip_value = 3000;
 		}
 		*/
-		
-		if(isHoverLegs()) {
-			if(attack_value >= SpecValues.HOVER_DOWN_DAMAGE + resist_chip_value) {
-				ret = true;
-			}
-			else {
-				ret = false;
-			}
+
+		if(attack_value >= SpecValues.BLUST_DOWN_DAMAGE + resist_chip_value) {
+			ret = true;
 		}
 		else {
-			if(attack_value >= SpecValues.BLUST_DOWN_DAMAGE + resist_chip_value) {
-				ret = true;
-			}
-			else {
-				ret = false;
-			}
+			ret = false;
 		}
+
 
 		return ret;
 	}
@@ -2804,22 +2740,12 @@ public class CustomData {
 			resist_chip_value = 1500;
 		}
 		*/
-		
-		if(isHoverLegs()) {
-			if(attack_value >= SpecValues.HOVER_KB_DAMAGE + resist_chip_value) {
-				ret = true;
-			}
-			else {
-				ret = false;
-			}
+
+		if(attack_value >= SpecValues.BLUST_KB_DAMAGE + resist_chip_value) {
+			ret = true;
 		}
 		else {
-			if(attack_value >= SpecValues.BLUST_KB_DAMAGE + resist_chip_value) {
-				ret = true;
-			}
-			else {
-				ret = false;
-			}
+			ret = false;
 		}
 
 		return ret;

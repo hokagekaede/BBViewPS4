@@ -214,10 +214,12 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ヘヴィガード");
 		SERIES_NAME_LIST.add("ケーファー");
 		SERIES_NAME_LIST.add("ランドバルク");
+		SERIES_NAME_LIST.add("ヤーデ");
 		SERIES_NAME_LIST.add("ジーシェン");
 		SERIES_NAME_LIST.add("ロージー");
 		SERIES_NAME_LIST.add("ライノス");
 		SERIES_NAME_LIST.add("シュライク");
+		SERIES_NAME_LIST.add("ヤクシャ");
 		SERIES_NAME_LIST.add("セイバー");
 		SERIES_NAME_LIST.add("ソリトン");
 		SERIES_NAME_LIST.add("フォーミュラ");
@@ -695,6 +697,18 @@ public class SpecValues {
 			else if(parts_name.equals("ランドバルクAT")) {
 				ret = 6150;
 			}
+			else if(parts_name.equals("ヤーデN4")) {
+				ret = 6000;
+			}
+			else if(parts_name.equals("ヤーデN4S")) {
+				ret = 6200;
+			}
+			else if(parts_name.equals("ヤーデN5")) {
+				ret = 6000;
+			}
+			else if(parts_name.equals("ヤーデ・マイスター")) {
+				ret = 5800;
+			}
 			else if(parts_name.equals("ジーシェン・フー")) {
 				ret = 6400;
 			}
@@ -925,8 +939,8 @@ public class SpecValues {
 	 * @param value 性能値
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPointWithValue(String key, String value, boolean is_hover) {
-		return getPoint(key, value, is_hover) + " (" + value + ")";
+	public static String getPointWithValue(String key, String value) {
+		return getPoint(key, value) + " (" + value + ")";
 	}
 
 	/**
@@ -935,8 +949,8 @@ public class SpecValues {
 	 * @param value 性能値
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPointWithValue(String key, double value, boolean is_hover) {
-		return getPoint(key, value, is_hover) + " (" + value + ")";
+	public static String getPointWithValue(String key, double value) {
+		return getPoint(key, value) + " (" + value + ")";
 	}
 
 	/**
@@ -945,12 +959,12 @@ public class SpecValues {
 	 * @param value 性能値
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPoint(String key, String value, boolean is_hover) {
+	public static String getPoint(String key, String value) {
 		String ret = NOTHING_STR;
 
 		try {
 			double buf = Double.valueOf(value);
-			ret = getPoint(key, buf, is_hover);
+			ret = getPoint(key, buf);
 
 		} catch(Exception e) {
 			ret = NOTHING_STR;
@@ -967,7 +981,7 @@ public class SpecValues {
 	 * @param value 性能値
 	 * @return ポイント番号(E～S)
 	 */
-	public static String getPoint(String key, double value, boolean is_hover) {
+	public static String getPoint(String key, double value) {
 		String point = "";
 		double tmp_value = value;
 		
@@ -1017,14 +1031,7 @@ public class SpecValues {
 			}
 
 			tmp_value = Math.round(tmp_value * 1000.0) / 1000.0;
-			
-			// ホバー脚部の二脚基準/ホバー基準設定に応じて、使用するテーブルを変更する
-			if(!BBViewSetting.IS_HOVER_TO_LEGS && is_hover) {
-				point = getPointAsc(SpecValues.WALK_HOVER, tmp_value);
-			}
-			else {
-				point = getPointAsc(SpecValues.WALK, tmp_value);
-			}
+			point = getPointAsc(SpecValues.WALK, tmp_value);
 		}
 		else if(key.equals("ダッシュ")) {
 			if(BBViewSetting.IS_KM_PER_HOUR) {
@@ -1032,14 +1039,7 @@ public class SpecValues {
 			}
 
 			tmp_value = Math.round(tmp_value * 100.0) / 100.0;
-
-			// ホバー脚部の二脚基準/ホバー基準設定に応じて、使用するテーブルを変更する
-			if(!BBViewSetting.IS_HOVER_TO_LEGS && is_hover) {
-				point = getPointAsc(SpecValues.DASH_HOVER, tmp_value);
-			}
-			else {
-				point = getPointAsc(SpecValues.DASH, tmp_value);
-			}
+            point = getPointAsc(SpecValues.DASH, tmp_value);
 		}
 		else if(key.equals("重量耐性")) {
 			tmp_value = Math.round(tmp_value);
@@ -1274,7 +1274,7 @@ public class SpecValues {
 		}
 
 		if(BBDataComparator.isPointKey(target_key)) {
-			String point = getPoint(target_key, value, false);
+			String point = getPoint(target_key, value);
 
 			// 評価値算出に失敗した場合は対象の文字が評価値そのもの
 			if(point.equals(SpecValues.NOTHING_STR)) {

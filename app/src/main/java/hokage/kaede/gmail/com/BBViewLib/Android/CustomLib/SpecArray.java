@@ -165,7 +165,7 @@ public class SpecArray {
 			real_value = data.getSpecValue(target_key, blust_type);
 		}
 		
-		String real_point = SpecValues.getPoint(target_key, real_value, data.isHoverLegs());
+		String real_point = SpecValues.getPoint(target_key, real_value);
 		
 		String real_value_str = SpecValues.getSpecUnit(real_value, target_key);
 
@@ -199,8 +199,8 @@ public class SpecArray {
 			to_value = to_data.getSpecValue(target_key, blust_type);
 		}
 		
-		String from_point = SpecValues.getPoint(target_key, from_value, from_data.isHoverLegs());
-		String to_point = SpecValues.getPoint(target_key, to_value, to_data.isHoverLegs());
+		String from_point = SpecValues.getPoint(target_key, from_value);
+		String to_point = SpecValues.getPoint(target_key, to_value);
 		
 		String from_value_str = SpecValues.getSpecUnit(from_value, target_key);
 		String to_value_str = SpecValues.getSpecUnit(to_value, target_key);
@@ -230,7 +230,7 @@ public class SpecArray {
 		String normal_value_str = SpecValues.getSpecUnit(normal_value, key);
 		
 		double real_value = data.getDefRecover(blust_type);
-		String real_point = SpecValues.getPoint(key, real_value, data.isHoverLegs());
+		String real_point = SpecValues.getPoint(key, real_value);
 		String real_value_str = SpecValues.getSpecUnit(real_value, key);
 
 		// スペックと内部値を結合する
@@ -263,7 +263,7 @@ public class SpecArray {
 		String normal_value_str = SpecValues.getSpecUnit(normal_value, key);
 		
 		double real_value = data.getBoost(blust_type);
-		String real_point = SpecValues.getPoint(key, real_value, data.isHoverLegs());
+		String real_point = SpecValues.getPoint(key, real_value);
 		String real_value_str = SpecValues.getSpecUnit(real_value, key);
 
 		// スペックと内部値を結合する
@@ -320,8 +320,8 @@ public class SpecArray {
 			to_value = to_data.getArmorAve(blust_type);
 		}
 
-		String from_point = SpecValues.getPoint("装甲", from_value, from_data.isHoverLegs());
-		String to_point = SpecValues.getPoint("装甲", to_value, to_data.isHoverLegs());
+		String from_point = SpecValues.getPoint("装甲", from_value);
+		String to_point = SpecValues.getPoint("装甲", to_value);
 		
 		String from_value_str = SpecValues.getSpecUnit(from_value, "装甲");
 		String to_value_str = SpecValues.getSpecUnit(to_value, "装甲");
@@ -385,8 +385,8 @@ public class SpecArray {
 		double from_value = from_data.getStartDush(blust_type);
 		double to_value = to_data.getStartDush(blust_type);
 
-		String from_point = SpecValues.getPoint("ダッシュ", from_value, from_data.isHoverLegs());
-		String to_point = SpecValues.getPoint("ダッシュ", to_value, to_data.isHoverLegs());
+		String from_point = SpecValues.getPoint("ダッシュ", from_value);
+		String to_point = SpecValues.getPoint("ダッシュ", to_value);
 		
 		String from_value_str = SpecValues.getSpecUnit(from_value, "ダッシュ");
 		String to_value_str = SpecValues.getSpecUnit(to_value, "ダッシュ");
@@ -410,8 +410,8 @@ public class SpecArray {
 		double from_value = from_data.getWalk(blust_type);
 		double to_value = to_data.getWalk(blust_type);
 
-		String from_point = SpecValues.getPoint("歩行", from_value, from_data.isHoverLegs());
-		String to_point = SpecValues.getPoint("歩行", to_value, to_data.isHoverLegs());
+		String from_point = SpecValues.getPoint("歩行", from_value);
+		String to_point = SpecValues.getPoint("歩行", to_value);
 		
 		String from_value_str = SpecValues.getSpecUnit(from_value, "歩行");
 		String to_value_str = SpecValues.getSpecUnit(to_value, "歩行");

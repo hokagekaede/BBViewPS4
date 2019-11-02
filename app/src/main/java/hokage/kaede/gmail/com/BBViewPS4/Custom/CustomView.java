@@ -278,7 +278,7 @@ public class CustomView extends FrameLayout implements android.widget.AdapterVie
 		String name = data.get("名称");
 		String spec = data.get(key);
 		double value = SpecValues.getSpecValue(spec, key, name);
-		return SpecValues.getPoint(key, value, false);
+		return SpecValues.getPoint(key, value);
 	}
 
 	private static CustomAdapterBaseItem createItem(Context context, CustomData custom_data, String blust_type, String weapon_type) {
