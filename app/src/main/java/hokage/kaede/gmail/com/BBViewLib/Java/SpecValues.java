@@ -727,6 +727,18 @@ public class SpecValues {
 			else if(parts_name.equals("ロージーEVE")) {
 				ret = 6700;
 			}
+			else if(parts_name.equals("ライノス")) {
+				ret = 5850;
+			}
+			else if(parts_name.equals("ライノス・ウェリ")) {
+				ret = 5600;
+			}
+			else if(parts_name.equals("ライノス・ホプロ")) {
+				ret = 6500;
+			}
+			else if(parts_name.equals("ライノス・レギオ")) {
+				ret = 6350;
+			}
 			else if(parts_name.equals("シュライクW")) {
 				ret = 3900;
 			}
