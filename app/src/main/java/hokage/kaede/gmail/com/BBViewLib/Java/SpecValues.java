@@ -218,6 +218,7 @@ public class SpecValues {
 		SERIES_NAME_LIST.add("ジーシェン");
 		SERIES_NAME_LIST.add("ロージー");
 		SERIES_NAME_LIST.add("ライノス");
+		SERIES_NAME_LIST.add("ヴァラー");
 		SERIES_NAME_LIST.add("シュライク");
 		SERIES_NAME_LIST.add("ヤクシャ");
 		SERIES_NAME_LIST.add("セイバー");
@@ -738,6 +739,18 @@ public class SpecValues {
 			}
 			else if(parts_name.equals("ライノス・レギオ")) {
 				ret = 6350;
+			}
+			else if(parts_name.equals("ヴァラーE")) {
+				ret = 6100;
+			}
+			else if(parts_name.equals("ヴァラーWS")) {
+				ret = 5750;
+			}
+			else if(parts_name.equals("ヴァラーHC")) {
+				ret = 6200;
+			}
+			else if(parts_name.equals("ヴァラーRAV")) {
+				ret = 6300;
 			}
 			else if(parts_name.equals("シュライクW")) {
 				ret = 3900;
